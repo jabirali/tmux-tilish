@@ -1,87 +1,70 @@
 #!/usr/bin/env bash
+# vim: foldmethod=marker
 
+# Project: tmux-tilish
+# Author:  Jabir Ali Ouassou <jabirali@switzerlandmail.ch>
+# Licence: MIT licence
+# 
+# This file contains the `tmux` plugin `tilish`, which implements keybindings
+# that turns `tmux` into a more typical tiling window manger for your terminal.
+# The keybindings are taken nearly directly from `i3wm` and `sway`, but with
+# minor adaptation to fit better with `vim` and `tmux`. See also the README.
+
+# Define core functionality {{{
+bind_switch () {
+	# Bind keys to switch between workspaces.
+	tmux bind -n "$1" \
+		if-shell "tmux select-window -t :$2" "" "new-window -t :$2"
+}
+
+bind_move () {
+	# Bind keys to move panes between workspaces.
+	tmux bind -n "$1" \
+		if-shell "tmux join-pane -t :$2" "" "break-pane -t :$2" \\\;\
+		select-layout \\\;\
+		select-layout -E
+}
+# }}}
+
+# Define keybindings {{{
 # Switch to workspace via Alt + #.
-tmux bind -n 'M-1' \
-	if-shell 'tmux select-window -t :1' '' 'new-window -t :1'
-tmux bind -n 'M-2' \
-	if-shell 'tmux select-window -t :2' '' 'new-window -t :2'
-tmux bind -n 'M-3' \
-	if-shell 'tmux select-window -t :3' '' 'new-window -t :3'
-tmux bind -n 'M-4' \
-	if-shell 'tmux select-window -t :4' '' 'new-window -t :4'
-tmux bind -n 'M-5' \
-	if-shell 'tmux select-window -t :5' '' 'new-window -t :5'
-tmux bind -n 'M-6' \
-	if-shell 'tmux select-window -t :6' '' 'new-window -t :6'
-tmux bind -n 'M-7' \
-	if-shell 'tmux select-window -t :7' '' 'new-window -t :7'
-tmux bind -n 'M-8' \
-	if-shell 'tmux select-window -t :8' '' 'new-window -t :8'
-tmux bind -n 'M-9' \
-	if-shell 'tmux select-window -t :9' '' 'new-window -t :9'
+bind_switch 'M-1' 1
+bind_switch 'M-2' 2
+bind_switch 'M-3' 3
+bind_switch 'M-4' 4
+bind_switch 'M-5' 5
+bind_switch 'M-6' 6
+bind_switch 'M-7' 7
+bind_switch 'M-8' 8
+bind_switch 'M-9' 9
+
+# Move pane to workspace via Alt + Shift + #.
+bind_move 'M-!' 1
+bind_move 'M-@' 2
+bind_move 'M-#' 3
+bind_move 'M-$' 4
+bind_move 'M-%' 5
+bind_move 'M-^' 6
+bind_move 'M-&' 7
+bind_move 'M-*' 8
+bind_move 'M-(' 9
 
 # The mapping of Alt + 0 and Alt + Shift + 0 depends on `base-index`.
 # It can either refer to workspace number 0 or workspace number 10.
 if [ "$(tmux display -p '#{base-index}')" = 0 ]
 then
-	tmux bind -n 'M-0' \
-		if-shell 'tmux select-window -t :0' '' 'new-window -t :0'
-	tmux bind -n 'M-)' \
-		if-shell 'tmux join-pane -t :0' '' 'break-pane -t :0' \\\;\
-		select-layout \\\;\
-		select-layout -E
+	bind_switch 'M-0' 0
+	bind_move   'M-)' 0
 else 
-	tmux bind -n 'M-0' \
-		if-shell 'tmux select-window -t :10' '' 'new-window -t :10'
-	tmux bind -n 'M-)' \
-		if-shell 'tmux join-pane -t :10' '' 'break-pane -t :10' \\\;\
-		select-layout \\\;\
-		select-layout -E
+	bind_switch 'M-0' 10
+	bind_move   'M-)' 10
 fi
 
-# Move pane to workspace via Alt + Shift + #.
-tmux bind -n 'M-!' \
-	if-shell 'tmux join-pane -t :1' '' 'break-pane -t :1' \\\;\
-	select-layout \\\;\
-	select-layout -E
-tmux bind -n 'M-@' \
-	if-shell 'tmux join-pane -t :2' '' 'break-pane -t :2' \\\;\
-	select-layout \\\;\
-	select-layout -E
-tmux bind -n 'M-#' \
-	if-shell 'tmux join-pane -t :3' '' 'break-pane -t :3' \\\;\
-	select-layout \\\;\
-	select-layout -E
-tmux bind -n 'M-$' \
-	if-shell 'tmux join-pane -t :4' '' 'break-pane -t :4' \\\;\
-	select-layout \\\;\
-	select-layout -E
-tmux bind -n 'M-%' \
-	if-shell 'tmux join-pane -t :5' '' 'break-pane -t :5' \\\;\
-	select-layout \\\;\
-	select-layout -E
-tmux bind -n 'M-^' \
-	if-shell 'tmux join-pane -t :6' '' 'break-pane -t :6' \\\;\
-	select-layout \\\;\
-	select-layout -E
-tmux bind -n 'M-&' \
-	if-shell 'tmux join-pane -t :7' '' 'break-pane -t :7' \\\;\
-	select-layout \\\;\
-	select-layout -E
-tmux bind -n 'M-*' \
-	if-shell 'tmux join-pane -t :8' '' 'break-pane -t :8' \\\;\
-	select-layout \\\;\
-	select-layout -E
-tmux bind -n 'M-(' \
-	if-shell 'tmux join-pane -t :9' '' 'break-pane -t :9' \\\;\
-	select-layout \\\;\
-	select-layout -E
-
 # Switch to pane via Alt + hjkl.
-tmux bind -n 'M-h' select-pane -L
-tmux bind -n 'M-j' select-pane -D
-tmux bind -n 'M-k' select-pane -U
-tmux bind -n 'M-l' select-pane -R
+tmux bind -n 'M-h' select-pane -t '{left-of}' 
+tmux bind -n 'M-j' select-pane -t '{down-of}' 
+tmux bind -n 'M-k' select-pane -t '{up-of}'   
+tmux bind -n 'M-l' select-pane -t '{right-of}'
 
 # Move pane via Alt + Shift + hjkl.
 tmux bind -n 'M-H' swap-pane -s '{left-of}'
@@ -133,3 +116,4 @@ tmux bind -n 'M-E' \
 tmux bind -n 'M-C' \
 	source-file ~/.tmux.conf \\\;\
 	display "Reloaded config"
+# }}}
