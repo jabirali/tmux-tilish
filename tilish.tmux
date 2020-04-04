@@ -85,8 +85,7 @@ bind_layout 'M-V' 'even-horizontal'
 bind_layout 'M-f' 'fullscreen'
 bind_layout 'M-t' 'tiled'
 
-# Switch to pane via Alt + hjkl. Note that if you use Vim, I highly
-# recommend you override these with `vim-tmux-navigator` bindings.
+# Switch to pane via Alt + hjkl.
 tmux bind -n 'M-h' select-pane -t '{left-of}' 
 tmux bind -n 'M-j' select-pane -t '{down-of}' 
 tmux bind -n 'M-k' select-pane -t '{up-of}'   
@@ -117,4 +116,22 @@ tmux bind -n 'M-E' \
 tmux bind -n 'M-C' \
 	source-file ~/.tmux.conf \\\;\
 	display "Reloaded config"
+# }}}
+
+# Integrate with `vim-tmux-navigator` {{{
+if [ -n "$(tmux display -p '#{@tilish-navigator}')" ]
+then
+	# If `@tilish-navigator` is nonzero, we override the Alt + hjkl bindings.
+	# This assumes that your Vim/Neovim is setup to use Alt + hjkl as well.
+	is_vim="ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
+
+	bind -n 'M-h' if-shell "$is_vim" 'send M-h' 'select-pane -L'
+	bind -n 'M-j' if-shell "$is_vim" 'send M-j' 'select-pane -D'
+	bind -n 'M-k' if-shell "$is_vim" 'send M-k' 'select-pane -U'
+	bind -n 'M-l' if-shell "$is_vim" 'send M-l' 'select-pane -R'
+
+	bind -T copy-mode-vi 'M-h' select-pane -L
+	bind -T copy-mode-vi 'M-j' select-pane -D
+	bind -T copy-mode-vi 'M-k' select-pane -U
+	bind -T copy-mode-vi 'M-l' select-pane -R
 # }}}
