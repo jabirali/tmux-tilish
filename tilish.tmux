@@ -125,13 +125,14 @@ then
 	# This assumes that your Vim/Neovim is setup to use Alt + hjkl as well.
 	is_vim="ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
 
-	bind -n 'M-h' if-shell "$is_vim" 'send M-h' 'select-pane -L'
-	bind -n 'M-j' if-shell "$is_vim" 'send M-j' 'select-pane -D'
-	bind -n 'M-k' if-shell "$is_vim" 'send M-k' 'select-pane -U'
-	bind -n 'M-l' if-shell "$is_vim" 'send M-l' 'select-pane -R'
+	tmux bind -n 'M-h' if-shell "$is_vim" 'send M-h' 'select-pane -L'
+	tmux bind -n 'M-j' if-shell "$is_vim" 'send M-j' 'select-pane -D'
+	tmux bind -n 'M-k' if-shell "$is_vim" 'send M-k' 'select-pane -U'
+	tmux bind -n 'M-l' if-shell "$is_vim" 'send M-l' 'select-pane -R'
 
-	bind -T copy-mode-vi 'M-h' select-pane -L
-	bind -T copy-mode-vi 'M-j' select-pane -D
-	bind -T copy-mode-vi 'M-k' select-pane -U
-	bind -T copy-mode-vi 'M-l' select-pane -R
+	tmux bind -T copy-mode-vi 'M-h' select-pane -L
+	tmux bind -T copy-mode-vi 'M-j' select-pane -D
+	tmux bind -T copy-mode-vi 'M-k' select-pane -U
+	tmux bind -T copy-mode-vi 'M-l' select-pane -R
+fi
 # }}}
