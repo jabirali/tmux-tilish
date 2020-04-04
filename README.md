@@ -58,6 +58,9 @@ makes more sense on a keyboard where the number row starts at 1. This behavior
 is also more similar to how `i3wm` numbers its workspaces. However, the plugin
 will check this setting explicitly when mapping keys, and works fine without it.
 
+If you use `vim-tmux-navigator`, which you should if you're using `vim` or `neovim`,
+see the section at the end of this README for how to integrate it with `tilish`.
+
 [2]: https://github.com/tmux-plugins/tpm
 [4]: https://github.com/tmux-plugins/tmux-sensible
 
@@ -95,11 +98,42 @@ As far as I know, `tmux` has no way of knowing what your keyboard layout is,
 especially if you're working over `ssh`. However, if you know of a way to make 
 this more portable without manually adding all keyboard layouts, let me know.
 
-The <kbd>Alt</kbd> + <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> keybindings 
-for switching panes are provided as a fallback, making this plugin self-contained. 
-However, if you use Vim as your editor, I highly recommend that you use
-[`vim-tmux-navigator`][3]. In that case, you should override 
-<kbd>Alt</kbd> + <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> 
-at the bottom of your `.tmux.conf` with `vim-tmux-navigator` bindings.
+## Integration with vim-tmux-navigator
+
+There is a great `vim` plugin called [vim-tmux-navigator][3], which allows seamless 
+navigation between `vim` splits and `tmux` splits. If you're using that plugin,
+you can tell `tilish` about it to make it setup the keybindings for you. (If you
+don't tell `tilish`, it uses fallback keybindings that only work in `tmux`.)
+
+The process is quite simple. First install the plugin for `vim` or `neovim`, as
+described on the [vim-tmux-navigator website][3]. Then place this in your
+`~/.config/nvim/init.vim` (`neovim`) or `~/.vimrc` (`vim`):
+
+	noremap <silent> <m-h> :TmuxNavigateLeft<cr>
+	noremap <silent> <m-j> :TmuxNavigateDown<cr>
+	noremap <silent> <m-k> :TmuxNavigateUp<cr>
+	noremap <silent> <m-l> :TmuxNavigateRight<cr>
+
+You then just have to tell `tilish` that you want the integration:
+
+	set -g @tilish-navigator true
+
+A minimal working  example of a `~/.tmux.conf` with `tpm` would then be:
+
+	# List of plugins.
+	set -g @plugin 'tmux-plugins/tpm'
+	set -g @plugin 'tmux-plugins/tmux-sensible'
+	set -g @plugin 'jabirali/tmux-tilish'
+	
+	# Plugin options.
+	set -g @tilish-navigator true
+	
+	# Install `tpm` if needed.
+	if "test ! -d ~/.tmux/plugins/tpm" \
+	   "run 'git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ~/.tmux/plugins/tpm/bin/install_plugins'"
+	
+	# Activate the plugins.
+	run -b "~/.tmux/plugins/tpm/tpm"
 
 [3]: https://github.com/christoomey/vim-tmux-navigator
+
