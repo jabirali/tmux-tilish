@@ -86,17 +86,18 @@ is called a "vertical" and "horizontal" split seems to vary between programs.)
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>c</kbd> | Reload config |
 
 The <kbd>Alt</kbd> + <kbd>0</kbd> and <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>0</kbd> 
-bindings try to be "smart": depending on `base-index`, they either act on workspace 0 or 10.
+bindings are "smart": depending on `base-index`, they either act on workspace 0 or 10.
 
 The keybindings that move panes between workspaces assume a US keyboard layout.
 As far as I know, `tmux` has no way of knowing what your keyboard layout is,
 especially if you're working over `ssh`. However, if you know of a way to make 
 this more portable without manually adding all keyboard layouts, let me know.
 
-The keybindings for switching panes are provided as a fallback. However, if you
-use Vim as your editor, I highly recommend that you use [`vim-tmux-navigator`][3].
-In that case, you should override the 
+The <kbd>Alt</kbd> + <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> keybindings 
+for switching panes are provided as a fallback, making this plugin self-contained. 
+However, if you use Vim as your editor, I highly recommend that you use
+[`vim-tmux-navigator`][3]. In that case, you should override 
 <kbd>Alt</kbd> + <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> 
-bindings at the bottom of your `.tmux.conf` with those recommended by `vim-tmux-navigator`.
+at the bottom of your `.tmux.conf` with `vim-tmux-navigator` bindings.
 
 [3]: https://github.com/christoomey/vim-tmux-navigator
