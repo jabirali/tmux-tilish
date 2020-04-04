@@ -52,12 +52,14 @@ It is also recommended that you add the following to the top of your `.tmux.conf
 This plugin should work fine without these settings. However, without the first one,
 you may accidentally trigger e.g. the <kbd>Alt</kbd> + <kbd>h</kbd> binding by pressing
 <kbd>Esc</kbd> + <kbd>h</kbd>, something that can happen often if you use `vim` in `tmux`. 
+Note that this setting only has to be set manually if you don't use [tmux-sensible][4].
 The second one makes the window numbers go from 1-10 instead of 0-9, which IMO
 makes more sense on a keyboard where the number row starts at 1. This behavior
 is also more similar to how `i3wm` numbers its workspaces. However, the plugin
 will check this setting explicitly when mapping keys, and works fine without it.
 
 [2]: https://github.com/tmux-plugins/tpm
+[4]: https://github.com/tmux-plugins/tmux-sensible
 
 ## Keybindings
 
