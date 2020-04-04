@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-# Count workspaces from 1 like i3, as assumed by the keybindings below. IMHO,
-# this also makes more sense on a keyboard where the number row starts at 1.
-tmux set -g base-index 1
-
 # Switch to workspace via Alt + #.
 tmux bind -n 'M-1' \
 	if-shell 'tmux select-window -t :1' '' 'new-window -t :1'
@@ -23,8 +19,25 @@ tmux bind -n 'M-8' \
 	if-shell 'tmux select-window -t :8' '' 'new-window -t :8'
 tmux bind -n 'M-9' \
 	if-shell 'tmux select-window -t :9' '' 'new-window -t :9'
-tmux bind -n 'M-0' \
-	if-shell 'tmux select-window -t :10' '' 'new-window -t :10'
+
+# The mapping of Alt + 0 and Alt + Shift + 0 depends on `base-index`.
+# It can either refer to workspace number 0 or workspace number 10.
+if [ "$(tmux display -p '#{base-index}')" = 0 ]
+then
+	tmux bind -n 'M-0' \
+		if-shell 'tmux select-window -t :0' '' 'new-window -t :0'
+	tmux bind -n 'M-)' \
+		if-shell 'tmux join-pane -t :0' '' 'break-pane -t :0' \\\;\
+		select-layout \\\;\
+		select-layout -E
+else 
+	tmux bind -n 'M-0' \
+		if-shell 'tmux select-window -t :10' '' 'new-window -t :10'
+	tmux bind -n 'M-)' \
+		if-shell 'tmux join-pane -t :10' '' 'break-pane -t :10' \\\;\
+		select-layout \\\;\
+		select-layout -E
+fi
 
 # Move pane to workspace via Alt + Shift + #.
 tmux bind -n 'M-!' \
@@ -61,10 +74,6 @@ tmux bind -n 'M-*' \
 	select-layout -E
 tmux bind -n 'M-(' \
 	if-shell 'tmux join-pane -t :9' '' 'break-pane -t :9' \\\;\
-	select-layout \\\;\
-	select-layout -E
-tmux bind -n 'M-)' \
-	if-shell 'tmux join-pane -t :10' '' 'break-pane -t :10' \\\;\
 	select-layout \\\;\
 	select-layout -E
 
