@@ -24,6 +24,21 @@ bind_move () {
 		select-layout \\\;\
 		select-layout -E
 }
+
+bind_layout () {
+	# Bind keys to switch or refresh layouts.
+	if [ "$2" = "fullscreen" ]
+	then
+		# Invoke the zoom feature.
+		tmux bind -n "$1" \
+			resize-pane -Z
+	else
+		# Actually switch layout.
+		tmux bind -n "$1" \
+			select-layout "$2" \\\;\
+			select-layout -E
+	fi
+}
 # }}}
 
 # Define keybindings {{{
@@ -60,42 +75,28 @@ else
 	bind_move   'M-)' 10
 fi
 
-# Switch to pane via Alt + hjkl.
+# Switch layout with Alt + <mnemonic key>. The mnemonics are `s` and `S` for 
+# layouts Vim would generate with `:split`, and `v` and `V` for `:vsplit`.
+# The remaining mappings based on `f` and `t` should be quite obvious.
+bind_layout 'M-s' 'main-horizontal'
+bind_layout 'M-S' 'even-vertical'
+bind_layout 'M-v' 'main-vertical'
+bind_layout 'M-V' 'even-horizontal'
+bind_layout 'M-f' 'fullscreen'
+bind_layout 'M-t' 'tiled'
+
+# Switch to pane via Alt + hjkl. Note that if you use Vim, I highly
+# recommend you override these with `vim-tmux-navigator` bindings.
 tmux bind -n 'M-h' select-pane -t '{left-of}' 
 tmux bind -n 'M-j' select-pane -t '{down-of}' 
 tmux bind -n 'M-k' select-pane -t '{up-of}'   
 tmux bind -n 'M-l' select-pane -t '{right-of}'
 
-# Move pane via Alt + Shift + hjkl.
+# Move a pane via Alt + Shift + hjkl.
 tmux bind -n 'M-H' swap-pane -s '{left-of}'
 tmux bind -n 'M-J' swap-pane -s '{down-of}'
 tmux bind -n 'M-K' swap-pane -s '{up-of}'
 tmux bind -n 'M-L' swap-pane -s '{right-of}'
-
-# Make :split layouts with Alt + s.
-tmux bind -n 'M-s' \
-	select-layout main-horizontal \\\;\
-	select-layout -E
-tmux bind -n 'M-S' \
-	select-layout even-vertical \\\;\
-	select-layout -E
-
-# Make :vsplit layouts with Alt + v.
-tmux bind -n 'M-v' \
-	select-layout main-vertical \\\;\
-	select-layout -E
-tmux bind -n 'M-V' \
-	select-layout even-horizontal \\\;\
-	select-layout -E
-
-# Make tiled layouts with Alt + t.
-tmux bind -n 'M-t' \
-	select-layout tiled \\\;\
-	select-layout -E
-
-# Switch to fullscreen with Alt + f.
-tmux bind -n 'M-f' \
-	resize-pane -Z
 
 # Open a terminal with Alt + Enter.
 tmux bind -n 'M-enter' \
