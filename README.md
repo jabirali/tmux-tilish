@@ -84,17 +84,15 @@ should instead move the current pane in the given direction; for instance, press
 left, by swapping it with the window to the left, and then moving the focus there.
 
 Like in `i3wm`, pressing <kbd>Alt</kbd> + <kbd>Enter</kbd> opens a new terminal pane.
-I've configured this to always open new terminals "at the end" of the current
-layout, without changing the currently selected layout. After creating it, you
-can move it around within a layout with the keybindings from the previous paragraph.
-Switching between layouts is then done using <kbd>Alt</kbd> + either <kbd>s</kbd>
-(split), <kbd>S</kbd> (only splits), <kbd>v</kbd> (vsplit), <kbd>V</kbd> (only vsplits),
-<kbd>t</kbd> (tiled), and <kbd>f</kbd> (fullscreen). The "splits" and "vsplits" refer 
-to the kind of layout you get using `:split` and `:vsplit` in `vim`. The "fullscreen"
-has the same meaning and keybinding as in `i3wm`, and is what `tmux` calls a "zoomed pane".
-Since the tiling layouts in `i3wm` are not exactly the same as in `tmux`, most keybindings
-above are not exactly the same either. I've therefore just tried to make them simple and
-mnemonic, and also somewhat consistent with `vim` nomenclature for people using that.
+I've configured these to always open "at the end" of the current layout, without 
+disturbing the current layout. Switching layouts may then be done using 
+<kbd>Alt</kbd> + <kbd>s</kbd> (split), <kbd>S</kbd> (only splits), <kbd>v</kbd> (vsplit),
+<kbd>V</kbd> (only vsplits), <kbd>t</kbd> (tiled), or <kbd>f</kbd> (fullscreen). 
+The "splits" and "vsplits" refer to the kind of layout you get from `:split` and `:vsplit`
+in `vim`. The "fullscreen" has the same meaning and keybinding as in `i3wm`, and is what
+`tmux` calls a "zoomed pane". Since the layouts in `i3wm` are not exactly the same as 
+in `tmux`, the keybindings above are not exactly the same either. I've just tried to 
+make them simple and mnemonic, and somewhat consistent with `vim` nomenclature.
 
 Finally, there are some convenience commands that are exactly like in `i3wm`.
 Pressing <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>q</kbd> quits a pane,
