@@ -98,6 +98,15 @@ As far as I know, `tmux` has no way of knowing what your keyboard layout is,
 especially if you're working over `ssh`. However, if you know of a way to make 
 this more portable without manually adding all keyboard layouts, let me know.
 
+It is worth noting that not all terminals support all keybindings. I've tested
+that the above works out-of-the-box on `alacritty`, `kitty`, `urxvt`, and 
+`gnome-terminal` on Linux. On `wsltty` (Windows), it works if you disable the 
+terminal keyboard shortcut <kbd>Alt</kbd>+<kbd>Enter</kbd> in the settings.
+Note that in `gnome-terminal`, it only works if you don't open any GUI tabs;
+if so, then the terminal steals the <kbd>Alt</kbd>+<kbd>0</kbd>-<kbd>9</kbd>
+keybindings for the GUI tabs. Note that almost none of the <kbd>Alt</kbd> 
+keys seem to work by default on an old-fashioned `xterm`. 
+
 ## Integration with vim-tmux-navigator
 
 There is a great `vim` plugin called [vim-tmux-navigator][3], which allows seamless 
@@ -116,7 +125,7 @@ described on the [vim-tmux-navigator website][3]. Then place this in your
 
 You then just have to tell `tilish` that you want the integration:
 
-	set -g @tilish-navigator true
+	set -g @tilish-navigator 'on'
 
 A minimal working  example of a `~/.tmux.conf` with `tpm` would then be:
 
@@ -126,7 +135,7 @@ A minimal working  example of a `~/.tmux.conf` with `tpm` would then be:
 	set -g @plugin 'jabirali/tmux-tilish'
 	
 	# Plugin options.
-	set -g @tilish-navigator true
+	set -g @tilish-navigator 'on'
 	
 	# Install `tpm` if needed.
 	if "test ! -d ~/.tmux/plugins/tpm" \
