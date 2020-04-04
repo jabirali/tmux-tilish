@@ -85,9 +85,8 @@ is called a "vertical" and "horizontal" split seems to vary between programs.)
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>e</kbd> | Exit (detach) `tmux` |
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>c</kbd> | Reload config |
 
-Note that the keybindings <kbd>Alt</kbd> + <kbd>0</kbd> and 
-<kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>0</kbd> try to be "smart": depending on your 
-`base-index`, they will either let <kbd>0</kbd> refer to workspace number 0 or 10.
+The <kbd>Alt</kbd> + <kbd>0</kbd> and <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>0</kbd> 
+bindings try to be "smart": depending on `base-index`, they either act on workspace 0 or 10.
 
 The keybindings that move panes between workspaces assume a US keyboard layout.
 As far as I know, `tmux` has no way of knowing what your keyboard layout is,
