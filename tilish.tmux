@@ -28,44 +28,44 @@ tmux bind -n 'M-0' \
 
 # Move pane to workspace via Alt + Shift + #.
 tmux bind -n 'M-!' \
-	if-shell 'tmux join-pane -t :1' '' 'break-pane -t :1' \;\
-	select-layout \;\
+	if-shell 'tmux join-pane -t :1' '' 'break-pane -t :1' \\\;\
+	select-layout \\\;\
 	select-layout -E
 tmux bind -n 'M-@' \
-	if-shell 'tmux join-pane -t :2' '' 'break-pane -t :2' \;\
-	select-layout \;\
+	if-shell 'tmux join-pane -t :2' '' 'break-pane -t :2' \\\;\
+	select-layout \\\;\
 	select-layout -E
 tmux bind -n 'M-#' \
-	if-shell 'tmux join-pane -t :3' '' 'break-pane -t :3' \;\
-	select-layout \;\
+	if-shell 'tmux join-pane -t :3' '' 'break-pane -t :3' \\\;\
+	select-layout \\\;\
 	select-layout -E
 tmux bind -n 'M-$' \
-	if-shell 'tmux join-pane -t :4' '' 'break-pane -t :4' \;\
-	select-layout \;\
+	if-shell 'tmux join-pane -t :4' '' 'break-pane -t :4' \\\;\
+	select-layout \\\;\
 	select-layout -E
 tmux bind -n 'M-%' \
-	if-shell 'tmux join-pane -t :5' '' 'break-pane -t :5' \;\
-	select-layout \;\
+	if-shell 'tmux join-pane -t :5' '' 'break-pane -t :5' \\\;\
+	select-layout \\\;\
 	select-layout -E
 tmux bind -n 'M-^' \
-	if-shell 'tmux join-pane -t :6' '' 'break-pane -t :6' \;\
-	select-layout \;\
+	if-shell 'tmux join-pane -t :6' '' 'break-pane -t :6' \\\;\
+	select-layout \\\;\
 	select-layout -E
 tmux bind -n 'M-&' \
-	if-shell 'tmux join-pane -t :7' '' 'break-pane -t :7' \;\
-	select-layout \;\
+	if-shell 'tmux join-pane -t :7' '' 'break-pane -t :7' \\\;\
+	select-layout \\\;\
 	select-layout -E
 tmux bind -n 'M-*' \
-	if-shell 'tmux join-pane -t :8' '' 'break-pane -t :8' \;\
-	select-layout \;\
+	if-shell 'tmux join-pane -t :8' '' 'break-pane -t :8' \\\;\
+	select-layout \\\;\
 	select-layout -E
 tmux bind -n 'M-(' \
-	if-shell 'tmux join-pane -t :9' '' 'break-pane -t :9' \;\
-	select-layout \;\
+	if-shell 'tmux join-pane -t :9' '' 'break-pane -t :9' \\\;\
+	select-layout \\\;\
 	select-layout -E
 tmux bind -n 'M-)' \
-	if-shell 'tmux join-pane -t :10' '' 'break-pane -t :10' \;\
-	select-layout \;\
+	if-shell 'tmux join-pane -t :10' '' 'break-pane -t :10' \\\;\
+	select-layout \\\;\
 	select-layout -E
 
 # Switch to pane via Alt + hjkl.
@@ -82,23 +82,23 @@ tmux bind -n 'M-L' swap-pane -s '{right-of}'
 
 # Make :split layouts with Alt + s.
 tmux bind -n 'M-s' \
-	select-layout main-horizontal \;\
+	select-layout main-horizontal \\\;\
 	select-layout -E
 tmux bind -n 'M-S' \
-	select-layout even-vertical \;\
+	select-layout even-vertical \\\;\
 	select-layout -E
 
 # Make :vsplit layouts with Alt + v.
 tmux bind -n 'M-v' \
-	select-layout main-vertical \;\
+	select-layout main-vertical \\\;\
 	select-layout -E
 tmux bind -n 'M-V' \
-	select-layout even-horizontal \;\
+	select-layout even-horizontal \\\;\
 	select-layout -E
 
 # Make tiled layouts with Alt + t.
 tmux bind -n 'M-t' \
-	select-layout tiled \;\
+	select-layout tiled \\\;\
 	select-layout -E
 
 # Switch to fullscreen with Alt + f.
@@ -107,9 +107,9 @@ tmux bind -n 'M-f' \
 
 # Open a terminal with Alt + Enter.
 tmux bind -n 'M-enter' \
-	select-pane -t '{bottom-right}' \;\
-	split-pane -h \;\
-	select-layout \;\
+	select-pane -t '{bottom-right}' \\\;\
+	split-pane -h \\\;\
+	select-layout \\\;\
 	select-layout -E
 
 # Close a window with Alt + Shift + q.
@@ -122,5 +122,5 @@ tmux bind -n 'M-E' \
 
 # Reload configuration with Alt + Shift + c.
 tmux bind -n 'M-C' \
-	source-file ~/.tmux.conf \;\
+	source-file ~/.tmux.conf \\\;\
 	display "Reloaded config"
