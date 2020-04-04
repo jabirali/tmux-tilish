@@ -21,18 +21,20 @@ Okay, so who is this plugin for anyway? You may be interested in this if:
 
 - You're using or interested in using `tmux`, but find the default keybindings
   a bit clunky. This lets you try out an alternative keybinding paradigm, 
-  which uses a modifier key (`Alt`) instead of a prefix key (e.g. `Ctrl-b`).
-- You love `i3wm`, but also do a fair bit of remote work over `ssh` + `tmux`.
-  This lets you use similar keybindings in your remote terminal as locally.
-- You also use other platforms like Gnome, Mac, or Windows Subsystem for Linux.
-  You want to take your `i3wm` muscle memory with you to all these platforms.
+  which uses a modifier key (<kbd>Alt</kbd>) instead of a prefix key 
+  (e.g. <kbd>Ctrl</kbd> + `b`).
+- You love `i3wm`, but also do a remote work over `ssh` + `tmux`. This lets 
+  you use similar keybindings in both contexts.
+- You also use other platforms like Gnome, Mac, or WSL. You want to take 
+  your `i3wm` muscle memory with you via `tmux`.
 - You're not really using `i3wm` anymore, but you did like how it handled
-  terminals and workspace. You'd like to keep working that way in terminals.
+  terminals and workspaces. You'd like to keep working that way in terminals,
+  without using `i3wm` or `sway` for your whole desktop.
 
 Personally, I made this because I loved the `i3wm` paradigm and keybindings,
-but these days I'm mostly using Gnome/Wayland at home and WSL/Windows. Then,
-`tmux` lets me have a consistent user interface for tabs and splits across
-all platforms, while this lets me use the (IMHO) more efficient `i3wm` keys.
+but these days I'm mostly using Gnome/Wayland at home and WSL/Windows at work.
+Now, `tmux` lets me have a consistent user interface for tabs and splits across
+both platforms, and this plugin lets me use the (IMHO) more efficient `i3wm` keys.
 
 ## Quickstart
 
@@ -47,10 +49,11 @@ It is also recommended that you add the following to the top of your `.tmux.conf
 	set -g base-index 1
 
 This plugin should work fine without these settings. However, without the first one,
-you may accidentally trigger e.g. the `Alt` + `h` binding by pressing `Esc` + `h`,
-something that can happen often if you use `vim` in `tmux`. The second one makes
-the window numbers go from 1-10 instead of 0-9, which in my opinion makes much 
-more sense on a keyboard where the number row starts at 1. However, the plugin
-will check this setting explicitly when mapping keys, and should work without it.
+you may accidentally trigger e.g. the <kbd>Alt</kbd> + `h` binding by pressing
+<kbd>Esc</kbd> + `h`, something that can happen often if you use `vim` in `tmux`. 
+The second one makes the window numbers go from 1-10 instead of 0-9, which IMO
+makes more sense on a keyboard where the number row starts at 1. This behavior
+is also more similar to how `i3wm` numbers its workspaces. However, the plugin
+will check this setting explicitly when mapping keys, and works fine without it.
 
 [2]: https://github.com/tmux-plugins/tpm
