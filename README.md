@@ -64,40 +64,30 @@ will check this setting explicitly when mapping keys, and works fine without it.
 Finally, here is a list of the actual keybindings. Most are [taken from `i3wm`][1].
 Below, a "workspace" is what `tmux` would call a "window" and `vim` would call a "tab",
 while a "pane" is what `i3wm` would call a "window" and `vim` would call a "split".
+The words "split" and "vsplit" below refer to the layouts you get in `vim` when
+running the commands `:split` and `:vsplit`, respectively. (Unfortunately, what
+is called a "vertical" and "horizontal" split seems to vary between programs.)
 
-To switch workspaces, use <kbd>Alt</kbd> + <kbd>0</kbd>-<kbd>9</kbd>. Similarly, 
-the keybindings <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>0</kbd>-<kbd>9</kbd> 
-moves the currently selected pane between workspaces. These bindings should behave
-exactly like in `i3wm`, just with a possibly different modifier key. Note that 
-<kbd>Alt</kbd> + <kbd>0</kbd> and <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>0</kbd>
-try to be "smart": depending on your `base-index`, they will either let <kbd>0</kbd>
-refer to workspace number 0 or 10.
+| Keybinding | Description |
+| ---------- | ----------- |
+| <kbd>Alt</kbd> + <kbd>0</kbd>-<kbd>9</kbd> | Switch to workspace number 0-9 |
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>0</kbd>-<kbd>9</kbd> | Move pane to workspace 0-9 |
+| <kbd>Alt</kbd> + <kbd>h</kbd>/<kbd>j</kbd>/<kbd>k</kbd>/<kbd>l</kbd> | Move focus left/down/up/right |
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>h</kbd>/<kbd>j</kbd>/<kbd>k</kbd></kbd>l</kbd> | Move pane left/down/up/right |
+| <kbd>Alt</kbd> + <kbd>Enter</kbd> | Create a new pane at "the end" of the current layout |
+| <kbd>Alt</kbd> + <kbd>s</kbd>     | Switch to layout: split then vsplit |
+| <kbd>Alt</kbd> + <kbd>S</kbd>     | Switch to layout: only split |
+| <kbd>Alt</kbd> + <kbd>v</kbd>     | Switch to layout: vsplit then split |
+| <kbd>Alt</kbd> + <kbd>V</kbd>     | Switch to layout: only vsplit |
+| <kbd>Alt</kbd> + <kbd>t</kbd>     | Switch to layout: fully tiled |
+| <kbd>Alt</kbd> + <kbd>f</kbd>     | Switch to layout: fullscreen (zoom) |
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>q</kbd> | Quit (close) pane |
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>e</kbd> | Exits (detach) `tmux` |
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>c</kbd> | Reload config |
 
-Within a workspace, you can also move around exactly like in `i3wm`, just using 
-`vim`-like <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> bindings instead of 
-the default <kbd>j</kbd><kbd>k</kbd><kbd>l</kbd><kbd>;</kbd> bindings. This means
-that <kbd>Alt</kbd> + <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> should move
-your focus to the pane that is to the left/down/up/right of where you are now.
-<kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd>
-should instead move the current pane in the given direction; for instance, pressing
-<kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>h</kbd> would move the current pane to the
-left, by swapping it with the window to the left, and then moving the focus there.
-
-Like in `i3wm`, pressing <kbd>Alt</kbd> + <kbd>Enter</kbd> opens a new terminal pane.
-I've configured these to always open "at the end" of the current layout, without 
-disturbing the current layout. Switching layouts may then be done using 
-<kbd>Alt</kbd> + <kbd>s</kbd> (split), <kbd>S</kbd> (only splits), <kbd>v</kbd> (vsplit),
-<kbd>V</kbd> (only vsplits), <kbd>t</kbd> (tiled), or <kbd>f</kbd> (fullscreen). 
-The "splits" and "vsplits" refer to the kind of layout you get from `:split` and `:vsplit`
-in `vim`. The "fullscreen" has the same meaning and keybinding as in `i3wm`, and is what
-`tmux` calls a "zoomed pane". Since the layouts in `i3wm` are not exactly the same as 
-in `tmux`, the keybindings above are not exactly the same either. I've just tried to 
-make them simple and mnemonic, and somewhat consistent with `vim` nomenclature.
-
-Finally, there are some convenience commands that are exactly like in `i3wm`.
-Pressing <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>q</kbd> quits a pane,
-<kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>e</kbd> exits (detaches) `tmux`,
-<kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>c</kbd> reloads the config file.
+Note that the keybindings <kbd>Alt</kbd> + <kbd>0</kbd> and 
+<kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>0</kbd> try to be "smart": depending on your 
+`base-index`, they will either let <kbd>0</kbd> refer to workspace number 0 or 10.
 
 The keybindings that move panes between workspaces assume a US keyboard layout.
 As far as I know, `tmux` has no way of knowing what your keyboard layout is,
