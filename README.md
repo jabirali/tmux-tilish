@@ -40,7 +40,7 @@ both platforms, and this plugin lets me use the (IMHO) more efficient `i3wm` key
 
 The easiest way to install this plugin is via the [Tmux Plugin Manager][2].
 Just add the following to `~/.tmux.conf`, then press <kbd>Ctrl</kbd>+<kbd>b</kbd>
-followed by <kbd>Shift</kbd>+<kbd>i</kbd> to install it:
+followed by <kbd>Shift</kbd>+<kbd>i</kbd> to install it (assuming default prefix key):
 
 	set -g @plugin 'jabirali/tmux-tilish'
 
@@ -65,8 +65,8 @@ Finally, here is a list of the actual keybindings. Most are [taken from `i3wm`][
 Below, a "workspace" is what `tmux` would call a "window" and `vim` would call a "tab",
 while a "pane" is what `i3wm` would call a "window" and `vim` would call a "split".
 
-To switch workspaces, use <kbd>Alt</kbd> + <kbd>0</kbd> to <kbd>9</kbd>. Similarly, 
-the keybindings <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>0</kbd> to <kbd>9</kbd> 
+To switch workspaces, use <kbd>Alt</kbd> + <kbd>0</kbd>-<kbd>9</kbd>. Similarly, 
+the keybindings <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>0</kbd>-<kbd>9</kbd> 
 moves the currently selected pane between workspaces. These bindings should behave
 exactly like in `i3wm`, just with a possibly different modifier key. Note that 
 <kbd>Alt</kbd> + <kbd>0</kbd> and <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>0</kbd>
