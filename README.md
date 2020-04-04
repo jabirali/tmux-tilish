@@ -3,15 +3,15 @@
 This is a plugin that makes `tmux` act and feel more like a tiling window
 manager. Most of the keybindings are just taken [directly from `i3wm`][1].
 However, I have made some adjustments to make the keybindings more similar
-to `vim`: notably, using `hjkl` instead of `jkl;` for cardinal directions,
-and using `vim`'s interpretations of "vertical" and "horizontal" splits.
+to `vim`: notably, using <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> 
+instead of <kbd>j</kbd><kbd>k</kbd><kbd>l</kbd><kbd>;</kbd> for cardinal 
+directions, and `vim`'s interpretations of what a "split" and "vsplit" is.
 
 You can find a full list of keybindings below. I'd be happy to receive 
-feedback and suggestions on this plugin. For instance, if there's interest,
-I'd be happy to add a config option that makes the keybindings more similar
-to "vanilla" `i3wm`. However, I'm under the impression that the majority of
-`i3wm` users anyway remap their keys to be more similar to `vim`, so I'm
-not planning to implement it unless I get a signal that there's interest.
+feedback and suggestions. For instance, if there's interest, I could add
+a config option that makes the keybindings more similar to "vanilla" `i3wm`.
+However, I have the impression that *most* `i3wm` users anyway remap their 
+keys to be more like `vim`, so I'm not adding this unless there's interest.
 
 [1]: https://i3wm.org/docs/refcard.html
 
@@ -22,7 +22,7 @@ Okay, so who is this plugin for anyway? You may be interested in this if:
 - You're using or interested in using `tmux`, but find the default keybindings
   a bit clunky. This lets you try out an alternative keybinding paradigm, 
   which uses a modifier key (<kbd>Alt</kbd>) instead of a prefix key 
-  (e.g. <kbd>Ctrl</kbd> + `b`).
+  (e.g. <kbd>Ctrl</kbd>+<kbd>b</kbd>).
 - You love `i3wm`, but also do a remote work over `ssh` + `tmux`. This lets 
   you use similar keybindings in both contexts.
 - You also use other platforms like Gnome, Mac, or WSL. You want to take 
@@ -39,7 +39,8 @@ both platforms, and this plugin lets me use the (IMHO) more efficient `i3wm` key
 ## Quickstart
 
 The easiest way to install this plugin is via the [Tmux Plugin Manager][2].
-Just add the following to `~/.tmux.conf`, then press `C-b I` to install:
+Just add the following to `~/.tmux.conf`, then press <kbd>Ctrl</kbd>+<kbd>b</kbd>
+followed by <kbd>Shift</kbd>+<kbd>i</kbd> to install it:
 
 	set -g @plugin 'jabirali/tmux-tilish'
 
@@ -49,8 +50,8 @@ It is also recommended that you add the following to the top of your `.tmux.conf
 	set -g base-index 1
 
 This plugin should work fine without these settings. However, without the first one,
-you may accidentally trigger e.g. the <kbd>Alt</kbd> + `h` binding by pressing
-<kbd>Esc</kbd> + `h`, something that can happen often if you use `vim` in `tmux`. 
+you may accidentally trigger e.g. the <kbd>Alt</kbd>+<kbd>h</kbd> binding by pressing
+<kbd>Esc</kbd>+<kbd>h</kbd>, something that can happen often if you use `vim` in `tmux`. 
 The second one makes the window numbers go from 1-10 instead of 0-9, which IMO
 makes more sense on a keyboard where the number row starts at 1. This behavior
 is also more similar to how `i3wm` numbers its workspaces. However, the plugin
@@ -73,8 +74,9 @@ try to be "smart": depending on your `base-index`, they will either let <kbd>0</
 refer to workspace number 0 or 10.
 
 Within a workspace, you can also move around exactly like in `i3wm`, just using 
-`vim`-like `hjkl` bindings instead of the default `jkl;` bindings. This means that
-<kbd>Alt</kbd> + <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> should move
+`vim`-like <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> bindings instead of 
+the default <kbd>j</kbd><kbd>k</kbd><kbd>l</kbd><kbd>;</kbd> bindings. This means
+that <kbd>Alt</kbd> + <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> should move
 your focus to the pane that is to the left/down/up/right of where you are now.
 <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd>
 should instead move the current pane in the given direction; for instance, pressing
@@ -106,7 +108,7 @@ this more portable without manually adding all keyboard layouts, let me know.
 
 The keybindings for switching panes are provided as a fallback. However, if you
 use Vim as your editor, I highly recommend that you use [`vim-tmux-navigator`][3].
-In that case, you should override the <kbd>Alt</kbd> + `hjkl` bindings at the 
+In that case, you should override the <kbd>Alt</kbd> + <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> bindings at the 
 bottom of your `.tmux.conf` with those recommended by `vim-tmux-navigator`.
 
 [3]: https://github.com/christoomey/vim-tmux-navigator
