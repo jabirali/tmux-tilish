@@ -107,7 +107,7 @@ tmux bind -n 'M-f' \
 
 # Open a terminal with Alt + Enter.
 tmux bind -n 'M-enter' \
-	select-pane -t {bottom-right} \;\
+	select-pane -t '{bottom-right}' \;\
 	split-pane -h \;\
 	select-layout \;\
 	select-layout -E
