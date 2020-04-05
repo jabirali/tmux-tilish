@@ -99,14 +99,18 @@ As far as I know, `tmux` has no way of knowing what your keyboard layout is,
 especially if you're working over `ssh`. However, if you know of a way to make 
 this more portable without manually adding all keyboard layouts, let me know.
 
+# Terminal compatibility
+
 It is worth noting that not all terminals support all keybindings. I've tested
 that the above works out-of-the-box on `alacritty`, `kitty`, `urxvt`, and 
-`gnome-terminal` on Linux. On `wsltty` (Windows), it works if you disable the 
-terminal keyboard shortcut <kbd>Alt</kbd>+<kbd>Enter</kbd> in the settings.
-Note that in `gnome-terminal`, it only works if you don't open any GUI tabs;
-if so, then the terminal steals the <kbd>Alt</kbd>+<kbd>0</kbd>-<kbd>9</kbd>
-keybindings for the GUI tabs. If you use `xterm`, almost none of the <kbd>Alt</kbd>
-keys work by default. That can be fixed by adding the following to `~/.Xresources`:
+`gnome-terminal` on Linux. Note that in `gnome-terminal`, it only works 
+if you don't open any GUI tabs; if you do so, the terminal steals the
+<kbd>Alt</kbd>+<kbd>0</kbd>-<kbd>9</kbd> keybindings for the GUI tabs. 
+
+On `wsltty` (Windows), it works if you disable the keyboard shortcut 
+<kbd>Alt</kbd>+<kbd>Enter</kbd> in the terminal settings. If you use 
+`xterm`, almost none of the <kbd>Alt</kbd> keys work by default. That 
+can be fixed by adding the following to your `~/.Xresources`:
 
 	XTerm*eightBitControl: false
 	XTerm*eightBitInput: false
