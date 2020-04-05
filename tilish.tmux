@@ -179,6 +179,9 @@ then
 	# Autorefresh layout after deleting a pane.
 	tmux set-hook after-split-window "select-layout; select-layout -E"
 	tmux set-hook pane-exited "select-layout; select-layout -E"
+
+	# Autoselect layout after creating new window.
+	tmux set-hook window-linked 'select-layout even-horizontal; select-layout -E'
 fi
 # }}}
 
