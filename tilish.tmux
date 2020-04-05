@@ -152,8 +152,16 @@ else
 fi
 
 # Close a window with Alt + Shift + q.
-tmux bind -n 'M-Q' \
-	kill-pane
+if [ "$version" -ge 2 ]
+then
+	tmux bind -n 'M-Q' \
+		kill-pane \\\;\
+		select-layout \\\;\
+		select-layout -E
+else
+	tmux bind -n 'M-Q' \
+		kill-pane
+fi
 
 # Close a connection with Alt + Shift + e.
 tmux bind -n 'M-E' \
@@ -163,6 +171,15 @@ tmux bind -n 'M-E' \
 tmux bind -n 'M-C' \
 	source-file ~/.tmux.conf \\\;\
 	display "Reloaded config"
+# }}}
+
+# Define hooks {{{
+if [ "$version" -ge 2 ]
+then
+	# Autorefresh layout after deleting a pane.
+	tmux set-hook after-split-window "select-layout; select-layout -E"
+	tmux set-hook pane-exited "select-layout; select-layout -E"
+fi
 # }}}
 
 # Integrate with `vim-tmux-navigator` {{{
