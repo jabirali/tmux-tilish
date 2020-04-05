@@ -13,6 +13,10 @@ a config option that makes the keybindings more similar to "vanilla" `i3wm`.
 However, I have the impression that *most* `i3wm` users anyway remap their 
 keys to be more like `vim`, so I'm not adding this unless there's interest.
 
+I have so far developed the plugin to work on `tmux` v2.9 and v1.9. If you
+try it out on other versions (especially v3.x), please let me know whether
+everything works as it should, or if it needs further testing and patching.
+
 [1]: https://i3wm.org/docs/refcard.html
 
 ## Why?

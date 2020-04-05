@@ -10,6 +10,9 @@
 # The keybindings are taken nearly directly from `i3wm` and `sway`, but with
 # minor adaptation to fit better with `vim` and `tmux`. See also the README.
 
+# Check tmux version.
+version=$(tmux -V | sed 's/\S* \([0-9]\)\..*/\1/')
+
 # Define core functionality {{{
 bind_switch () {
 	# Bind keys to switch between workspaces.
@@ -19,10 +22,21 @@ bind_switch () {
 
 bind_move () {
 	# Bind keys to move panes between workspaces.
-	tmux bind -n "$1" \
-		if-shell "tmux join-pane -t :$2" "" "break-pane -t :$2" \\\;\
-		select-layout \\\;\
-		select-layout -E
+	if [ "$version" -ge 2 ]
+	then
+		tmux bind -n "$1" \
+			if-shell "tmux join-pane -t :$2" \
+				"" \
+				"new-window -dt :$2; join-pane -t :$2; select-pane -t top-left; kill-pane" \\\;\
+			select-layout \\\;\
+			select-layout -E
+	else
+		tmux bind -n "$1" \
+			if-shell "tmux new-window -dt :$2" \
+				"join-pane -t :$2; select-pane -t top-left; kill-pane" \
+				"send escape; join-pane -t :$2" \\\;\
+			select-layout
+	fi
 }
 
 bind_layout () {
@@ -34,9 +48,16 @@ bind_layout () {
 			resize-pane -Z
 	else
 		# Actually switch layout.
-		tmux bind -n "$1" \
-			select-layout "$2" \\\;\
-			select-layout -E
+		if [ "$version" -ge 2 ]
+		then
+			tmux bind -n "$1" \
+				select-layout "$2" \\\;\
+				select-layout -E
+		else
+			tmux bind -n "$1" \
+				run-shell "tmux select-layout \"$2\"" \\\;\
+				send escape
+		fi
 	fi
 }
 # }}}
@@ -66,13 +87,13 @@ bind_move 'M-(' 9
 
 # The mapping of Alt + 0 and Alt + Shift + 0 depends on `base-index`.
 # It can either refer to workspace number 0 or workspace number 10.
-if [ "$(tmux display -p '#{base-index}')" = 0 ]
+if [ "$(tmux show-options -g base-index)" = "base-index 1" ]
 then
-	bind_switch 'M-0' 0
-	bind_move   'M-)' 0
-else 
 	bind_switch 'M-0' 10
 	bind_move   'M-)' 10
+else 
+	bind_switch 'M-0' 0
+	bind_move   'M-)' 0
 fi
 
 # Switch layout with Alt + <mnemonic key>. The mnemonics are `s` and `S` for 
@@ -86,26 +107,48 @@ bind_layout 'M-f' 'fullscreen'
 bind_layout 'M-t' 'tiled'
 
 # Refresh the current layout (e.g. after deleting a pane).
-tmux bind -n 'M-r' select-layout -E
+if [ "$version" -ge 2 ]
+then
+	tmux bind -n 'M-r' select-layout -E
+else
+	tmux bind -n 'M-r' run-shell 'tmux select-layout'\\\; send escape
+fi
 
 # Switch to pane via Alt + hjkl.
-tmux bind -n 'M-h' select-pane -t '{left-of}' 
-tmux bind -n 'M-j' select-pane -t '{down-of}' 
-tmux bind -n 'M-k' select-pane -t '{up-of}'   
-tmux bind -n 'M-l' select-pane -t '{right-of}'
+tmux bind -n 'M-h' select-pane -L
+tmux bind -n 'M-j' select-pane -D
+tmux bind -n 'M-k' select-pane -U
+tmux bind -n 'M-l' select-pane -R
 
 # Move a pane via Alt + Shift + hjkl.
-tmux bind -n 'M-H' swap-pane -s '{left-of}'
-tmux bind -n 'M-J' swap-pane -s '{down-of}'
-tmux bind -n 'M-K' swap-pane -s '{up-of}'
-tmux bind -n 'M-L' swap-pane -s '{right-of}'
+if [ "$version" -ge 2 ]
+then
+	tmux bind -n 'M-H' swap-pane -s '{left-of}'
+	tmux bind -n 'M-J' swap-pane -s '{down-of}'
+	tmux bind -n 'M-K' swap-pane -s '{up-of}'
+	tmux bind -n 'M-L' swap-pane -s '{right-of}'
+else
+	tmux bind -n 'M-H' run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -L; tmux swap-pane -t $old'
+	tmux bind -n 'M-J' run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -D; tmux swap-pane -t $old'
+	tmux bind -n 'M-K' run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -U; tmux swap-pane -t $old'
+	tmux bind -n 'M-L' run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -R; tmux swap-pane -t $old'
+fi
 
 # Open a terminal with Alt + Enter.
-tmux bind -n 'M-enter' \
-	select-pane -t '{bottom-right}' \\\;\
-	split-pane -h \\\;\
-	select-layout \\\;\
-	select-layout -E
+if [ "$version" -ge 2 ]
+then
+	tmux bind -n 'M-enter' \
+		select-pane -t 'bottom-right' \\\;\
+		split-pane -h \\\;\
+		select-layout \\\;\
+		select-layout -E
+else
+	tmux bind -n 'M-enter' \
+		select-pane -t 'bottom-right' \\\;\
+		split-window \\\;\
+		run-shell 'tmux select-layout' \\\;\
+		send escape
+fi
 
 # Close a window with Alt + Shift + q.
 tmux bind -n 'M-Q' \
