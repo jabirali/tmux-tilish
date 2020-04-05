@@ -85,6 +85,9 @@ bind_layout 'M-V' 'even-horizontal'
 bind_layout 'M-f' 'fullscreen'
 bind_layout 'M-t' 'tiled'
 
+# Refresh the current layout (e.g. after deleting a pane).
+tmux bind -n 'M-r' select-layout -E
+
 # Switch to pane via Alt + hjkl.
 tmux bind -n 'M-h' select-pane -t '{left-of}' 
 tmux bind -n 'M-j' select-pane -t '{down-of}' 
