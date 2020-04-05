@@ -99,7 +99,7 @@ As far as I know, `tmux` has no way of knowing what your keyboard layout is,
 especially if you're working over `ssh`. However, if you know of a way to make 
 this more portable without manually adding all keyboard layouts, let me know.
 
-# Terminal compatibility
+## Terminal compatibility
 
 It is worth noting that not all terminals support all keybindings. I've tested
 that the above works out-of-the-box on `alacritty`, `kitty`, `urxvt`, and 
