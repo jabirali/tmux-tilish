@@ -13,9 +13,9 @@ a config option that makes the keybindings more similar to "vanilla" `i3wm`.
 However, I have the impression that *most* `i3wm` users anyway remap their 
 keys to be more like `vim`, so I'm not adding this unless there's interest.
 
-I have so far developed the plugin to work on `tmux` v2.9 and v1.9. If you
-try it out on other versions (especially v3.x), please let me know whether
-everything works as it should, or if it needs further testing and patching.
+The plugin has so far been verified to work on `tmux` v1.9, v2.9, and v3.0.
+I hope to support most versions of `tmux` in active use, so if you encounter
+any problems on your setup, please file an issue and I'll try to look into it.
 
 [1]: https://i3wm.org/docs/refcard.html
 
@@ -105,11 +105,11 @@ this more portable without manually adding all keyboard layouts, let me know.
 
 ## Terminal compatibility
 
-It is worth noting that not all terminals support all keybindings. I've tested
-that the above works out-of-the-box on `alacritty`, `kitty`, `urxvt`, and 
-`gnome-terminal` on Linux. Note that in `gnome-terminal`, it only works 
-if you don't open any GUI tabs; if you do so, the terminal steals the
-<kbd>Alt</kbd>+<kbd>0</kbd>-<kbd>9</kbd> keybindings for the GUI tabs. 
+It is worth noting that not all terminals support all keybindings. It 
+has been verified to work out-of-the-box on `alacritty`, `kitty`, `urxvt`, 
+`terminator`, and `gnome-terminal` on Linux. Note that in `gnome-terminal`,
+it only works if you don't open any GUI tabs; if you do so, the terminal 
+itself steals the <kbd>Alt</kbd>+<kbd>0</kbd>-<kbd>9</kbd> keybindings.
 
 On `wsltty` (Windows), it works if you disable the keyboard shortcut 
 <kbd>Alt</kbd>+<kbd>Enter</kbd> in the terminal settings. If you use 
