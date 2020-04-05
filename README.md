@@ -105,8 +105,13 @@ that the above works out-of-the-box on `alacritty`, `kitty`, `urxvt`, and
 terminal keyboard shortcut <kbd>Alt</kbd>+<kbd>Enter</kbd> in the settings.
 Note that in `gnome-terminal`, it only works if you don't open any GUI tabs;
 if so, then the terminal steals the <kbd>Alt</kbd>+<kbd>0</kbd>-<kbd>9</kbd>
-keybindings for the GUI tabs. Note that almost none of the <kbd>Alt</kbd> 
-keys seem to work by default on an old-fashioned `xterm`. 
+keybindings for the GUI tabs. If you use `xterm`, almost none of the <kbd>Alt</kbd>
+keys work by default. That can be fixed by adding the following to `~/.Xresources`:
+
+	XTerm*eightBitControl: false
+	XTerm*eightBitInput: false
+	XTerm.omitTranslation: fullscreen
+	XTerm*fullscreen: never
 
 ## Integration with vim-tmux-navigator
 
