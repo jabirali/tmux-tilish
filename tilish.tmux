@@ -10,8 +10,9 @@
 # The keybindings are taken nearly directly from `i3wm` and `sway`, but with
 # minor adaptation to fit better with `vim` and `tmux`. See also the README.
 
-# Check tmux version.
-version=$(tmux -V | sed 's/\S* \([0-9]\)\..*/\1/')
+# Check tmux version and options.
+version="$(tmux -V | sed 's/\S* \([0-9]\)\..*/\1/')"
+navigator="$(tmux show-options -g '@tilish-navigator' | sed -ne 's/@tilish-navigator\s*.\(on\)./\1/p')"
 
 # Define core functionality {{{
 bind_switch () {
@@ -165,7 +166,7 @@ tmux bind -n 'M-C' \
 # }}}
 
 # Integrate with `vim-tmux-navigator` {{{
-if [ -n "$(tmux display -p '#{@tilish-navigator}')" ]
+if [ -n "$navigator" ]
 then
 	# If `@tilish-navigator` is nonzero, we override the Alt + hjkl bindings.
 	# This assumes that your Vim/Neovim is setup to use Alt + hjkl as well.
