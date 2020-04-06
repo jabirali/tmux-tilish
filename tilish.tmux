@@ -12,7 +12,8 @@
 
 # Check tmux version and options.
 version="$(tmux -V | sed 's/\S* \([0-9]\)\..*/\1/')"
-navigator="$(tmux show-options -g '@tilish-navigator' | sed -ne 's/@tilish-navigator\s*.\(on\)./\1/p')"
+navigator="$(tmux show-options -g '@tilish-navigator' 2>/dev/null | sed -ne 's/@tilish-navigator\s*.\(on\)./\1/p')"
+layout="$(tmux show-options -g '@tilish-default' 2>/dev/null | sed -ne 's/@tilish-default\s*.\(.*\)./\1/p')"
 
 # Define core functionality {{{
 bind_switch () {
@@ -181,7 +182,12 @@ then
 	tmux set-hook pane-exited "select-layout; select-layout -E"
 
 	# Autoselect layout after creating new window.
-	tmux set-hook window-linked 'select-layout even-horizontal; select-layout -E'
+	if [ -n "$layout" ]
+	then
+		tmux set-hook window-linked "select-layout $layout; select-layout -E"
+		tmux select-layout $layout
+		tmux select-layout -E
+	fi
 fi
 # }}}
 

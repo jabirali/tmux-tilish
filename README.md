@@ -62,6 +62,16 @@ makes more sense on a keyboard where the number row starts at 1. This behavior
 is also more similar to how `i3wm` numbers its workspaces. However, the plugin
 will check this setting explicitly when mapping keys, and works fine without it.
 
+If you use `tmux` v2.x or higher, it is possible to customize which layout is
+used as the default for new workspaces. To do so, add this to `~/.tmux.conf`:
+
+	set -g @tilish-default 'main-vertical'
+
+Just replace `main-vertical` with one of the layouts from the `tmux` `man` page;
+currently, those options are `main-vertical`, `even-vertical`, `main-horizontal`,
+`even-horizontal`, or `tiled`. If you do not set this option, then `tilish` will
+not set any layout, and you can use the keybindings below to do so manually.
+
 If you use `vim-tmux-navigator`, which you should if you're using `vim` or `neovim`,
 see the section at the end of this README for how to integrate it with `tilish`.
 
