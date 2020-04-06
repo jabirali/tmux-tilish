@@ -48,6 +48,30 @@ followed by <kbd>Shift</kbd> + <kbd>i</kbd> to install it (assuming default pref
 
 	set -g @plugin 'jabirali/tmux-tilish'
 
+If you use `tmux` v2.x or higher, it is possible to customize which layout is
+used as the default for new workspaces. To do so, add this to `~/.tmux.conf`:
+
+	set -g @tilish-default 'main-vertical'
+
+Just replace `main-vertical` with one of the layouts from the `tmux` `man` page:
+
+| Name              | Description       |
+| ----------------- | ----------------- |
+| `main-horizontal` | split then vsplit |
+| `even-vertical`   | only split        |
+| `main-vertical`   | vsplit then split |
+| `even-horizontal` | only vsplit       |
+| `tiled`           | fully tiled       |
+
+The words "split" and "vsplit" below refer to the layouts you get in `vim` when
+running the commands `:split` and `:vsplit`, respectively. (Unfortunately, what
+is called a "vertical" and "horizontal" split seems to vary between programs.)
+If you do not set this option, `tilish` will not autoselect any layout; you
+can still choose layouts manually using the keybindings listed below.
+
+If you use `vim-tmux-navigator`, which you should if you're using `vim` or `neovim`,
+see the section at the end of this README for how to integrate it with `tilish`.
+
 It is also recommended that you add the following to the top of your `.tmux.conf`:
 
 	set -s escape-time 0
@@ -62,19 +86,6 @@ makes more sense on a keyboard where the number row starts at 1. This behavior
 is also more similar to how `i3wm` numbers its workspaces. However, the plugin
 will check this setting explicitly when mapping keys, and works fine without it.
 
-If you use `tmux` v2.x or higher, it is possible to customize which layout is
-used as the default for new workspaces. To do so, add this to `~/.tmux.conf`:
-
-	set -g @tilish-default 'main-vertical'
-
-Just replace `main-vertical` with one of the layouts from the `tmux` `man` page;
-currently, those options are `main-vertical`, `even-vertical`, `main-horizontal`,
-`even-horizontal`, or `tiled`. If you do not set this option, then `tilish` will
-not set any layout, and you can use the keybindings below to do so manually.
-
-If you use `vim-tmux-navigator`, which you should if you're using `vim` or `neovim`,
-see the section at the end of this README for how to integrate it with `tilish`.
-
 [2]: https://github.com/tmux-plugins/tpm
 [4]: https://github.com/tmux-plugins/tmux-sensible
 
@@ -83,9 +94,6 @@ see the section at the end of this README for how to integrate it with `tilish`.
 Finally, here is a list of the actual keybindings. Most are [taken from `i3wm`][1].
 Below, a "workspace" is what `tmux` would call a "window" and `vim` would call a "tab",
 while a "pane" is what `i3wm` would call a "window" and `vim` would call a "split".
-The words "split" and "vsplit" below refer to the layouts you get in `vim` when
-running the commands `:split` and `:vsplit`, respectively. (Unfortunately, what
-is called a "vertical" and "horizontal" split seems to vary between programs.)
 
 | Keybinding | Description |
 | ---------- | ----------- |
