@@ -48,24 +48,24 @@ followed by <kbd>Shift</kbd> + <kbd>i</kbd> to install it (assuming default pref
 
 	set -g @plugin 'jabirali/tmux-tilish'
 
-If you use `tmux` v2.x or higher, it is possible to customize which layout is
-used as the default for new workspaces. To do so, add this to `~/.tmux.conf`:
+For `tmux` v2+, you can customize which layout is used as default for new workspaces.
+To do so, add this to `~/.tmux.conf`:
 
 	set -g @tilish-default 'main-vertical'
 
 Just replace `main-vertical` with one of the layouts from the `tmux` `man` page:
 
-| Name              | Description       |
+| Description       | Name              |
 | ----------------- | ----------------- |
-| `main-horizontal` | split then vsplit |
-| `even-vertical`   | only split        |
-| `main-vertical`   | vsplit then split |
-| `even-horizontal` | only vsplit       |
-| `tiled`           | fully tiled       |
-
-The words "split" and "vsplit" below refer to the layouts you get in `vim` when
-running the commands `:split` and `:vsplit`, respectively. (Unfortunately, what
-is called a "vertical" and "horizontal" split seems to vary between programs.)
+| split then vsplit | `main-horizontal` |
+| only split        | `even-vertical`   |
+| vsplit then split | `main-vertical`   |
+| only vsplit       | `even-horizontal` |
+| fully tiled       | `tiled`           |
+                                         
+The words "split" and "vsplit" refer to the layouts you get in `vim` when
+running `:split` and `:vsplit`, respectively. (Unfortunately, what is called 
+a "vertical" and "horizontal" split varies between programs.)
 If you do not set this option, `tilish` will not autoselect any layout; you
 can still choose layouts manually using the keybindings listed below.
 
