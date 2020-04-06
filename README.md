@@ -13,7 +13,7 @@ a config option that makes the keybindings more similar to "vanilla" `i3wm`.
 However, I have the impression that *most* `i3wm` users anyway remap their 
 keys to be more like `vim`, so I'm not adding this unless there's interest.
 
-The plugin has so far been verified to work on `tmux` v1.9, v2.9, and v3.0.
+The plugin has so far been verified to work on `tmux` v1.9, v2.7, v2.9, and v3.0.
 I hope to support most versions of `tmux` in active use, so if you encounter
 any problems on your setup, please file an issue and I'll try to look into it.
 
