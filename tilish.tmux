@@ -13,7 +13,20 @@
 # Check tmux version and options.
 version="$(tmux -V | sed 's/\S* \([0-9]\)\..*/\1/')"
 navigator="$(tmux show-options -g '@tilish-navigator' 2>/dev/null | sed -ne 's/@tilish-navigator\s*.\(on\)./\1/p')"
+arrows="$(tmux show-options -g '@tilish-easymode' 2>/dev/null | sed -ne 's/@tilish-easymode\s*.\(on\)./\1/p')"
 layout="$(tmux show-options -g '@tilish-default' 2>/dev/null | sed -ne 's/@tilish-default\s*.\(.*\)./\1/p')"
+
+# Define the "arrow types".
+if [ -n "$arrows" ]
+then
+	# Simplified arrows.
+	h='left';   j='down';   k='up';   l='right';
+	H='S-left'; J='S-down'; K='S-up'; L='S-right';
+else
+	# Vim-style arrows.
+	h='h'; j='j'; k='k'; l='l';
+	H='H'; J='J'; K='K'; L='L';
+fi
 
 # Define core functionality {{{
 bind_switch () {
@@ -117,23 +130,23 @@ else
 fi
 
 # Switch to pane via Alt + hjkl.
-tmux bind -n 'M-h' select-pane -L
-tmux bind -n 'M-j' select-pane -D
-tmux bind -n 'M-k' select-pane -U
-tmux bind -n 'M-l' select-pane -R
+tmux bind -n "M-$h" select-pane -L
+tmux bind -n "M-$j" select-pane -D
+tmux bind -n "M-$k" select-pane -U
+tmux bind -n "M-$l" select-pane -R
 
 # Move a pane via Alt + Shift + hjkl.
 if [ "$version" -ge 2 ]
 then
-	tmux bind -n 'M-H' swap-pane -s '{left-of}'
-	tmux bind -n 'M-J' swap-pane -s '{down-of}'
-	tmux bind -n 'M-K' swap-pane -s '{up-of}'
-	tmux bind -n 'M-L' swap-pane -s '{right-of}'
+	tmux bind -n "M-$H" swap-pane -s '{left-of}'
+	tmux bind -n "M-$J" swap-pane -s '{down-of}'
+	tmux bind -n "M-$K" swap-pane -s '{up-of}'
+	tmux bind -n "M-$L" swap-pane -s '{right-of}'
 else
-	tmux bind -n 'M-H' run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -L; tmux swap-pane -t $old'
-	tmux bind -n 'M-J' run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -D; tmux swap-pane -t $old'
-	tmux bind -n 'M-K' run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -U; tmux swap-pane -t $old'
-	tmux bind -n 'M-L' run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -R; tmux swap-pane -t $old'
+	tmux bind -n "M-$H" run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -L; tmux swap-pane -t $old'
+	tmux bind -n "M-$J" run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -D; tmux swap-pane -t $old'
+	tmux bind -n "M-$K" run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -U; tmux swap-pane -t $old'
+	tmux bind -n "M-$L" run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -R; tmux swap-pane -t $old'
 fi
 
 # Open a terminal with Alt + Enter.
@@ -198,14 +211,14 @@ then
 	# This assumes that your Vim/Neovim is setup to use Alt + hjkl as well.
 	is_vim="ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
 
-	tmux bind -n 'M-h' if-shell "$is_vim" 'send M-h' 'select-pane -L'
-	tmux bind -n 'M-j' if-shell "$is_vim" 'send M-j' 'select-pane -D'
-	tmux bind -n 'M-k' if-shell "$is_vim" 'send M-k' 'select-pane -U'
-	tmux bind -n 'M-l' if-shell "$is_vim" 'send M-l' 'select-pane -R'
+	tmux bind -n "M-$h" if-shell "$is_vim" 'send M-h' 'select-pane -L'
+	tmux bind -n "M-$j" if-shell "$is_vim" 'send M-j' 'select-pane -D'
+	tmux bind -n "M-$k" if-shell "$is_vim" 'send M-k' 'select-pane -U'
+	tmux bind -n "M-$l" if-shell "$is_vim" 'send M-l' 'select-pane -R'
 
-	tmux bind -T copy-mode-vi 'M-h' select-pane -L
-	tmux bind -T copy-mode-vi 'M-j' select-pane -D
-	tmux bind -T copy-mode-vi 'M-k' select-pane -U
-	tmux bind -T copy-mode-vi 'M-l' select-pane -R
+	tmux bind -T copy-mode-vi "M-$h" select-pane -L
+	tmux bind -T copy-mode-vi "M-$j" select-pane -D
+	tmux bind -T copy-mode-vi "M-$k" select-pane -U
+	tmux bind -T copy-mode-vi "M-$l" select-pane -R
 fi
 # }}}

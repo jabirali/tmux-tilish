@@ -6,6 +6,8 @@ However, I have made some adjustments to make the keybindings more similar
 to `vim`: notably, using <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> 
 instead of <kbd>j</kbd><kbd>k</kbd><kbd>l</kbd><kbd>;</kbd> for cardinal 
 directions, and `vim`'s interpretations of what a "split" and "vsplit" is.
+There is also an "easy mode" available for non-`vim` users, which uses 
+arrow keys instead of <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd>.
 
 You can find a full list of keybindings below. I'd be happy to receive 
 feedback and suggestions. For instance, if there's interest, I could add
@@ -120,6 +122,22 @@ The keybindings that move panes between workspaces assume a US keyboard layout.
 As far as I know, `tmux` has no way of knowing what your keyboard layout is,
 especially if you're working over `ssh`. However, if you know of a way to make 
 this more portable without manually adding all keyboard layouts, let me know.
+
+## Easy mode
+
+To make the plugin more accessible for people who do not use `vim` as well,
+there is also an "easy mode" available, which uses arrow keys instead of 
+the `vim`-style <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> keys.
+This mode can be activated by putting this in your `.tmux.conf`:
+
+	set -g @tilish-easymode 'on'
+
+The revised keybindings for the pane focus and movement then become:
+
+| Keybinding | Description |
+| ---------- | ----------- |
+| <kbd>Alt</kbd> + <kbd>&#8592;</kbd><kbd>&#8595;</kbd><kbd>&#8593;</kbd><kbd>&#8594;</kbd> | Move focus left/down/up/right |
+| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>&#8592;</kbd><kbd>&#8595;</kbd><kbd>&#8593;</kbd><kbd>&#8594;</kbd> | Move pane left/down/up/right |
 
 ## Terminal compatibility
 
