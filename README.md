@@ -34,11 +34,6 @@ Okay, so who is this plugin for anyway? You may be interested in this if:
   terminals and workspaces. You'd like to keep working that way in terminals,
   without using `i3wm` or `sway` for your whole desktop.
 
-Personally, I made this because I loved the `i3wm` paradigm and keybindings,
-but these days I'm mostly using Gnome/Wayland at home and WSL/Windows at work.
-Now, `tmux` lets me have a consistent user interface for tabs and splits across
-both platforms, and this plugin lets me use the (IMHO) more efficient `i3wm` keys.
-
 ## Quickstart
 
 The easiest way to install this plugin is via the [Tmux Plugin Manager][2].
