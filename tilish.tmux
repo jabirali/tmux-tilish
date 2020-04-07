@@ -11,13 +11,17 @@
 # minor adaptation to fit better with `vim` and `tmux`. See also the README.
 
 # Check tmux version and options.
+options="$(tmux show-options -g | sed -ne 's/^@tilish-\([[:alpha:]]*\)\s\s*.\(\S*\).\s*$/\1=\2/p')"
 version="$(tmux -V | sed 's/\S* \([0-9]\)\..*/\1/')"
-navigator="$(tmux show-options -g '@tilish-navigator' 2>/dev/null | sed -ne 's/@tilish-navigator\s*.\(on\)./\1/p')"
-arrows="$(tmux show-options -g '@tilish-easymode' 2>/dev/null | sed -ne 's/@tilish-easymode\s*.\(on\)./\1/p')"
-layout="$(tmux show-options -g '@tilish-default' 2>/dev/null | sed -ne 's/@tilish-default\s*.\(.*\)./\1/p')"
+
+# Set the option variables.
+for n in $options
+do 
+	export $n
+done
 
 # Define the "arrow types".
-if [ -n "$arrows" ]
+if [ -n "$easymode" ]
 then
 	# Simplified arrows.
 	h='left';   j='down';   k='up';   l='right';
@@ -195,10 +199,10 @@ then
 	tmux set-hook pane-exited "select-layout; select-layout -E"
 
 	# Autoselect layout after creating new window.
-	if [ -n "$layout" ]
+	if [ -n "$default" ]
 	then
-		tmux set-hook window-linked "select-layout $layout; select-layout -E"
-		tmux select-layout $layout
+		tmux set-hook window-linked "select-layout $default; select-layout -E"
+		tmux select-layout $default
 		tmux select-layout -E
 	fi
 fi
@@ -220,5 +224,19 @@ then
 	tmux bind -T copy-mode-vi "M-$j" select-pane -D
 	tmux bind -T copy-mode-vi "M-$k" select-pane -U
 	tmux bind -T copy-mode-vi "M-$l" select-pane -R
+fi
+# }}}
+
+# Integrate with `fzf` to approximate `dmenu` {{{
+if [ "$version" -ge 2 -a -n "$dmenu" ]
+then
+	# The hack of going via `send-keys -l` instead of using the optional argument 
+	# to `split-window` is to support environment variables for `fzf` defined in
+	# a `sh` or `fish` config, which would otherwise not be known to `bash`.
+	tmux bind -n 'M-d' \
+		select-pane -t '{bottom-right}' \\\;\
+		split-pane \\\;\
+		send-keys -l 'bash -c "exec \$(compgen -c|xargs which | sort | uniq | fzf)"; exit' \\\;\
+		send-keys enter
 fi
 # }}}

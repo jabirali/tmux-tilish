@@ -139,6 +139,25 @@ The revised keybindings for the pane focus and movement then become:
 | <kbd>Alt</kbd> + <kbd>&#8592;</kbd><kbd>&#8595;</kbd><kbd>&#8593;</kbd><kbd>&#8594;</kbd> | Move focus left/down/up/right |
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>&#8592;</kbd><kbd>&#8595;</kbd><kbd>&#8593;</kbd><kbd>&#8594;</kbd> | Move pane left/down/up/right |
 
+## Application launcher
+
+In `i3wm`, the keybinding <kbd>Alt</kbd>+<kbd>d</kbd> is by default mapped to
+the application launcher `dmenu`, which can be practical to quickly open apps.
+If you have `bash` and [`fzf`][5] available on your system, `tilish` can
+offer a similar application launcher using the same keyboard shortcut. To
+enable this functionality, add the following to your `~/.tmux.conf`:
+
+	set -g @tilish-dmenu 'on'
+
+Basically, pressing <kbd>Alt</kbd>+<kbd>d</kbd> will then pop up a split
+that lets you fuzzy-search through all executables in your system `$PATH`.
+Selecting an executable runs the command in that terminal split. If you
+you're opening an interactive process like `vim` or `htop`, this can be 
+faster than using <kbd>Alt</kbd>+<kbd<>Enter</kbd> and typing it out.
+Note that this functionality is currently only available in `tmux` v2+.
+
+[5]: https://github.com/junegunn/fzf
+
 ## Terminal compatibility
 
 It is worth noting that not all terminals support all keybindings. It 
