@@ -1,21 +1,24 @@
 # Tmux Tilish
 
-This is a plugin that makes `tmux` act and feel like a tiling window manager.
-Most keybindings are taken [directly from `i3wm`][1]. However, I have made some 
-adjustments to make the keybindings more similar to `vim` than the `i3wm` defaults:
-notably, using <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> instead of 
-<kbd>j</kbd><kbd>k</kbd><kbd>l</kbd><kbd>;</kbd> for cardinal directions, 
-and using `vim`'s interpretations of what a "split" and "vsplit" means. 
-There is also an "easy mode" available for non-`vim` users, which uses 
-arrow keys instead of <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd>.
+This is a plugin that makes [`tmux`][6] act and feel more like a [dynamic tiling
+window manager][7]. It is heavily inspired by [`i3wm`][8], and most keybindings
+are taken [directly from there][1]. However, I have made some adjustments to
+make the keybindings more similar to `vim` than the `i3wm` defaults: notably,
+using <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> instead of
+<kbd>j</kbd><kbd>k</kbd><kbd>l</kbd><kbd>;</kbd> for the cardinal directions,
+and using `vim`'s interpretations of what a "split" and "vsplit" means. There 
+is also an "easy mode" available for non-`vim` users, which uses arrow keys
+instead of <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd>.
 
-The plugin has been verified to work on `tmux` v1.9, v2.6, v2.7, v2.9, and v3.0.
+The plugin has been verified to work on `tmux` v1.9, v2.6, v2.7, v2.9, and v3.0. 
 Some features are only available on newer versions of `tmux` (currently v2.7+), 
 but I hope to provide at least basic support for most `tmux` versions in active use.
 If you encounter any problems, please file an issue and I'll try to look into it.
 
-
 [1]: https://i3wm.org/docs/refcard.html
+[6]: https://github.com/tmux/tmux/wiki/Getting-Started
+[7]: https://en.wikipedia.org/wiki/Dynamic_window_manager
+[8]: https://i3wm.org/docs/
 
 ## Why?
 
