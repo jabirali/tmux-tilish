@@ -13,7 +13,7 @@
 # Check input parameters {{{
 	# Get version and options.
 	options="$(tmux show-options -g | sed -ne 's/^@tilish-\([[:alpha:]]*\)\s\s*.\(\S*\).\s*$/\1=\2/p')"
-	version="$(tmux -V | sed 's/\S* \([0-9]\)\..*/\1/')"
+	version=$(tmux select-layout -E 2>/dev/null && echo 2 || echo 1)
 	
 	# Set option variables.
 	for n in $options
