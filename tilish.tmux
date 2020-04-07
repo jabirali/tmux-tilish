@@ -233,10 +233,16 @@ then
 	# The hack of going via `send-keys -l` instead of using the optional argument 
 	# to `split-window` is to support environment variables for `fzf` defined in
 	# a `sh` or `fish` config, which would otherwise not be known to `bash`.
-	tmux bind -n 'M-d' \
-		select-pane -t '{bottom-right}' \\\;\
-		split-pane \\\;\
-		send-keys -l 'bash -c "exec \$(compgen -c|xargs which | sort | uniq | fzf)"; exit' \\\;\
-		send-keys enter
+	if [ -n "$(which bash)" -a -n "$(which fzf)" ]
+	then
+		tmux bind -n 'M-d' \
+			select-pane -t '{bottom-right}' \\\;\
+			split-pane \\\;\
+			send-keys -l 'bash -c "exec \$(compgen -c|xargs which | sort | uniq | fzf)"; exit' \\\;\
+			send-keys enter
+	else
+		tmux bind -n 'M-d' \
+			display 'To enable this function, install `bash` and `fzf` and restart `tmux`.'
+	fi
 fi
 # }}}
