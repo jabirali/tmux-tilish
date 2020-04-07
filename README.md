@@ -143,9 +143,9 @@ The revised keybindings for the pane focus and movement then become:
 
 In `i3wm`, the keybinding <kbd>Alt</kbd>+<kbd>d</kbd> is by default mapped to
 the application launcher `dmenu`, which can be practical to quickly open apps.
-If you have `bash` and [`fzf`][5] available on your system, `tilish` can
-offer a similar application launcher using the same keyboard shortcut. To
-enable this functionality, add the following to your `~/.tmux.conf`:
+If you have [`fzf`][5] available on your system, `tilish` can offer a similar 
+application launcher using the same keyboard shortcut. To enable this 
+functionality, add the following to your `~/.tmux.conf`:
 
 	set -g @tilish-dmenu 'on'
 

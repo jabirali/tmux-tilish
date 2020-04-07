@@ -197,7 +197,7 @@ then
 	# Autorefresh layout after deleting a pane.
 	tmux set-hook after-split-window "select-layout; select-layout -E"
 	tmux set-hook pane-exited "select-layout; select-layout -E"
-
+	
 	# Autoselect layout after creating new window.
 	if [ -n "$default" ]
 	then
@@ -214,12 +214,12 @@ then
 	# If `@tilish-navigator` is nonzero, we override the Alt + hjkl bindings.
 	# This assumes that your Vim/Neovim is setup to use Alt + hjkl as well.
 	is_vim="ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
-
+	
 	tmux bind -n "M-$h" if-shell "$is_vim" 'send M-h' 'select-pane -L'
 	tmux bind -n "M-$j" if-shell "$is_vim" 'send M-j' 'select-pane -D'
 	tmux bind -n "M-$k" if-shell "$is_vim" 'send M-k' 'select-pane -U'
 	tmux bind -n "M-$l" if-shell "$is_vim" 'send M-l' 'select-pane -R'
-
+	
 	tmux bind -T copy-mode-vi "M-$h" select-pane -L
 	tmux bind -T copy-mode-vi "M-$j" select-pane -D
 	tmux bind -T copy-mode-vi "M-$k" select-pane -U
@@ -230,19 +230,17 @@ fi
 # Integrate with `fzf` to approximate `dmenu` {{{
 if [ "$version" -ge 2 -a -n "$dmenu" ]
 then
-	# The hack of going via `send-keys -l` instead of using the optional argument 
-	# to `split-window` is to support environment variables for `fzf` defined in
-	# a `sh` or `fish` config, which would otherwise not be known to `bash`.
-	if [ -n "$(which bash)" -a -n "$(which fzf)" ]
+	if [ -n "$(which fzf)" ]
 	then
+		# The environment variables of your `default-shell` are used when running `fzf`.
+		# This solution is about an order of magnitude faster than invoking `compgen`.
+		# Based on: https://medium.com/njiuko/using-fzf-instead-of-dmenu-2780d184753f
 		tmux bind -n 'M-d' \
 			select-pane -t '{bottom-right}' \\\;\
-			split-pane \\\;\
-			send-keys -l 'bash -c "exec \$(compgen -c|xargs which | sort | uniq | fzf)"; exit' \\\;\
-			send-keys enter
+			split-pane 'sh -c "exec \$(echo \"\$PATH\" | tr \":\" \"\n\" | xargs -I{} -- find {} -maxdepth 1 -mindepth 1 -executable 2>/dev/null | sort -u | fzf)"'
 	else
 		tmux bind -n 'M-d' \
-			display 'To enable this function, install `bash` and `fzf` and restart `tmux`.'
+			display 'To enable this function, install `fzf` and restart `tmux`.'
 	fi
 fi
 # }}}
