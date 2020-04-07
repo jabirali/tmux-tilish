@@ -1,12 +1,12 @@
 # Tmux Tilish
 
-This is a plugin that makes `tmux` act and feel more like a tiling window
-manager. Most of the keybindings are just taken [directly from `i3wm`][1].
-However, I have made some adjustments to make the keybindings more similar
-to `vim`: notably, using <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> 
-instead of <kbd>j</kbd><kbd>k</kbd><kbd>l</kbd><kbd>;</kbd> for cardinal 
-directions, and using `vim`'s interpretations of what a "split" and "vsplit" 
-means. There is also an "easy mode" available for non-`vim` users, which uses 
+This is a plugin that makes `tmux` act and feel like a tiling window manager.
+Most keybindings are taken [directly from `i3wm`][1]. However, I have made some 
+adjustments to make the keybindings more similar to `vim` than the `i3wm` defaults:
+notably, using <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> instead of 
+<kbd>j</kbd><kbd>k</kbd><kbd>l</kbd><kbd>;</kbd> for cardinal directions, 
+and using `vim`'s interpretations of what a "split" and "vsplit" means. 
+There is also an "easy mode" available for non-`vim` users, which uses 
 arrow keys instead of <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd>.
 
 The plugin has been verified to work on `tmux` v1.9, v2.6, v2.7, v2.9, and v3.0.
@@ -26,7 +26,7 @@ Okay, so who is this plugin for anyway? You may be interested in this if:
   which uses a modifier key (<kbd>Alt</kbd>) instead of a prefix key 
   (<kbd>Ctrl</kbd> + <kbd>b</kbd>). The plugin also makes it easier to do
   automatic tiling via `tmux` layouts, as opposed to splitting panes manually.
-- You love `i3wm`, but also do remote work over `ssh` + `tmux`. This lets 
+- You use `i3wm`, but also do remote work over `ssh` + `tmux`. This lets 
   you use similar keybindings in both contexts.
 - You also use other platforms like Gnome, Mac, or WSL. You want to take 
   your `i3wm` muscle memory with you via `tmux`.
