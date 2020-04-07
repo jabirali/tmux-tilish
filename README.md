@@ -9,15 +9,9 @@ directions, and `vim`'s interpretations of what a "split" and "vsplit" is.
 There is also an "easy mode" available for non-`vim` users, which uses 
 arrow keys instead of <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd>.
 
-You can find a full list of keybindings below. I'd be happy to receive 
-feedback and suggestions. For instance, if there's interest, I could add
-a config option that makes the keybindings more similar to "vanilla" `i3wm`.
-However, I have the impression that *most* `i3wm` users anyway remap their 
-keys to be more like `vim`, so I'm not adding this unless there's interest.
-
 The plugin has been verified to work on `tmux` v1.9, v2.6, v2.7, v2.9, and v3.0.
 Some features are only available on newer versions of `tmux` (currently v2.7+), 
-but I hope to provide at least basic support most versions of `tmux` in active use.
+but I hope to provide at least basic support for most `tmux` versions in active use.
 If you encounter any problems, please file an issue and I'll try to look into it.
 
 
@@ -30,7 +24,8 @@ Okay, so who is this plugin for anyway? You may be interested in this if:
 - You're using or interested in using `tmux`, but find the default keybindings
   a bit clunky. This lets you try out an alternative keybinding paradigm, 
   which uses a modifier key (<kbd>Alt</kbd>) instead of a prefix key 
-  (e.g. <kbd>Ctrl</kbd> + <kbd>b</kbd>).
+  (<kbd>Ctrl</kbd> + <kbd>b</kbd>). The plugin also makes it easier to do
+  automatic tiling via `tmux` layouts, as opposed to splitting panes manually.
 - You love `i3wm`, but also do a remote work over `ssh` + `tmux`. This lets 
   you use similar keybindings in both contexts.
 - You also use other platforms like Gnome, Mac, or WSL. You want to take 
