@@ -10,27 +10,29 @@
 # The keybindings are taken nearly directly from `i3wm` and `sway`, but with
 # minor adaptation to fit better with `vim` and `tmux`. See also the README.
 
-# Check tmux version and options.
-options="$(tmux show-options -g | sed -ne 's/^@tilish-\([[:alpha:]]*\)\s\s*.\(\S*\).\s*$/\1=\2/p')"
-version="$(tmux -V | sed 's/\S* \([0-9]\)\..*/\1/')"
-
-# Set the option variables.
-for n in $options
-do 
-	export $n
-done
-
-# Define the "arrow types".
-if [ -n "$easymode" ]
-then
-	# Simplified arrows.
-	h='left';   j='down';   k='up';   l='right';
-	H='S-left'; J='S-down'; K='S-up'; L='S-right';
-else
-	# Vim-style arrows.
-	h='h'; j='j'; k='k'; l='l';
-	H='H'; J='J'; K='K'; L='L';
-fi
+# Check input parameters {{{
+	# Get version and options.
+	options="$(tmux show-options -g | sed -ne 's/^@tilish-\([[:alpha:]]*\)\s\s*.\(\S*\).\s*$/\1=\2/p')"
+	version="$(tmux -V | sed 's/\S* \([0-9]\)\..*/\1/')"
+	
+	# Set option variables.
+	for n in $options
+	do 
+		export $n
+	done
+	
+	# Determine "arrow types".
+	if [ -n "$easymode" ]
+	then
+		# Simplified arrows.
+		h='left';   j='down';   k='up';   l='right';
+		H='S-left'; J='S-down'; K='S-up'; L='S-right';
+	else
+		# Vim-style arrows.
+		h='h'; j='j'; k='k'; l='l';
+		H='H'; J='J'; K='K'; L='L';
+	fi
+# }}}
 
 # Define core functionality {{{
 bind_switch () {
@@ -158,9 +160,7 @@ if [ "$version" -ge 2 ]
 then
 	tmux bind -n 'M-enter' \
 		select-pane -t 'bottom-right' \\\;\
-		split-pane -h \\\;\
-		select-layout \\\;\
-		select-layout -E
+		split-pane
 else
 	tmux bind -n 'M-enter' \
 		select-pane -t 'bottom-right' \\\;\
