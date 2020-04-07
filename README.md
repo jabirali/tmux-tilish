@@ -153,8 +153,8 @@ Basically, pressing <kbd>Alt</kbd>+<kbd>d</kbd> will then pop up a split
 that lets you fuzzy-search through all executables in your system `$PATH`.
 Selecting an executable runs the command in that terminal split. If you
 you're opening an interactive process like `vim` or `htop`, this can be 
-faster than using <kbd>Alt</kbd>+<kbd<>Enter</kbd> and typing it out.
-Note that this functionality is currently only available in `tmux` v2+.
+faster than using <kbd>Alt</kbd>+<kbd>Enter</kbd> and typing it out.
+This functionality is currently only available in `tmux` v2+.
 
 [5]: https://github.com/junegunn/fzf
 
