@@ -159,8 +159,7 @@ fi
 if [ "$version" -ge 2 ]
 then
 	tmux bind -n 'M-enter' \
-		select-pane -t 'bottom-right' \\\;\
-		split-pane
+		run-shell 'cwd="`tmux display -p \"#{pane_current_path}\"`"; tmux select-pane -t "bottom-right"; tmux split-pane -c "$cwd"'
 else
 	tmux bind -n 'M-enter' \
 		select-pane -t 'bottom-right' \\\;\
