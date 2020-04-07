@@ -151,9 +151,9 @@ functionality, add the following to your `~/.tmux.conf`:
 
 Basically, pressing <kbd>Alt</kbd>+<kbd>d</kbd> will then pop up a split
 that lets you fuzzy-search through all executables in your system `$PATH`.
-Selecting an executable runs the command in that terminal split. When you
-you want to start an interactive process, this can be more convenient than
-using <kbd>Alt</kbd>+<kbd>Enter</kbd> and typing out the command name.
+Selecting an executable runs the command in that split. When you want 
+to start an interactive process, this can be more convenient than
+using <kbd>Alt</kbd>+<kbd>Enter</kbd> and typing the command name.
 This functionality is currently only available in `tmux` v2+.
 
 [5]: https://github.com/junegunn/fzf
