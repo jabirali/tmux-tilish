@@ -6,9 +6,9 @@ most keybindings are taken [directly from there][1]. However, I have made
 some adjustments to make these keybindings more consistent with `vim`: 
 using <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> instead of
 <kbd>j</kbd><kbd>k</kbd><kbd>l</kbd><kbd>;</kbd> for directions, and 
-using `vim`'s definitions "split" and "vsplit". There is also an "easy 
-mode" available for non-`vim` users, which uses arrow keys instead of
-<kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd>.
+using `vim`'s definitions of "split" and "vsplit". There is also an 
+"easy mode" available for non-`vim` users, which uses arrow keys 
+instead of <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd>.
 
 The plugin has been verified to work on `tmux` v1.9, v2.6, v2.7, v2.9, and v3.0. 
 Some features are only available on newer versions of `tmux` (currently v2.7+), 
