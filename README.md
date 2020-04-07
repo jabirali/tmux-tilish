@@ -15,9 +15,11 @@ a config option that makes the keybindings more similar to "vanilla" `i3wm`.
 However, I have the impression that *most* `i3wm` users anyway remap their 
 keys to be more like `vim`, so I'm not adding this unless there's interest.
 
-The plugin has so far been verified to work on `tmux` v1.9, v2.7, v2.9, and v3.0.
-I hope to support most versions of `tmux` in active use, so if you encounter
-any problems on your setup, please file an issue and I'll try to look into it.
+The plugin has been verified to work on `tmux` v1.9, v2.6, v2.7, v2.9, and v3.0.
+Some features are only available on newer versions of `tmux` (currently v2.7+), 
+but I hope to provide at least basic support most versions of `tmux` in active use.
+If you encounter any problems, please file an issue and I'll try to look into it.
+
 
 [1]: https://i3wm.org/docs/refcard.html
 
@@ -50,7 +52,7 @@ followed by <kbd>Shift</kbd> + <kbd>i</kbd> to install it (assuming default pref
 
 	set -g @plugin 'jabirali/tmux-tilish'
 
-For `tmux` v2+, you can customize which layout is used as default for new workspaces.
+For `tmux` v2.7+, you can customize which layout is used as default for new workspaces.
 To do so, add this to `~/.tmux.conf`:
 
 	set -g @tilish-default 'main-vertical'
@@ -154,7 +156,7 @@ that lets you fuzzy-search through all executables in your system `$PATH`.
 Selecting an executable runs the command in that split. When you want 
 to start an interactive process, this can be more convenient than
 using <kbd>Alt</kbd>+<kbd>Enter</kbd> and typing the command name.
-This functionality is currently only available in `tmux` v2+.
+This functionality is currently only available in `tmux` v2.7+.
 
 [5]: https://github.com/junegunn/fzf
 
