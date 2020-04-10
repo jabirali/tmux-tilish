@@ -11,18 +11,19 @@
 # minor adaptation to fit better with `vim` and `tmux`. See also the README.
 
 # Check input parameters {{{
-	# Get version and options.
-	options="$(tmux show-options -g | sed -ne 's/^@tilish-\([[:alpha:]]*\)\s\s*.\(\S*\).\s*$/\1=\2/p')"
-	version=$(tmux select-layout -E 2>/dev/null && echo 2 || echo 1)
+	# Estimate the version. This basically checks if `tmux select-layout -E` is
+	# supported (v2.7+); if not, the plugin goes into legacy compatibility mode.
+	# In the future, more fine-grained support for older versions may be added.
+	version="$(tmux select-layout -E 2>/dev/null && echo 2 || echo 1)"
 	
-	# Set option variables.
-	for n in $options
-	do 
-		export $n
+	# Read user options.
+	for opt in default dmenu easymode navigator
+	do
+		export "$opt"="$(tmux show-option -gv @tilish-$opt 2>/dev/null)"
 	done
 	
 	# Determine "arrow types".
-	if [ -n "$easymode" ]
+	if [ "$easymode" = "on" ]
 	then
 		# Simplified arrows.
 		h='left';   j='down';   k='up';   l='right';
@@ -194,13 +195,13 @@ tmux bind -n 'M-C' \
 if [ "$version" -ge 2 ]
 then
 	# Autorefresh layout after deleting a pane.
-	tmux set-hook after-split-window "select-layout; select-layout -E"
-	tmux set-hook pane-exited "select-layout; select-layout -E"
+	tmux set-hook -g after-split-window "select-layout; select-layout -E"
+	tmux set-hook -g pane-exited "select-layout; select-layout -E"
 	
 	# Autoselect layout after creating new window.
 	if [ -n "$default" ]
 	then
-		tmux set-hook window-linked "select-layout $default; select-layout -E"
+		tmux set-hook -g window-linked "select-layout $default; select-layout -E"
 		tmux select-layout $default
 		tmux select-layout -E
 	fi
@@ -208,7 +209,7 @@ fi
 # }}}
 
 # Integrate with `vim-tmux-navigator` {{{
-if [ -n "$navigator" ]
+if [ "$navigator" = "on" ]
 then
 	# If `@tilish-navigator` is nonzero, we override the Alt + hjkl bindings.
 	# This assumes that your Vim/Neovim is setup to use Alt + hjkl as well.
@@ -229,7 +230,7 @@ fi
 # Integrate with `fzf` to approximate `dmenu` {{{
 if [ "$version" -ge 2 -a -n "$dmenu" ]
 then
-	if [ -n "$(which fzf)" ]
+	if [ -n "$(which fzf 2>/dev/null)" ]
 	then
 		# The environment variables of your `default-shell` are used when running `fzf`.
 		# This solution is about an order of magnitude faster than invoking `compgen`.
