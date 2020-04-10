@@ -69,6 +69,9 @@ can still choose layouts manually using the keybindings listed below.
 If you use `vim-tmux-navigator`, which you should if you're using `vim` or `neovim`,
 see the section at the end of this README for how to integrate it with `tilish`.
 
+If you use `kak` or `emacs`, which use the <kbd>Alt</kbd> modifier a lot`, this
+plugin also supports a "prefix mode". This is described in a separate section below.
+
 It is also recommended that you add the following to the top of your `.tmux.conf`:
 
 	set -s escape-time 0
@@ -133,6 +136,33 @@ The revised keybindings for the pane focus and movement then become:
 | ---------- | ----------- |
 | <kbd>Alt</kbd> + <kbd>&#8592;</kbd><kbd>&#8595;</kbd><kbd>&#8593;</kbd><kbd>&#8594;</kbd> | Move focus left/down/up/right |
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>&#8592;</kbd><kbd>&#8595;</kbd><kbd>&#8593;</kbd><kbd>&#8594;</kbd> | Move pane left/down/up/right |
+
+## Prefix mode
+Note that this feature is currently only available in `tmux` v2.4+.
+The "prefix mode" may be particularly interesting for users of editors 
+like `kak` and `emacs` that use <kbd>Alt</kbd> key a lot. To do so, you
+can define a prefix keybinding in your `tmux.conf`. For instance, to use
+<kbd>Alt</kbd> + <kbd>Space</kbd> as your `tilish` prefix, you would use:
+
+	set -g @tilish-prefix 'M-space'
+
+In this case, all keybindings that would usually be activated by holding
+down <kbd>Alt</kbd>, are now activated by pressing this prefix key. For
+example, opening a terminal is <kbd>Alt</kbd> + <kbd>Space</kbd> followed
+by <kbd>Enter</kbd> (instead of <kbd>Alt</kbd> + <kbd>Enter</kbd>). Note 
+that the `tilish` prefix is a separate keymap from the `tmux` prefix.
+For this prefix, you can choose basically any keybinding that `tmux`
+supports, e.g. `F12` or `C-s` or anything else you may prefer.
+
+All these keybindings are `repeat`'able, so you do not have to press the
+prefix key again if you type multiple commands fast enough. Thus, pressing
+<kbd>Alt</kbd> + <kbd>Space</kbd> followed by <kbd>h</kbd><kbd>j</kbd> would 
+move to the left and then down, without requiring another prefix activation.
+The `tmux` option `repeat-time` can be used to customize this timeout.
+Personally, I find the default 500ms timeout a bit short, so you may
+want to increase this to at least a second if you use `tilish`:
+
+	set -g repeat-time 1000
 
 ## Application launcher
 
