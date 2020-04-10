@@ -116,9 +116,18 @@ The <kbd>Alt</kbd> + <kbd>0</kbd> and <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>0
 bindings are "smart": depending on `base-index`, they either act on workspace 0 or 10.
 
 The keybindings that move panes between workspaces assume a US keyboard layout.
-As far as I know, `tmux` has no way of knowing what your keyboard layout is,
-especially if you're working over `ssh`. However, if you know of a way to make 
-this more portable without manually adding all keyboard layouts, let me know.
+As far as I know, `tmux` has no way of knowing what your keyboard layout looks
+like, especially if you work over `ssh`. However, you can configure `tilish`
+for international keyboards, by feeding `tilish` a string that you produce
+by pressing <kbd>Shift</kbd> + <kbd>1</kbd>-<kbd>0</kbd> on your keyboard.
+For instance, for a UK keyboard, you would configure it as follows:
+
+	set -g @tilish-shiftnum '!"£$%^&*()'
+
+Note however that your terminal must support sending keycodes like `M-£`
+for the above to work. For instance, a UK keyboard layout works fine on
+`urxvt`, but does not work by default on `kitty` or `alacritty`. Some
+terminals may therefore need additional configuration.
 
 ## Easy mode
 

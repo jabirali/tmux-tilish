@@ -17,10 +17,16 @@
 	version="$(tmux select-layout -E 2>/dev/null && echo 2 || echo 1)"
 	
 	# Read user options.
-	for opt in default dmenu easymode navigator prefix
+	for opt in default dmenu easymode navigator prefix shiftnum
 	do
 		export "$opt"="$(tmux show-option -gv @tilish-$opt 2>/dev/null)"
 	done
+	
+	# Default to US keyboard layout, unless something is configured.
+	if [ -z "$shiftnum" ]
+	then
+		shiftnum='!@#$%^&*()'
+	fi
 	
 	# Determine "arrow types".
 	if [ "$easymode" = "on" ]
@@ -113,25 +119,25 @@ bind_switch "${mod}8" 8
 bind_switch "${mod}9" 9
 
 # Move pane to workspace via Alt + Shift + #.
-bind_move "${mod}!" 1
-bind_move "${mod}@" 2
-bind_move "${mod}#" 3
-bind_move "${mod}$" 4
-bind_move "${mod}%" 5
-bind_move "${mod}^" 6
-bind_move "${mod}&" 7
-bind_move "${mod}*" 8
-bind_move "${mod}(" 9
+bind_move "${mod}$(expr substr $shiftnum 1 1)" 1
+bind_move "${mod}$(expr substr $shiftnum 2 1)" 2
+bind_move "${mod}$(expr substr $shiftnum 3 1)" 3
+bind_move "${mod}$(expr substr $shiftnum 4 1)" 4
+bind_move "${mod}$(expr substr $shiftnum 5 1)" 5
+bind_move "${mod}$(expr substr $shiftnum 6 1)" 6
+bind_move "${mod}$(expr substr $shiftnum 7 1)" 7
+bind_move "${mod}$(expr substr $shiftnum 8 1)" 8
+bind_move "${mod}$(expr substr $shiftnum 9 1)" 9
 
 # The mapping of Alt + 0 and Alt + Shift + 0 depends on `base-index`.
 # It can either refer to workspace number 0 or workspace number 10.
 if [ "$(tmux show-options -g base-index)" = "base-index 1" ]
 then
 	bind_switch "${mod}0" 10
-	bind_move   "${mod})" 10
+	bind_move   "${mod}$(expr substr $shiftnum 10 1)" 10
 else
 	bind_switch "${mod}0" 0
-	bind_move   "${mod})" 0
+	bind_move   "${mod}$(expr substr $shiftnum 10 1)" 0
 fi
 
 # Switch layout with Alt + <mnemonic key>. The mnemonics are `s` and `S` for
