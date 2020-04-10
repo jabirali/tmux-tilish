@@ -66,11 +66,10 @@ a "vertical" and "horizontal" split varies between programs.)
 If you do not set this option, `tilish` will not autoselect any layout; you
 can still choose layouts manually using the keybindings listed below.
 
-If you use `vim-tmux-navigator`, which you should if you're using `vim` or `neovim`,
-see the section at the end of this README for how to integrate it with `tilish`.
-
-If you use `kak` or `emacs`, which use the <kbd>Alt</kbd> modifier a lot`, this
-plugin also supports a "prefix mode". This is described in a separate section below.
+If you use `vim` or `nvim` as your editor, see 
+[how to integrate it with `tilish`](#integration-with-vim-tmux-navigator).
+If you use `kak` or `emacs`, you may want to activate [Prefix mode](#prefix-mode).
+If you do not use `vim` or `kak`, you may wish to activate [Easy mode](#easy-mode).
 
 It is also recommended that you add the following to the top of your `.tmux.conf`:
 
