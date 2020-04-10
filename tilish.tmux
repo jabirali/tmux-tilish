@@ -4,7 +4,7 @@
 # Project: tmux-tilish
 # Author:  Jabir Ali Ouassou <jabirali@switzerlandmail.ch>
 # Licence: MIT licence
-# 
+#
 # This file contains the `tmux` plugin `tilish`, which implements keybindings
 # that turns `tmux` into a more typical tiling window manger for your terminal.
 # The keybindings are taken nearly directly from `i3wm` and `sway`, but with
@@ -113,12 +113,12 @@ if [ "$(tmux show-options -g base-index)" = "base-index 1" ]
 then
 	bind_switch 'M-0' 10
 	bind_move   'M-)' 10
-else 
+else
 	bind_switch 'M-0' 0
 	bind_move   'M-)' 0
 fi
 
-# Switch layout with Alt + <mnemonic key>. The mnemonics are `s` and `S` for 
+# Switch layout with Alt + <mnemonic key>. The mnemonics are `s` and `S` for
 # layouts Vim would generate with `:split`, and `v` and `V` for `:vsplit`.
 # The remaining mappings based on `f` and `t` should be quite obvious.
 bind_layout 'M-s' 'main-horizontal'
@@ -201,8 +201,8 @@ then
 	# Autoselect layout after creating new window.
 	if [ -n "$default" ]
 	then
-		tmux set-hook -g window-linked "select-layout $default; select-layout -E"
-		tmux select-layout $default
+		tmux set-hook -g window-linked "select-layout \"$default\"; select-layout -E"
+		tmux select-layout "$default"
 		tmux select-layout -E
 	fi
 fi
@@ -228,9 +228,9 @@ fi
 # }}}
 
 # Integrate with `fzf` to approximate `dmenu` {{{
-if [ "$version" -ge 2 -a -n "$dmenu" ]
+if [ "$version" -ge 2 ] && [ -n "$dmenu" ]
 then
-	if [ -n "$(which fzf 2>/dev/null)" ]
+	if [ -n "$(command -v fzf)" ]
 	then
 		# The environment variables of your `default-shell` are used when running `fzf`.
 		# This solution is about an order of magnitude faster than invoking `compgen`.
