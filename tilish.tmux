@@ -252,7 +252,7 @@ fi
 # }}}
 
 # Integrate with `fzf` to approximate `dmenu` {{{
-if [ -z "$legacy" ] && [ -n "$dmenu" ]
+if [ -z "$legacy" ] && [ "$dmenu" = "on" ]
 then
 	if [ -n "$(command -v fzf)" ]
 	then
