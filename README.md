@@ -208,7 +208,7 @@ that work automatically on Linux, e.g. `alacritty`, also require unbinding
       - { key: Return, mods: Alt, action: ReceiveChar }
 
 If you use `xterm`, almost none of the <kbd>Alt</kbd> keys work by default.
-That can be fixed by adding the following to your `~/.Xresources`:
+That can be fixed by adding this to `~/.Xresources`:
 
 	XTerm*eightBitControl: false
 	XTerm*eightBitInput: false
