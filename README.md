@@ -200,9 +200,15 @@ it only works if you don't open any GUI tabs; if you do so, the terminal
 itself steals the <kbd>Alt</kbd>+<kbd>0</kbd>-<kbd>9</kbd> keybindings.
 
 On `wsltty` (Windows), it works if you disable the keyboard shortcut 
-<kbd>Alt</kbd>+<kbd>Enter</kbd> in the terminal settings. If you use 
-`xterm`, almost none of the <kbd>Alt</kbd> keys work by default. That 
-can be fixed by adding the following to your `~/.Xresources`:
+<kbd>Alt</kbd>+<kbd>Enter</kbd> in the terminal settings. Some terminals
+that work automatically on Linux, e.g. `alacritty`, also require unbinding
+<kbd>Alt</kbd>+<kbd>Enter</kbd> on Windows. This `alacritty.yml` does so:
+
+    key_bindings:
+      - { key: Return, mods: Alt, action: ReceiveChar }
+
+If you use `xterm`, almost none of the <kbd>Alt</kbd> keys work by default.
+That can be fixed by adding the following to your `~/.Xresources`:
 
 	XTerm*eightBitControl: false
 	XTerm*eightBitInput: false
