@@ -13,8 +13,7 @@
 # Check input parameters {{{
 	# Estimate the version. This basically checks if `tmux select-layout -E` is
 	# supported (v2.7+); if not, the plugin goes into legacy compatibility mode.
-	# In the future, more fine-grained support for older versions may be added.
-	version="$(tmux select-layout -E 2>/dev/null && echo 2 || echo 1)"
+	legacy="$(tmux select-layout -E 2>/dev/null || echo on)"
 	
 	# Read user options.
 	for opt in default dmenu easymode navigator prefix shiftnum
@@ -60,7 +59,7 @@ bind_switch () {
 
 bind_move () {
 	# Bind keys to move panes between workspaces.
-	if [ "$version" -ge 2 ]
+	if [ -z "$legacy" ]
 	then
 		tmux $bind "$1" \
 			if-shell "tmux join-pane -t :$2" \
@@ -86,7 +85,7 @@ bind_layout () {
 			resize-pane -Z
 	else
 		# Actually switch layout.
-		if [ "$version" -ge 2 ]
+		if [ -z "$legacy" ]
 		then
 			tmux $bind "$1" \
 				select-layout "$2" \\\;\
@@ -131,7 +130,7 @@ bind_move "${mod}$(expr substr $shiftnum 9 1)" 9
 
 # The mapping of Alt + 0 and Alt + Shift + 0 depends on `base-index`.
 # It can either refer to workspace number 0 or workspace number 10.
-if [ "$(tmux show-options -g base-index)" = "base-index 1" ]
+if [ "$(tmux show-option -gv base-index)" = "1" ]
 then
 	bind_switch "${mod}0" 10
 	bind_move   "${mod}$(expr substr $shiftnum 10 1)" 10
@@ -151,7 +150,7 @@ bind_layout "${mod}f" 'fullscreen'
 bind_layout "${mod}t" 'tiled'
 
 # Refresh the current layout (e.g. after deleting a pane).
-if [ "$version" -ge 2 ]
+if [ -z "$legacy" ]
 then
 	tmux $bind "${mod}r" select-layout -E
 else
@@ -165,7 +164,7 @@ tmux $bind "${mod}${k}" select-pane -U
 tmux $bind "${mod}${l}" select-pane -R
 
 # Move a pane via Alt + Shift + hjkl.
-if [ "$version" -ge 2 ]
+if [ -z "$legacy" ]
 then
 	tmux $bind "${mod}${H}" swap-pane -s '{left-of}'
 	tmux $bind "${mod}${J}" swap-pane -s '{down-of}'
@@ -179,7 +178,7 @@ else
 fi
 
 # Open a terminal with Alt + Enter.
-if [ "$version" -ge 2 ]
+if [ -z "$legacy" ]
 then
 	tmux $bind "${mod}enter" \
 		run-shell 'cwd="`tmux display -p \"#{pane_current_path}\"`"; tmux select-pane -t "bottom-right"; tmux split-pane -c "$cwd"'
@@ -192,7 +191,7 @@ else
 fi
 
 # Close a window with Alt + Shift + q.
-if [ "$version" -ge 2 ]
+if [ -z "$legacy" ]
 then
 	tmux $bind "${mod}Q" \
 		kill-pane \\\;\
@@ -214,7 +213,7 @@ tmux $bind "${mod}C" \
 # }}}
 
 # Define hooks {{{
-if [ "$version" -ge 2 ]
+if [ -z "$legacy" ]
 then
 	# Autorefresh layout after deleting a pane.
 	tmux set-hook -g after-split-window "select-layout; select-layout -E"
@@ -253,7 +252,7 @@ fi
 # }}}
 
 # Integrate with `fzf` to approximate `dmenu` {{{
-if [ "$version" -ge 2 ] && [ -n "$dmenu" ]
+if [ -z "$legacy" ] && [ -n "$dmenu" ]
 then
 	if [ -n "$(command -v fzf)" ]
 	then
