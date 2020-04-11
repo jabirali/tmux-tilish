@@ -116,8 +116,9 @@ The <kbd>Alt</kbd> + <kbd>0</kbd> and <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>0
 bindings are "smart": depending on `base-index`, they either act on workspace 0 or 10.
 
 The keybindings that move panes between workspaces assume a US keyboard layout.
-However, you can configure `tilish` for international keyboards by providing
-a string that you produce by pressing <kbd>Shift</kbd> + <kbd>1</kbd>-<kbd>0</kbd>.
+However, you can configure `tilish` for international keyboards by providing a string
+`@tilish-shiftnum` that you produce by pressing <kbd>Shift</kbd> + 
+<kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd><kbd>5</kbd><kbd>6</kbd><kbd>7</kbd><kbd>8</kbd><kbd>9</kbd><kbd>0</kbd>. 
 For instance, for a UK keyboard, you would configure it as follows:
 
 	set -g @tilish-shiftnum '!"£$%^&*()'
