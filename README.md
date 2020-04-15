@@ -36,6 +36,10 @@ Okay, so who is this plugin for anyway? You may be interested in this if:
 - You're not really using `i3wm` anymore, but you did like how it handled
   terminals and workspaces. You'd like to keep working that way in terminals,
   without using `i3wm` or `sway` for your whole desktop.
+- You use a window manager that is similar to `i3wm`, e.g. [`dwm`][9],
+  and want to have that workflow in `tmux` too.  
+  
+[9]: https://dwm.suckless.org/tutorial/
 
 ## Quickstart
 
