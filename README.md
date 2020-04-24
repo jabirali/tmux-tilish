@@ -78,6 +78,7 @@ For further configuration options:
 - If you use `kak` or `emacs`, consider activating [prefix mode](#prefix-mode).
 - If you use `tmux` within `i3wm` or `sway`, see [this section](#usage-inside-i3wm).
 - If you like `dmenu`, check out the [application launcher](#application-launcher).
+- If it doesn't work, check your [terminal settings](#terminal-compatibility).
 
 It is also recommended that you add the following to the top of your `.tmux.conf`:
 
