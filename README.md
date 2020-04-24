@@ -70,24 +70,26 @@ a "vertical" and "horizontal" split varies between programs.)
 If you do not set this option, `tilish` will not autoselect any layout; you
 can still choose layouts manually using the keybindings listed below.
 
-If you use `vim` or `nvim` as your editor, see 
-[how to integrate it with `tilish`](#integration-with-vim-tmux-navigator).
-If you use `kak` or `emacs`, you may want to activate [Prefix mode](#prefix-mode).
-If you do not use `vim` or `kak`, you may wish to activate [Easy mode](#easy-mode).
+After performing the steps above, you should read the [list of keybindings](#keybindings).
+For further configuration options:
+
+- If you use `nvim` or `vim`, consider [integrating it with `tilish`](#integration-with-vim-tmux-navigator).
+- If you do not use `vim` or `kak`, consider activating [easy mode](#easy-mode).
+- If you use `kak` or `emacs`, consider activating [prefix mode](#prefix-mode).
+- If you use `tmux` within `i3wm` or `sway`, see [this section](#usage-inside-i3wm).
+- If you like `dmenu`, check out the [application launcher](#application-launcher).
 
 It is also recommended that you add the following to the top of your `.tmux.conf`:
 
 	set -s escape-time 0
 	set -g base-index 1
 
-This plugin should work fine without these settings. However, without the first one,
-you may accidentally trigger e.g. the <kbd>Alt</kbd> + <kbd>h</kbd> binding by pressing
-<kbd>Esc</kbd> + <kbd>h</kbd>, something that can happen often if you use `vim` in `tmux`. 
-Note that this setting only has to be set manually if you don't use [tmux-sensible][4].
-The second one makes the window numbers go from 1-10 instead of 0-9, which IMO
-makes more sense on a keyboard where the number row starts at 1. This behavior
-is also more similar to how `i3wm` numbers its workspaces. However, the plugin
-will check this setting explicitly when mapping keys, and works fine without it.
+The first line prevents e.g. <kbd>Esc</kbd> + <kbd>h</kbd> from triggering the
+<kbd>Alt</kbd> + <kbd>h</kbd> keybinding, preventing common misbehavior when
+using `vim` in `tmux`. This option is automatically set by [tmux-sensible][4], if 
+you use that. The second line makes workspace numbers go from 1-10 instead of 0-9,
+which makes more sense on a keyboard where the number row starts at 1. However,
+`tilish` explicitly checks this setting when mapping keys, and works fine without it.
 
 [2]: https://github.com/tmux-plugins/tpm
 [4]: https://github.com/tmux-plugins/tmux-sensible
@@ -218,6 +220,25 @@ That can be fixed by adding this to `~/.Xresources`:
 	XTerm*eightBitInput: false
 	XTerm.omitTranslation: fullscreen
 	XTerm*fullscreen: never
+
+## Usage inside i3wm
+
+If you use `tilish` inside `i3wm` or `sway`, keybindings like 
+<kbd>Alt</kbd>+<kbd>Enter</kbd> may spawn a new terminal in your window manager
+instead of a new terminal pane inside `tmux`. The window manager always takes
+priority — so if both `i3wm` and `tilish` define the same keybinding,
+`i3wm` will intercept the keybinding before `tmux` sees it.
+
+The best way to solve this is perhaps to change your window manager  modifier key
+to <kbd>Super</kbd>, also known as the "Windows key". As described 
+[in the `i3wm` user guide](https://i3wm.org/docs/userguide.html#_using_i3), this can
+be done by changing `$mod` to `Mod4` in your `i3wm` config. That way, pressing e.g.
+<kbd>Alt</kbd>+<kbd>Enter</kbd> opens a new terminal pane inside `tmux`, while
+<kbd>Super</kbd>+<kbd>Enter</kbd> opens a new terminal in `i3wm`. 
+
+Alternatively, `tilish` also supports a [Prefix mode](#prefix-mode). This is in my opinion
+less ergonomic than the default `tilish` keybindings. However, it does not require the use
+of <kbd>Alt</kbd>, and is therefore compatible with the default `i3wm` keybindings.
 
 ## Integration with vim-tmux-navigator
 
