@@ -190,6 +190,10 @@ else
 		send escape
 fi
 
+# Name a window with Alt + n.
+tmux $bind "${mod}n" \
+	command-prompt -p 'Workspace name:' 'rename-window %%'
+
 # Close a window with Alt + Shift + q.
 if [ -z "$legacy" ]
 then
