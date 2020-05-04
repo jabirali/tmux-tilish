@@ -195,7 +195,7 @@ that lets you fuzzy-search through all executables in your system `$PATH`.
 Selecting an executable runs the command in that split. When you want 
 to start an interactive process, this can be more convenient than
 using <kbd>Alt</kbd>+<kbd>Enter</kbd> and typing the command name.
-This functionality is currently only available in `tmux` v2.7+.
+This is currently only available in `tmux` v2.7+.
 
 [5]: https://github.com/junegunn/fzf
 
@@ -253,7 +253,7 @@ don't tell `tilish`, it uses fallback keybindings that only work in `tmux`.)
 ### Navigate
 
 It is perhaps easiest to setup `tmux-navigate`. Just load `navigate` *after* `tilish`
-in your `tmux.conf`, and set the option `tilish-navigate` to `on` to enable it.
+in your `tmux.conf`, and set the option `@tilish-navigate` to `on` to integrate them.
 Thus a full working minimal example of a `tpm`-based `tmux.conf` would be:
 
 	# List of plugins.
@@ -273,9 +273,9 @@ Thus a full working minimal example of a `tpm`-based `tmux.conf` would be:
 	run -b "~/.tmux/plugins/tpm/tpm"
 
 
-No further setup is really required; `tilish` sets up the keybindings, and
-`navigate` handles seamless navigation of `vim`/`nvim` splits. However, if you
-also want this seamless navigation over `ssh` connections, you should install
+No further setup is required; `tilish` sets up the keybindings, and `navigate`
+handles seamless navigation of `vim`/`nvim` splits. However, if you also want
+this seamless navigation over `ssh` connections, you should install
 the accompanying `vim` plugin; see [their website for more information][10].
 
 ### Navigator
