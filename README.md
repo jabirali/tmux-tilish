@@ -73,7 +73,7 @@ can still choose layouts manually using the keybindings listed below.
 After performing the steps above, you should read the [list of keybindings](#keybindings).
 For further configuration options:
 
-- If you use `nvim` or `vim`, consider [integrating it with `tilish`](#integration-with-vim-tmux-navigator).
+- If you use `nvim` or `vim`, consider [integrating it with `tilish`](#integration-with-vim).
 - If you do not use `vim` or `kak`, consider activating [easy mode](#easy-mode).
 - If you use `kak` or `emacs`, consider activating [prefix mode](#prefix-mode).
 - If you use `tmux` within `i3wm` or `sway`, see [this section](#usage-inside-i3wm).
@@ -242,16 +242,47 @@ Alternatively, `tilish` also supports a [Prefix mode](#prefix-mode). This is in 
 less ergonomic than the default `tilish` keybindings. However, it does not require the use
 of <kbd>Alt</kbd>, and is therefore compatible with the default `i3wm` keybindings.
 
-## Integration with vim-tmux-navigator
+## Integration with vim
 
-There is a great `vim` plugin called [vim-tmux-navigator][3], which allows seamless 
-navigation between `vim` splits and `tmux` splits. If you're using that plugin,
+There are two great plugins known as [tmux-navigate][10] and [vim-tmux-navigator][3], 
+which both allows seamless navigation between `vim` splits and `tmux` splits. The former
+has an advantage that it also works over `ssh` connections. If you use either plugin,
 you can tell `tilish` about it to make it setup the keybindings for you. (If you
 don't tell `tilish`, it uses fallback keybindings that only work in `tmux`.)
 
-The process is quite simple. First install the plugin for `vim` or `neovim`, as
-described on the [vim-tmux-navigator website][3]. Then place this in your
-`~/.config/nvim/init.vim` (`neovim`) or `~/.vimrc` (`vim`):
+### Navigate
+
+It is perhaps easiest to setup `tmux-navigate`. Just load `navigate` *after* `tilish`
+in your `tmux.conf`, and set the option `tilish-navigate` to `on` to enable it.
+Thus a full working minimal example of a `tpm`-based `tmux.conf` would be:
+
+	# List of plugins.
+	set -g @plugin 'tmux-plugins/tpm'
+	set -g @plugin 'tmux-plugins/tmux-sensible'
+	set -g @plugin 'jabirali/tmux-tilish'
+	set -g @plugin 'sunaku/tmux-navigate'
+	
+	# Plugin options.
+	set -g @tilish-navigate 'on'
+	
+	# Install `tpm` if needed.
+	if "test ! -d ~/.tmux/plugins/tpm" \
+	   "run 'git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ~/.tmux/plugins/tpm/bin/install_plugins'"
+	
+	# Activate the plugins.
+	run -b "~/.tmux/plugins/tpm/tpm"
+
+
+No further setup is really required; `tilish` sets up the keybindings, and
+`navigate` handles seamless navigation of `vim`/`nvim` splits. However, if you
+also want this seamless navigation over `ssh` connections, you should install
+the accompanying `vim` plugin; see [their website for more information][10].
+
+### Navigator
+
+To install `vim-tmux-navigator`, you should first install the plugin for `vim` 
+or `nvim`, as described on [their website][3]. Then place this in your
+`~/.config/nvim/init.vim` (`nvim`) or `~/.vimrc` (`vim`):
 
 	noremap <silent> <m-h> :TmuxNavigateLeft<cr>
 	noremap <silent> <m-j> :TmuxNavigateDown<cr>
@@ -279,10 +310,12 @@ A minimal working  example of a `~/.tmux.conf` with `tpm` would then be:
 	# Activate the plugins.
 	run -b "~/.tmux/plugins/tpm/tpm"
 
-[3]: https://github.com/christoomey/vim-tmux-navigator
+[3]:  https://github.com/christoomey/vim-tmux-navigator
+[10]: https://github.com/sunaku/tmux-navigate
 
 # Related projects
 
 - [3mux](https://github.com/aaronjanse/3mux)
+- [tmux-navigate](https://github.com/sunaku/tmux-navigate)
 - [vim-tmux-navigator](https://github.com/christoomey/vim-tmux-navigator)
 - [vim-i3wm-tmux-navigator](https://github.com/fogine/vim-i3wm-tmux-navigator)

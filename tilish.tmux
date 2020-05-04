@@ -16,7 +16,7 @@
 	legacy="$(tmux select-layout -E 2>/dev/null || echo on)"
 	
 	# Read user options.
-	for opt in default dmenu easymode navigator prefix shiftnum
+	for opt in default dmenu easymode navigate navigator prefix shiftnum
 	do
 		export "$opt"="$(tmux show-option -gv @tilish-$opt 2>/dev/null)"
 	done
@@ -233,11 +233,18 @@ then
 fi
 # }}}
 
-# Integrate with `vim-tmux-navigator` {{{
-if [ "$navigator" = "on" ]
+# Integrate with Vim for transparent navigation {{{
+if [ "$navigate" = "on" ]
 then
-	# If `@tilish-navigator` is nonzero, we override the Alt + hjkl bindings.
-	# This assumes that your Vim/Neovim is setup to use Alt + hjkl as well.
+	# If `@tilish-navigate` is nonzero, integrate Alt + hjkl with `tmux-navigate`.
+	tmux set -g '@navigate-left'  '-n M-h'
+	tmux set -g '@navigate-down'  '-n M-j'
+	tmux set -g '@navigate-up'    '-n M-k'
+	tmux set -g '@navigate-right' '-n M-l'
+elif [ "$navigator" = "on" ]
+then
+	# If `@tilish-navigator` is nonzero, integrate Alt + hjkl with `vim-tmux-navigator`.
+	# This assumes that your Vim/Neovim is setup to use Alt + hjkl bindings as well.
 	is_vim="ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
 	
 	tmux $bind "${mod}${h}" if-shell "$is_vim" 'send M-h' 'select-pane -L'
