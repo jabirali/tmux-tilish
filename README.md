@@ -245,10 +245,11 @@ of <kbd>Alt</kbd>, and is therefore compatible with the default `i3wm` keybindin
 ## Integration with vim
 
 There are two great plugins known as [tmux-navigate][10] and [vim-tmux-navigator][3], 
-which both allows seamless navigation between `vim` splits and `tmux` splits. The former
-has an advantage that it also works over `ssh` connections. If you use either plugin,
-you can tell `tilish` about it to make it setup the keybindings for you. (If you
-don't tell `tilish`, it uses fallback keybindings that only work in `tmux`.)
+which both allow seamless navigation between `vim` splits and `tmux` splits. The former
+has an advantage that it also works over `ssh` connections, and that it plays better with
+the fullscreen (zoom) feature of that `tilish` maps to <kbd>Alt</kbd>+<kbd>f</kbd>. 
+If you use either plugin, you can tell `tilish` to make it setup the keybindings for you.
+(If you don't tell `tilish`, it uses fallback keybindings that don't integrate with `vim`.)
 
 ### Navigate
 
