@@ -198,9 +198,10 @@ tmux $bind "${mod}n" \
 if [ -z "$legacy" ]
 then
 	tmux $bind "${mod}Q" \
-		kill-pane \\\;\
-		select-layout \\\;\
-		select-layout -E
+		if-shell \
+			'[ "$(tmux display-message -p "#{window_panes}")" -gt 1 ]' \
+			'kill-pane; select-layout; select-layout -E' \
+			'kill-pane'
 else
 	tmux $bind "${mod}Q" \
 		kill-pane
