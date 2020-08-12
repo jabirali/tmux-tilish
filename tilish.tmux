@@ -11,9 +11,8 @@
 # minor adaptation to fit better with `vim` and `tmux`. See also the README.
 
 # Check input parameters {{{
-	# Estimate the version. This basically checks if `tmux select-layout -E` is
-	# supported (v2.7+); if not, the plugin goes into legacy compatibility mode.
-	legacy="$(tmux select-layout -E 2>/dev/null || echo on)"
+	# Whether we need to use legacy workarounds (required before tmux 2.7).
+	legacy="$(tmux -V | /bin/grep -E 'tmux (1\.|2\.[0-6])' &>/dev/null && echo on)"
 	
 	# Read user options.
 	for opt in default dmenu easymode navigate navigator prefix shiftnum
