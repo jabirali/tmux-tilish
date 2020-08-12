@@ -12,7 +12,7 @@
 
 # Check input parameters {{{
 	# Whether we need to use legacy workarounds (required before tmux 2.7).
-	legacy="$(tmux -V | grep -E 'tmux (1\.|2\.[0-6])' &>/dev/null && echo on)"
+	legacy="$(tmux -V | grep -E 'tmux (1\.|2\.[0-6])')"
 	
 	# Read user options.
 	for opt in default dmenu easymode navigate navigator prefix shiftnum
