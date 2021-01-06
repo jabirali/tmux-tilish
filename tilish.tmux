@@ -98,6 +98,13 @@ bind_layout () {
 }
 # }}}
 
+# A helper for finding the character at a given position in a string in a
+# POSIX sh compatible way {{{
+charAt () {
+    echo $1 | cut -c $2
+}
+# }}}
+
 # Define keybindings {{{
 # Define a prefix key.
 if [ -n "$prefix" ]
@@ -117,25 +124,25 @@ bind_switch "${mod}8" 8
 bind_switch "${mod}9" 9
 
 # Move pane to workspace via Alt + Shift + #.
-bind_move "${mod}$(expr substr $shiftnum 1 1)" 1
-bind_move "${mod}$(expr substr $shiftnum 2 1)" 2
-bind_move "${mod}$(expr substr $shiftnum 3 1)" 3
-bind_move "${mod}$(expr substr $shiftnum 4 1)" 4
-bind_move "${mod}$(expr substr $shiftnum 5 1)" 5
-bind_move "${mod}$(expr substr $shiftnum 6 1)" 6
-bind_move "${mod}$(expr substr $shiftnum 7 1)" 7
-bind_move "${mod}$(expr substr $shiftnum 8 1)" 8
-bind_move "${mod}$(expr substr $shiftnum 9 1)" 9
+bind_move "${mod}$(charAt $shiftnum 1)" 1
+bind_move "${mod}$(charAt $shiftnum 2)" 2
+bind_move "${mod}$(charAt $shiftnum 3)" 3
+bind_move "${mod}$(charAt $shiftnum 4)" 4
+bind_move "${mod}$(charAt $shiftnum 5)" 5
+bind_move "${mod}$(charAt $shiftnum 6)" 6
+bind_move "${mod}$(charAt $shiftnum 7)" 7
+bind_move "${mod}$(charAt $shiftnum 8)" 8
+bind_move "${mod}$(charAt $shiftnum 9)" 9
 
 # The mapping of Alt + 0 and Alt + Shift + 0 depends on `base-index`.
 # It can either refer to workspace number 0 or workspace number 10.
 if [ "$(tmux show-option -gv base-index)" = "1" ]
 then
 	bind_switch "${mod}0" 10
-	bind_move   "${mod}$(expr substr $shiftnum 10 1)" 10
+	bind_move   "${mod}$(charAt $shiftnum 10)" 10
 else
 	bind_switch "${mod}0" 0
-	bind_move   "${mod}$(expr substr $shiftnum 10 1)" 0
+	bind_move   "${mod}$(charAt $shiftnum 10)" 0
 fi
 
 # Switch layout with Alt + <mnemonic key>. The mnemonics are `s` and `S` for
