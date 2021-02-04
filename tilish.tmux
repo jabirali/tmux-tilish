@@ -10,6 +10,10 @@
 # The keybindings are taken nearly directly from `i3wm` and `sway`, but with
 # minor adaptation to fit better with `vim` and `tmux`. See also the README.
 
+# shellcheck disable=SC2003
+# shellcheck disable=SC2016
+# shellcheck disable=SC2250
+
 # Check input parameters {{{
 	# Whether we need to use legacy workarounds (required before tmux 2.7).
 	legacy="$(tmux -V | grep -E 'tmux (1\.|2\.[0-6])')"
@@ -17,7 +21,7 @@
 	# Read user options.
 	for opt in default dmenu easymode navigate navigator prefix shiftnum
 	do
-		export "$opt"="$(tmux show-option -gv @tilish-$opt 2>/dev/null)"
+		export "$opt"="$(tmux show-option -gv @tilish-"$opt" 2>/dev/null)"
 	done
 
 	# Default to US keyboard layout, unless something is configured.
@@ -27,7 +31,7 @@
 	fi
 
 	# Determine "arrow types".
-	if [ "$easymode" = "on" ]
+	if [ "${easymode:-}" = "on" ]
 	then
 		# Simplified arrows.
 		h='left';   j='down';   k='up';   l='right';
@@ -39,7 +43,7 @@
 	fi
 
 	# Determine modifier vs. prefix key.
-	if [ -z "$prefix" ]
+	if [ -z "${prefix:-}" ]
 	then
 		bind='bind -n'
 		mod='M-'
@@ -52,7 +56,7 @@
 # Define core functionality {{{
 bind_switch () {
 	# Bind keys to switch between workspaces.
-	tmux $bind "$1" \
+	tmux "$bind" "$1" \
 		if-shell "tmux select-window -t :$2" "" "new-window -t :$2"
 }
 
@@ -60,14 +64,14 @@ bind_move () {
 	# Bind keys to move panes between workspaces.
 	if [ -z "$legacy" ]
 	then
-		tmux $bind "$1" \
+		tmux "$bind" "$1" \
 			if-shell "tmux join-pane -t :$2" \
 				"" \
 				"new-window -dt :$2; join-pane -t :$2; select-pane -t top-left; kill-pane" \\\;\
 			select-layout \\\;\
 			select-layout -E
 	else
-		tmux $bind "$1" \
+		tmux "$bind" "$1" \
 			if-shell "tmux new-window -dt :$2" \
 				"join-pane -t :$2; select-pane -t top-left; kill-pane" \
 				"send escape; join-pane -t :$2" \\\;\
@@ -80,17 +84,17 @@ bind_layout () {
 	if [ "$2" = "fullscreen" ]
 	then
 		# Invoke the zoom feature.
-		tmux $bind "$1" \
+		tmux "$bind" "$1" \
 			resize-pane -Z
 	else
 		# Actually switch layout.
 		if [ -z "$legacy" ]
 		then
-			tmux $bind "$1" \
+			tmux "$bind" "$1" \
 				select-layout "$2" \\\;\
 				select-layout -E
 		else
-			tmux $bind "$1" \
+			tmux "$bind" "$1" \
 				run-shell "tmux select-layout \"$2\"" \\\;\
 				send escape
 		fi
@@ -117,25 +121,25 @@ bind_switch "${mod}8" 8
 bind_switch "${mod}9" 9
 
 # Move pane to workspace via Alt + Shift + #.
-bind_move "${mod}$(expr substr $shiftnum 1 1)" 1
-bind_move "${mod}$(expr substr $shiftnum 2 1)" 2
-bind_move "${mod}$(expr substr $shiftnum 3 1)" 3
-bind_move "${mod}$(expr substr $shiftnum 4 1)" 4
-bind_move "${mod}$(expr substr $shiftnum 5 1)" 5
-bind_move "${mod}$(expr substr $shiftnum 6 1)" 6
-bind_move "${mod}$(expr substr $shiftnum 7 1)" 7
-bind_move "${mod}$(expr substr $shiftnum 8 1)" 8
-bind_move "${mod}$(expr substr $shiftnum 9 1)" 9
+bind_move "${mod}$(expr substr "$shiftnum" 1 1)" 1
+bind_move "${mod}$(expr substr "$shiftnum" 2 1)" 2
+bind_move "${mod}$(expr substr "$shiftnum" 3 1)" 3
+bind_move "${mod}$(expr substr "$shiftnum" 4 1)" 4
+bind_move "${mod}$(expr substr "$shiftnum" 5 1)" 5
+bind_move "${mod}$(expr substr "$shiftnum" 6 1)" 6
+bind_move "${mod}$(expr substr "$shiftnum" 7 1)" 7
+bind_move "${mod}$(expr substr "$shiftnum" 8 1)" 8
+bind_move "${mod}$(expr substr "$shiftnum" 9 1)" 9
 
 # The mapping of Alt + 0 and Alt + Shift + 0 depends on `base-index`.
 # It can either refer to workspace number 0 or workspace number 10.
 if [ "$(tmux show-option -gv base-index)" = "1" ]
 then
 	bind_switch "${mod}0" 10
-	bind_move   "${mod}$(expr substr $shiftnum 10 1)" 10
+	bind_move   "${mod}$(expr substr "$shiftnum" 10 1)" 10
 else
 	bind_switch "${mod}0" 0
-	bind_move   "${mod}$(expr substr $shiftnum 10 1)" 0
+	bind_move   "${mod}$(expr substr "$shiftnum" 10 1)" 0
 fi
 
 # Switch layout with Alt + <mnemonic key>. The mnemonics are `s` and `S` for
@@ -151,38 +155,38 @@ bind_layout "${mod}t" 'tiled'
 # Refresh the current layout (e.g. after deleting a pane).
 if [ -z "$legacy" ]
 then
-	tmux $bind "${mod}r" select-layout -E
+	tmux "$bind" "${mod}r" select-layout -E
 else
-	tmux $bind "${mod}r" run-shell 'tmux select-layout'\\\; send escape
+	tmux "$bind" "${mod}r" run-shell 'tmux select-layout'\\\; send escape
 fi
 
 # Switch to pane via Alt + hjkl.
-tmux $bind "${mod}${h}" select-pane -L
-tmux $bind "${mod}${j}" select-pane -D
-tmux $bind "${mod}${k}" select-pane -U
-tmux $bind "${mod}${l}" select-pane -R
+tmux "$bind" "${mod}${h}" select-pane -L
+tmux "$bind" "${mod}${j}" select-pane -D
+tmux "$bind" "${mod}${k}" select-pane -U
+tmux "$bind" "${mod}${l}" select-pane -R
 
 # Move a pane via Alt + Shift + hjkl.
 if [ -z "$legacy" ]
 then
-	tmux $bind "${mod}${H}" swap-pane -s '{left-of}'
-	tmux $bind "${mod}${J}" swap-pane -s '{down-of}'
-	tmux $bind "${mod}${K}" swap-pane -s '{up-of}'
-	tmux $bind "${mod}${L}" swap-pane -s '{right-of}'
+	tmux "$bind" "${mod}${H}" swap-pane -s '{left-of}'
+	tmux "$bind" "${mod}${J}" swap-pane -s '{down-of}'
+	tmux "$bind" "${mod}${K}" swap-pane -s '{up-of}'
+	tmux "$bind" "${mod}${L}" swap-pane -s '{right-of}'
 else
-	tmux $bind "${mod}${H}" run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -L; tmux swap-pane -t $old'
-	tmux $bind "${mod}${J}" run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -D; tmux swap-pane -t $old'
-	tmux $bind "${mod}${K}" run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -U; tmux swap-pane -t $old'
-	tmux $bind "${mod}${L}" run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -R; tmux swap-pane -t $old'
+	tmux "$bind" "${mod}${H}" run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -L; tmux swap-pane -t $old'
+	tmux "$bind" "${mod}${J}" run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -D; tmux swap-pane -t $old'
+	tmux "$bind" "${mod}${K}" run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -U; tmux swap-pane -t $old'
+	tmux "$bind" "${mod}${L}" run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -R; tmux swap-pane -t $old'
 fi
 
 # Open a terminal with Alt + Enter.
 if [ -z "$legacy" ]
 then
-	tmux $bind "${mod}enter" \
+	tmux "$bind" "${mod}enter" \
 		run-shell 'cwd="`tmux display -p \"#{pane_current_path}\"`"; tmux select-pane -t "bottom-right"; tmux split-pane -c "$cwd"'
 else
-	tmux $bind "${mod}enter" \
+	tmux "$bind" "${mod}enter" \
 		select-pane -t 'bottom-right' \\\;\
 		split-window \\\;\
 		run-shell 'tmux select-layout' \\\;\
@@ -190,28 +194,28 @@ else
 fi
 
 # Name a window with Alt + n.
-tmux $bind "${mod}n" \
+tmux "$bind" "${mod}n" \
 	command-prompt -p 'Workspace name:' 'rename-window %%'
 
 # Close a window with Alt + Shift + q.
 if [ -z "$legacy" ]
 then
-	tmux $bind "${mod}Q" \
+	tmux "$bind" "${mod}Q" \
 		if-shell \
 			'[ "$(tmux display-message -p "#{window_panes}")" -gt 1 ]' \
 			'kill-pane; select-layout; select-layout -E' \
 			'kill-pane'
 else
-	tmux $bind "${mod}Q" \
+	tmux "$bind" "${mod}Q" \
 		kill-pane
 fi
 
 # Close a connection with Alt + Shift + e.
-tmux $bind "${mod}E" \
+tmux "$bind" "${mod}E" \
 	confirm-before -p "Detach from #H:#S? (y/n)" detach-client
 
 # Reload configuration with Alt + Shift + c.
-tmux $bind "${mod}C" \
+tmux "$bind" "${mod}C" \
 	source-file ~/.tmux.conf \\\;\
 	display "Reloaded config"
 # }}}
@@ -224,7 +228,7 @@ then
 	tmux set-hook -g pane-exited "select-layout; select-layout -E"
 
 	# Autoselect layout after creating new window.
-	if [ -n "$default" ]
+	if [ -n "${default:-}" ]
 	then
 		tmux set-hook -g window-linked "select-layout \"$default\"; select-layout -E"
 		tmux select-layout "$default"
@@ -234,23 +238,23 @@ fi
 # }}}
 
 # Integrate with Vim for transparent navigation {{{
-if [ "$navigate" = "on" ]
+if [ "${navigate:-}" = "on" ]
 then
 	# If `@tilish-navigate` is nonzero, integrate Alt + hjkl with `tmux-navigate`.
 	tmux set -g '@navigate-left'  '-n M-h'
 	tmux set -g '@navigate-down'  '-n M-j'
 	tmux set -g '@navigate-up'    '-n M-k'
 	tmux set -g '@navigate-right' '-n M-l'
-elif [ "$navigator" = "on" ]
+elif [ "${navigator:-}" = "on" ]
 then
 	# If `@tilish-navigator` is nonzero, integrate Alt + hjkl with `vim-tmux-navigator`.
 	# This assumes that your Vim/Neovim is setup to use Alt + hjkl bindings as well.
 	is_vim="ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
 
-	tmux $bind "${mod}${h}" if-shell "$is_vim" 'send M-h' 'select-pane -L'
-	tmux $bind "${mod}${j}" if-shell "$is_vim" 'send M-j' 'select-pane -D'
-	tmux $bind "${mod}${k}" if-shell "$is_vim" 'send M-k' 'select-pane -U'
-	tmux $bind "${mod}${l}" if-shell "$is_vim" 'send M-l' 'select-pane -R'
+	tmux "$bind" "${mod}${h}" if-shell "$is_vim" 'send M-h' 'select-pane -L'
+	tmux "$bind" "${mod}${j}" if-shell "$is_vim" 'send M-j' 'select-pane -D'
+	tmux "$bind" "${mod}${k}" if-shell "$is_vim" 'send M-k' 'select-pane -U'
+	tmux "$bind" "${mod}${l}" if-shell "$is_vim" 'send M-l' 'select-pane -R'
 
 	if [ -z "$prefix" ]
 	then
@@ -263,18 +267,18 @@ fi
 # }}}
 
 # Integrate with `fzf` to approximate `dmenu` {{{
-if [ -z "$legacy" ] && [ "$dmenu" = "on" ]
+if [ -z "$legacy" ] && [ "${dmenu:-}" = "on" ]
 then
 	if [ -n "$(command -v fzf)" ]
 	then
 		# The environment variables of your `default-shell` are used when running `fzf`.
 		# This solution is about an order of magnitude faster than invoking `compgen`.
 		# Based on: https://medium.com/njiuko/using-fzf-instead-of-dmenu-2780d184753f
-		tmux $bind "${mod}d" \
+		tmux "$bind" "${mod}d" \
 			select-pane -t '{bottom-right}' \\\;\
 			split-pane 'sh -c "exec \$(echo \"\$PATH\" | tr \":\" \"\n\" | xargs -I{} -- find {} -maxdepth 1 -mindepth 1 -executable 2>/dev/null | sort -u | fzf)"'
 	else
-		tmux $bind "${mod}d" \
+		tmux "$bind" "${mod}d" \
 			display 'To enable this function, install `fzf` and restart `tmux`.'
 	fi
 fi
