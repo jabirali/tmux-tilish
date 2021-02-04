@@ -13,19 +13,19 @@
 # Check input parameters {{{
 	# Whether we need to use legacy workarounds (required before tmux 2.7).
 	legacy="$(tmux -V | grep -E 'tmux (1\.|2\.[0-6])')"
-	
+
 	# Read user options.
 	for opt in default dmenu easymode navigate navigator prefix shiftnum
 	do
 		export "$opt"="$(tmux show-option -gv @tilish-$opt 2>/dev/null)"
 	done
-	
+
 	# Default to US keyboard layout, unless something is configured.
 	if [ -z "$shiftnum" ]
 	then
 		shiftnum='!@#$%^&*()'
 	fi
-	
+
 	# Determine "arrow types".
 	if [ "$easymode" = "on" ]
 	then
@@ -37,7 +37,7 @@
 		h='h'; j='j'; k='k'; l='l';
 		H='H'; J='J'; K='K'; L='L';
 	fi
-	
+
 	# Determine modifier vs. prefix key.
 	if [ -z "$prefix" ]
 	then
@@ -222,7 +222,7 @@ then
 	# Autorefresh layout after deleting a pane.
 	tmux set-hook -g after-split-window "select-layout; select-layout -E"
 	tmux set-hook -g pane-exited "select-layout; select-layout -E"
-	
+
 	# Autoselect layout after creating new window.
 	if [ -n "$default" ]
 	then
@@ -246,12 +246,12 @@ then
 	# If `@tilish-navigator` is nonzero, integrate Alt + hjkl with `vim-tmux-navigator`.
 	# This assumes that your Vim/Neovim is setup to use Alt + hjkl bindings as well.
 	is_vim="ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
-	
+
 	tmux $bind "${mod}${h}" if-shell "$is_vim" 'send M-h' 'select-pane -L'
 	tmux $bind "${mod}${j}" if-shell "$is_vim" 'send M-j' 'select-pane -D'
 	tmux $bind "${mod}${k}" if-shell "$is_vim" 'send M-k' 'select-pane -U'
 	tmux $bind "${mod}${l}" if-shell "$is_vim" 'send M-l' 'select-pane -R'
-	
+
 	if [ -z "$prefix" ]
 	then
 		tmux bind -T copy-mode-vi "M-$h" select-pane -L
