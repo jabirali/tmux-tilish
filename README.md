@@ -201,19 +201,13 @@ This is currently only available in `tmux` v2.7+.
 
 ## Terminal compatibility
 
-It is worth noting that not all terminals support all keybindings. It 
-has been verified to work out-of-the-box on `alacritty`, `kitty`, `urxvt`, 
-`terminator`, and `gnome-terminal` on Linux. Note that in `gnome-terminal`,
-it only works if you don't open any GUI tabs; if you do so, the terminal 
-itself steals the <kbd>Alt</kbd>+<kbd>0</kbd>-<kbd>9</kbd> keybindings.
-
-On `wsltty` (Windows), it works if you disable the keyboard shortcut 
-<kbd>Alt</kbd>+<kbd>Enter</kbd> in the terminal settings. Some terminals
-that work automatically on Linux, e.g. `alacritty`, also require unbinding
-<kbd>Alt</kbd>+<kbd>Enter</kbd> on Windows. This `alacritty.yml` does so:
-
-    key_bindings:
-      - { key: Return, mods: Alt, action: ReceiveChar }
+Not all terminals support all keybindings. The plugin has been verified
+to work well with: `iTerm2` on macOS; `alacritty`, `kitty`, `terminator`,
+`gnome-terminal`, and `urxvt` on Linux; `wsltty` and `alacritty` on Windows.
+Some of these terminals bind <kbd>Alt</kbd>+<kbd>Enter</kbd> to fullscreen,
+so you have to disable that for the `tilish` "new pane" binding to work.
+Moreover, `gnome-terminal` steals the "switch workspace" keybindings
+<kbd>Alt</kbd>+<kbd>0</kbd>-<kbd>9</kbd> *if* you open multiple tabs.
 
 If you use `xterm`, almost none of the <kbd>Alt</kbd> keys work by default.
 That can be fixed by adding this to `~/.Xresources`:
