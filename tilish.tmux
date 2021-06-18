@@ -10,8 +10,8 @@
 # The keybindings are taken nearly directly from `i3wm` and `sway`, but with
 # minor adaptation to fit better with `vim` and `tmux`. See also the README.
 
-# shellcheck disable=SC2003
 # shellcheck disable=SC2016
+# shellcheck disable=SC2086
 # shellcheck disable=SC2250
 
 # Check input parameters {{{
