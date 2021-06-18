@@ -113,7 +113,7 @@ while a "pane" is what `i3wm` would call a "window" and `vim` would call a "spli
 | <kbd>Alt</kbd> + <kbd>v</kbd> | Switch to layout: vsplit then split |
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>v</kbd> | Switch to layout: only vsplit |
 | <kbd>Alt</kbd> + <kbd>t</kbd> | Switch to layout: fully tiled |
-| <kbd>Alt</kbd> + <kbd>f</kbd> | Switch to layout: fullscreen (zoom) |
+| <kbd>Alt</kbd> + <kbd>z</kbd> | Switch to layout: zoom (fullscreen) |
 | <kbd>Alt</kbd> + <kbd>r</kbd> | Refresh current layout |
 | <kbd>Alt</kbd> + <kbd>n</kbd> | Name current workspace |
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>q</kbd> | Quit (close) pane |
@@ -202,11 +202,11 @@ This is currently only available in `tmux` v2.7+.
 ## Terminal compatibility
 
 Not all terminals support all keybindings. The plugin has been verified
-to work well with: `iTerm2` on macOS; `alacritty`, `kitty`, `terminator`,
-`gnome-terminal`, and `urxvt` on Linux; `wsltty` and `alacritty` on Windows.
-Some of these terminals bind <kbd>Alt</kbd>+<kbd>Enter</kbd> to fullscreen,
-so you have to disable that for the `tilish` "new pane" binding to work.
-Moreover, `gnome-terminal` steals the "switch workspace" keybindings
+to work well with: `iTerm2` and `Terminal.app` on macOS; `alacritty`, `kitty`,
+`terminator`, `gnome-terminal`, and `urxvt` on Linux; `wsltty` and `alacritty`
+on Windows.  Some of these terminals bind <kbd>Alt</kbd>+<kbd>Enter</kbd> to
+fullscreen, so you have to disable that for the `tilish` "new pane" binding to
+work.  Moreover, `gnome-terminal` steals the "switch workspace" keybindings
 <kbd>Alt</kbd>+<kbd>0</kbd>-<kbd>9</kbd> *if* you open multiple tabs.
 
 If you use `xterm`, almost none of the <kbd>Alt</kbd> keys work by default.
@@ -238,12 +238,12 @@ of <kbd>Alt</kbd>, and is therefore compatible with the default `i3wm` keybindin
 
 ## Integration with vim
 
-There are two great plugins known as [tmux-navigate][10] and [vim-tmux-navigator][3], 
-which both allow seamless navigation between `vim` splits and `tmux` splits. The former
-has an advantage that it also works over `ssh` connections, and that it plays better with
-the fullscreen (zoom) feature of that `tilish` maps to <kbd>Alt</kbd>+<kbd>f</kbd>. 
-If you use either plugin, you can tell `tilish` to make it setup the keybindings for you.
-(If you don't tell `tilish`, it uses fallback keybindings that don't integrate with `vim`.)
+There are two great plugins [tmux-navigate][10] and [vim-tmux-navigator][3],
+which both allow seamless navigation between `vim` splits and `tmux` splits.
+The former has an advantage that it also works over `ssh` connections, and that
+it plays better with zooming (<kbd>Alt</kbd>+<kbd>z</kbd>).  If you use either
+plugin, you can tell `tilish` to make it setup the keybindings for you. (If you
+don't, `tilish` will use fallback keybindings that don't integrate with `vim`.)
 
 ### Navigate
 

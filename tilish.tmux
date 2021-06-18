@@ -81,7 +81,7 @@ bind_move () {
 
 bind_layout () {
 	# Bind keys to switch or refresh layouts.
-	if [ "$2" = "fullscreen" ]
+	if [ "$2" = "zoom" ]
 	then
 		# Invoke the zoom feature.
 		tmux $bind "$1" \
@@ -150,13 +150,13 @@ fi
 
 # Switch layout with Alt + <mnemonic key>. The mnemonics are `s` and `S` for
 # layouts Vim would generate with `:split`, and `v` and `V` for `:vsplit`.
-# The remaining mappings based on `f` and `t` should be quite obvious.
+# The remaining mappings based on `z` and `t` should be quite obvious.
 bind_layout "${mod}s" 'main-horizontal'
 bind_layout "${mod}S" 'even-vertical'
 bind_layout "${mod}v" 'main-vertical'
 bind_layout "${mod}V" 'even-horizontal'
-bind_layout "${mod}f" 'fullscreen'
 bind_layout "${mod}t" 'tiled'
+bind_layout "${mod}z" 'zoom'
 
 # Refresh the current layout (e.g. after deleting a pane).
 if [ -z "$legacy" ]
