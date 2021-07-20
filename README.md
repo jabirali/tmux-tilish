@@ -207,7 +207,9 @@ to work well with: `iTerm2` and `Terminal.app` on macOS; `alacritty`, `kitty`,
 on Windows.  Some of these terminals bind <kbd>Alt</kbd>+<kbd>Enter</kbd> to
 fullscreen, so you have to disable that for the `tilish` "new pane" binding to
 work.  Moreover, `gnome-terminal` steals the "switch workspace" keybindings
-<kbd>Alt</kbd>+<kbd>0</kbd>-<kbd>9</kbd> *if* you open multiple tabs.
+<kbd>Alt</kbd>+<kbd>0</kbd>-<kbd>9</kbd> *if* you open multiple tabs. If you
+use macOS, you likely want to configure the `Option` key to send either `Esc+`
+(`iTerm2`) or `Meta` (`Terminal.app`) under the keyboard settings of the app.
 
 If you use `xterm`, almost none of the <kbd>Alt</kbd> keys work by default.
 That can be fixed by adding this to `~/.Xresources`:
