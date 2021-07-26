@@ -1,5 +1,11 @@
 # Tmux Tilish
 
+## Changes in this fork:
+
+- A lot of keybindings are configurable using `set -g @tilish-<option> "<val>"`
+
+---
+
 This is a plugin that makes [`tmux`][6] behave more like a typical
 [dynamic window manager][7]. It is heavily inspired by [`i3wm`][8], and 
 most keybindings are taken [directly from there][1]. However, I have made 
@@ -111,6 +117,8 @@ Finally, here is a list of the actual keybindings. Most are [taken from `i3wm`][
 Below, a "workspace" is what `tmux` would call a "window" and `vim` would call a "tab",
 while a "pane" is what `i3wm` would call a "window" and `vim` would call a "split".
 
+NOTE: a bunch of the following keys can be overridden through the options (see below).
+
 | Keybinding | Description |
 | ---------- | ----------- |
 | <kbd>Alt</kbd> + <kbd>0</kbd>-<kbd>9</kbd> | Switch to workspace number 0-9 |
@@ -133,6 +141,17 @@ while a "pane" is what `i3wm` would call a "window" and `vim` would call a "spli
 
 The <kbd>Alt</kbd> + <kbd>0</kbd> and <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>0</kbd> 
 bindings are "smart": depending on `base-index`, they either act on workspace 0 or 10.
+
+The following options can be used to override some keys mentioned in the above table (if they're not
+set, the default value will be used):
+- `set -g @tilish-split_vsplit "..."` (default <kbd>s</kbd>)
+- `set -g @tilish-split_only "..."` (default <kbd>S</kbd>)
+- `set -g @tilish-vsplit_split "..."` (default <kbd>v</kbd>)
+- `set -g @tilish-vsplit_only "..."` (default <kbd>V</kbd>)
+- `set -g @tilish-tiled "..."` (default <kbd>t</kbd>)
+- `set -g @tilish-zoom "..."` (default <kbd>z</kbd>)
+- `set -g @tilish-refresh "..."` (default <kbd>r</kbd>)
+- `set -g @tilish-rename "..."` (default <kbd>n</kbd>)
 
 The keybindings that move panes between workspaces assume a US keyboard layout.
 However, you can configure `tilish` for international keyboards by providing a string

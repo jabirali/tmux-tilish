@@ -19,7 +19,9 @@
 	legacy="$(tmux -V | grep -E 'tmux (1\.|2\.[0-6])')"
 
 	# Read user options.
-	for opt in default dmenu easymode enforce navigate navigator prefix shiftnum
+	for opt in \
+        default dmenu easymode enforce navigate navigator prefix shiftnum \
+		split_vsplit split_only vsplit_split vsplit_only tiled zoom refresh rename
 	do
 		export "$opt"="$(tmux show-option -gv @tilish-"$opt" 2>/dev/null)"
 	done
@@ -29,6 +31,15 @@
 	then
 		shiftnum='!@#$%^&*()'
 	fi
+
+	if [ -z "$split_vsplit" ]; then split_vsplit="s" ; fi
+	if [ -z "$split_only"   ]; then split_only="S"   ; fi
+	if [ -z "$vsplit_split" ]; then vsplit_split="v" ; fi
+	if [ -z "$vsplit_only"  ]; then vsplit_only="V"  ; fi
+	if [ -z "$tiled"        ]; then tiled="t"        ; fi
+	if [ -z "$zoom"         ]; then zoom="z"         ; fi
+	if [ -z "$refresh"      ]; then refresh="r"      ; fi
+	if [ -z "$rename"       ]; then rename="n"       ; fi
 
 	# Determine "arrow types".
 	if [ "${easymode:-}" = "on" ]
@@ -150,22 +161,23 @@ else
 	bind_move   "${mod}$(char_at "$shiftnum" 10)" 0
 fi
 
-# Switch layout with Alt + <mnemonic key>. The mnemonics are `s` and `S` for
-# layouts Vim would generate with `:split`, and `v` and `V` for `:vsplit`.
+# Switch layout with Alt + <mnemonic key>.
+# The keys can be overridden, but the default mnemonics are
+# `s` and `S` for layouts Vim would generate with `:split`, and `v` and `V` for `:vsplit`.
 # The remaining mappings based on `z` and `t` should be quite obvious.
-bind_layout "${mod}s" 'main-horizontal'
-bind_layout "${mod}S" 'even-vertical'
-bind_layout "${mod}v" 'main-vertical'
-bind_layout "${mod}V" 'even-horizontal'
-bind_layout "${mod}t" 'tiled'
-bind_layout "${mod}z" 'zoom'
+bind_layout "${mod}${split_vsplit}" 'main-horizontal'
+bind_layout "${mod}${split_only}" 'even-vertical'
+bind_layout "${mod}${vsplit_split}" 'main-vertical'
+bind_layout "${mod}${vsplit_only}" 'even-horizontal'
+bind_layout "${mod}${tiled}" 'tiled'
+bind_layout "${mod}${zoom}" 'zoom'
 
 # Refresh the current layout (e.g. after deleting a pane).
 if [ -z "$legacy" ]
 then
-	tmux $bind "${mod}r" select-layout -E
+	tmux $bind "${mod}${refresh}" select-layout -E
 else
-	tmux $bind "${mod}r" run-shell 'tmux select-layout'\\\; send escape
+	tmux $bind "${mod}${refresh}" run-shell 'tmux select-layout'\\\; send escape
 fi
 
 # Switch pane via Alt + o. (Mirrors Tmux `Ctrl-b o` and Emacs `Ctrl-x o`.)
@@ -204,8 +216,8 @@ else
 		send escape
 fi
 
-# Name a window with Alt + n.
-tmux $bind "${mod}n" \
+# Name a window with Alt + n (or the key set through the options)
+tmux $bind "${mod}${rename}" \
 	command-prompt -p 'Workspace name:' 'rename-window "%%"'
 
 # Close a window with Alt + Shift + q.
