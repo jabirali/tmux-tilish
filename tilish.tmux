@@ -94,6 +94,10 @@ bind_move () {
 }
 
 bind_layout () {
+  if [ "$1" = '_' ]; then
+    return
+  fi
+
 	# Bind keys to switch or refresh layouts.
 	if [ "$2" = "zoom" ]
 	then

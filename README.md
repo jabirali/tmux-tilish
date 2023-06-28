@@ -186,6 +186,10 @@ to use <kbd>i</kbd> and <kbd>I</kbd> instead of <kbd>v</kbd> and <kbd>V</kbd>, r
 
 	set -g @tilish-layout_keys 'sSiItz'
 
+To disable a key, you can set it to `_`; for example, to disable `mod-t` to switch to tiled layout, we can do:
+
+	set -g @tilish-layout_keys 'sSiI_z'
+
 ## Easy mode
 
 To make the plugin more accessible for people who do not use `vim` as well,
