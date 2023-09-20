@@ -219,6 +219,10 @@ That can be fixed by adding this to `~/.Xresources`:
 	XTerm.omitTranslation: fullscreen
 	XTerm*fullscreen: never
 
+The same issue affects Alacritty on macOS; see
+[this issue](https://github.com/alacritty/alacritty/issues/93#issuecomment-353489475)
+for a proposed solution.
+
 ## Usage inside i3wm
 
 If you use `tilish` inside `i3wm` or `sway`, keybindings like 
