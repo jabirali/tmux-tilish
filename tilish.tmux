@@ -2,7 +2,7 @@
 # vim: foldmethod=marker
 
 # Project: tmux-tilish
-# Author:  Jabir Ali Ouassou <jabirali@switzerlandmail.ch>
+# Author:  Jabir Ali Ouassou <jabir.ali.ouassou@hvl.no>
 # Licence: MIT licence
 #
 # This file contains the `tmux` plugin `tilish`, which implements keybindings

@@ -37,8 +37,8 @@ Okay, so who is this plugin for anyway? You may be interested in this if:
   terminals and workspaces. You'd like to keep working that way in terminals,
   without using `i3wm` or `sway` for your whole desktop.
 - You use a window manager that is similar to `i3wm`, e.g. [`dwm`][9],
-  and want to have that workflow in `tmux` too.  
-  
+  and want to have that workflow in `tmux` too.
+
 [9]: https://dwm.suckless.org/tutorial/
 
 ## Quickstart
@@ -63,7 +63,7 @@ Just replace `main-vertical` with one of the layouts from the `tmux` `man` page:
 | vsplit then split | `main-vertical`   |
 | only vsplit       | `even-horizontal` |
 | fully tiled       | `tiled`           |
-                                         
+
 The words "split" and "vsplit" refer to the layouts you get in `vim` when
 running `:split` and `:vsplit`, respectively. (Unfortunately, what is called 
 a "vertical" and "horizontal" split varies between programs.)
@@ -210,6 +210,10 @@ work.  Moreover, `gnome-terminal` steals the "switch workspace" keybindings
 <kbd>Alt</kbd>+<kbd>0</kbd>-<kbd>9</kbd> *if* you open multiple tabs. If you
 use macOS, you likely want to configure the `Option` key to send either `Esc+`
 (`iTerm2`) or `Meta` (`Terminal.app`) under the keyboard settings of the app.
+
+It is also worth noting that `iTerm2` allows you to swap the `Cmd` and `Option`
+keys in the terminal app. I recommend giving this a try if you're on macOS,
+since the `Cmd` is more ergonomic than the `Option` key for extended use.
 
 If you use `xterm`, almost none of the <kbd>Alt</kbd> keys work by default.
 That can be fixed by adding this to `~/.Xresources`:
