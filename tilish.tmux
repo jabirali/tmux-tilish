@@ -15,7 +15,7 @@
 # shellcheck disable=SC2250
 
 # Check input parameters {{{
-	# Whether we need to use legacy workarounds (required before tmux 2.7).
+	# Whether we need to use legacy workarounds (required before Tmux 2.7).
 	legacy="$(tmux -V | grep -E 'tmux (1\.|2\.[0-6])')"
 
 	# Read user options.
@@ -165,6 +165,9 @@ then
 else
 	tmux $bind "${mod}r" run-shell 'tmux select-layout'\\\; send escape
 fi
+
+# Switch pane via Alt + o. (Mirrors Tmux `Ctrl-b o` and Emacs `Ctrl-x o`.)
+tmux $bind "${mod}o" select-pane -t :.+1
 
 # Switch to pane via Alt + hjkl.
 tmux $bind "${mod}${h}" select-pane -L
