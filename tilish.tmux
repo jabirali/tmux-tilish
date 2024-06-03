@@ -250,10 +250,10 @@ fi
 if [ "${navigate:-}" = "on" ]
 then
 	# If `@tilish-navigate` is nonzero, integrate Alt + hjkl with `tmux-navigate`.
-	tmux set -g '@navigate-left'  '-n M-h'
-	tmux set -g '@navigate-down'  '-n M-j'
-	tmux set -g '@navigate-up'    '-n M-k'
-	tmux set -g '@navigate-right' '-n M-l'
+	tmux set -g '@navigate-left'  "-n M-$h"
+	tmux set -g '@navigate-down'  "-n M-$j"
+	tmux set -g '@navigate-up'    "-n M-$k"
+	tmux set -g '@navigate-right' "-n M-$l"
 elif [ "${navigator:-}" = "on" ]
 then
 	# If `@tilish-navigator` is nonzero, integrate Alt + hjkl with `vim-tmux-navigator`.
