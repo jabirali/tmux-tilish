@@ -232,9 +232,9 @@ tmux $bind "${mod}C" \
 # Define hooks {{{
 if [ -z "$legacy" ]
 then
-	# Autorefresh layout after deleting a pane.
-	tmux set-hook -g after-split-window "select-layout; select-layout -E"
-	tmux set-hook -g pane-exited "select-layout; select-layout -E"
+	# Autorefresh layout after creating/deleting a pane.
+	tmux set-hook -g after-split-window "select-layout -E"
+	tmux set-hook -g pane-exited "select-layout -E"
 
 	# Autoselect layout after creating new window.
 	if [ -n "${default:-}" ]
