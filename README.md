@@ -50,7 +50,7 @@ followed by <kbd>Shift</kbd> + <kbd>i</kbd> to install it (assuming default pref
 	set -g @plugin 'jabirali/tmux-tilish'
 
 For `tmux` v2.7+, you can customize which layout is used as default for new workspaces.
-To do so, add this to `~/.tmux.conf`:
+To do so, add this to your `tmux.conf`:
 
 	set -g @tilish-default 'main-vertical'
 
@@ -70,6 +70,16 @@ a "vertical" and "horizontal" split varies between programs.)
 If you do not set this option, `tilish` will not autoselect any layout; you
 can still choose layouts manually using the keybindings listed below.
 
+By default, Tilish will enforce the selected layout by automatically reapplying
+it every time a new pane is created or destroyed. If you want to disable this
+feature, you can add one of these commands to your `tmux.conf`:
+
+    set -g @tilish-enforce 'size'
+    set -g @tilish-enforce 'none'
+
+The former enforces that panes should have equal sizes, but does not move the
+panes around to enforce the layout. The latter disables the feature completely.
+
 After performing the steps above, you should read the [list of keybindings](#keybindings).
 For further configuration options:
 
@@ -80,7 +90,7 @@ For further configuration options:
 - If you like `dmenu`, check out the [application launcher](#application-launcher).
 - If it doesn't work, check your [terminal settings](#terminal-compatibility).
 
-It is also recommended that you add the following to the top of your `.tmux.conf`:
+It is also recommended that you add the following to the top of your `tmux.conf`:
 
 	set -s escape-time 0
 	set -g base-index 1
@@ -141,7 +151,7 @@ by default on `kitty` or `alacritty`, which may require additional configuration
 To make the plugin more accessible for people who do not use `vim` as well,
 there is also an "easy mode" available, which uses arrow keys instead of 
 the `vim`-style <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> keys.
-This mode can be activated by putting this in your `.tmux.conf`:
+This mode can be activated by putting this in your `tmux.conf`:
 
 	set -g @tilish-easymode 'on'
 
