@@ -234,18 +234,18 @@ then
 	# Autorefresh layout after creating/deleting a pane.
 	if [ "${enforce:-}" = "none" ]
 	then
-        # Never change the layout automatically.
-        :
-    elif [ "${enforce:-}" = "size" ]
-    then
-        # Enforce pane sizes but not the overall layout.
-        tmux set-hook -g after-split-window "select-layout -E"
-        tmux set-hook -g pane-exited "select-layout -E"
-    else
-        # Default: Completely enforce the selected layout.
-        tmux set-hook -g after-split-window "select-layout; select-layout -E"
-        tmux set-hook -g pane-exited "select-layout; select-layout -E"
-    fi
+		# Never change the layout automatically.
+		:
+	elif [ "${enforce:-}" = "size" ]
+	then
+		# Enforce pane sizes but not the overall layout.
+		tmux set-hook -g after-split-window "select-layout -E"
+		tmux set-hook -g pane-exited "select-layout -E"
+	else
+		# Default: Completely enforce the selected layout.
+		tmux set-hook -g after-split-window "select-layout; select-layout -E"
+		tmux set-hook -g pane-exited "select-layout; select-layout -E"
+	fi
 
 	# Autoselect layout after creating new window.
 	if [ -n "${default:-}" ]
