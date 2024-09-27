@@ -54,10 +54,13 @@
 # }}}
 
 # Define core functionality {{{
-bind_switch () {
-	# Bind keys to switch between workspaces.
-	tmux $bind "$1" \
-		if-shell "tmux select-window -t :$2" "" "new-window -t :$2"
+bind_switch() {
+    # Bind keys to switch to a workspace. The workspace is created if it
+    # doesn't exist, and if we're already there we go back to the last one.
+    tmux $bind "$1" \
+        if-shell '[ "$(tmux display -p "#I")" != "'"$2"'" ]' \
+            "if-shell 'tmux select-window -t :$2' '' 'new-window -t :$2'" \
+            "last-window"
 }
 
 bind_move () {
