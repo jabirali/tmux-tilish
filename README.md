@@ -136,8 +136,8 @@ bindings are "smart": depending on `base-index`, they either act on workspace 0 
 Moreover, if you press <kbd>Alt</kbd> + <kbd>3</kbd> to switch to workspace 3 and then
 press it again, you will be sent back to the previous workspace you were using.
 
-Please note that all the keybindings except <kbd>Alt</kbd> + <kbd>Enter</kbd> can be
-changed by using a configuration setting called `@tilish-remap`. The way it works is
+These keybindings can be changed by using a configuration setting `@tilish-remap`,
+which is somewhat similar to `vim`'s `nnoremap` command. The way it works is
 that you specify which keys you want to remap in the following format. For instance,
 say that you want to remap the `vim`-style `hjkl` movements to the arrow-like `ijkl`
 movements; use <kbd>Alt</kbd> + <kbd>p</kbd> instead of <kbd>Alt</kbd> + <kbd>Enter</kbd>
