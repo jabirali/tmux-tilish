@@ -279,7 +279,7 @@
 			# This solution is about an order of magnitude faster than invoking `compgen`.
 			# Based on: https://medium.com/njiuko/using-fzf-instead-of-dmenu-2780d184753f
 			tmux $bind "${mod}${d}" \
-				select-pane -t '{bottom-right}' \\\; split-pane 'sh -c "exec \$(echo \"\$PATH\" | tr \":\" \"\n\" | xargs -I{} -- find {} -maxdepth 1 -mindepth 1 -executable 2>/dev/null | sort -u | fzf)"'
+				select-pane -t '{bottom-right}' \\\; split-pane 'sh -c "exec \$(echo \"\$PATH\" | tr \":\" \"\n\" | xargs -I{} -- find {} -maxdepth 1 -mindepth 1 -perm -111 2>/dev/null | sort -u | fzf)"'
 		else
 			tmux $bind "${mod}${d}" \
 				display 'To enable this function, install `fzf` and restart `tmux`.'
