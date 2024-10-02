@@ -30,7 +30,7 @@
 
 	# Define placeholder variables used in keybindings below.
 	h='h'; j='j'; k='k'; l='l'; o='o';
-	H='H'; J='J'; K='K'; L='L';
+	H='H'; J='J'; K='K'; L='L'; O='O';
 	s='s'; S='S'; v='v'; V='V'; t='t'; z='z';
 	d='d'; n='n'; r='r';
 	C='C'; E='E'; Q='Q';
@@ -163,8 +163,10 @@
 		tmux $bind "${mod}${r}" run-shell 'tmux select-layout'\\\; send escape
 	fi
 
-	# Switch pane via Alt + o. (Mirrors Tmux `Ctrl-b o` and Emacs `Ctrl-x o`.)
+	# Switch pane via Alt + o or move via Alt + Shift + o.
+	# (This mirrors Tmux `Ctrl-b o` and Emacs `Ctrl-x o`.)
 	tmux $bind "${mod}${o}" select-pane -t :.+1
+	tmux $bind "${mod}${O}" swap-pane -D
 
 	# Switch to pane via Alt + hjkl.
 	tmux $bind "${mod}${h}" select-pane -L
