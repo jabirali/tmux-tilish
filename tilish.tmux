@@ -1,5 +1,5 @@
 #!/bin/sh
-# vim: foldmethod=marker
+# vim: foldmethod=marker noexpandtab tabstop=4
 
 # Project: tmux-tilish
 # Author:  Jabir Ali Ouassou <jabir.ali.ouassou@hvl.no>
@@ -19,7 +19,7 @@
 	legacy="$(tmux -V | grep -E 'tmux (1\.|2\.[0-6])')"
 
 	# Read user options.
-	for opt in default dmenu easymode enforce navigate navigator prefix shiftnum; do
+	for opt in default dmenu easymode enforce navigate navigator prefix remap shiftnum; do
 		export "$opt"="$(tmux show-option -gv @tilish-"$opt" 2>/dev/null)"
 	done
 
@@ -28,15 +28,24 @@
 		shiftnum='!@#$%^&*()'
 	fi
 
-	# Determine "arrow types".
+	# Define placeholder variables used in keybindings below.
+	h='h'; j='j'; k='k'; l='l'; o='o';
+	H='H'; J='J'; K='K'; L='L';
+	s='s'; S='S'; v='v'; V='V'; t='t'; z='z';
+	d='d'; n='n'; r='r';
+	C='C'; E='E'; Q='Q';
+	enter='enter'
+
+	# Let the user redefine these variables to remap keys.
+	if [ -n "${remap:-}" ]; then
+	   eval "${remap}"
+	fi
+
+	# If easymode is on, use arrow keys instead of Vim-style hjkl.
 	if [ "${easymode:-}" = "on" ]; then
 		# Simplified arrows.
 		h='left'; j='down'; k='up'; l='right';
 		H='S-left'; J='S-down'; K='S-up'; L='S-right';
-	else
-		# Vim-style arrows.
-		h='h'; j='j'; k='k'; l='l';
-		H='H'; J='J'; K='K'; L='L';
 	fi
 
 	# Determine modifier vs. prefix key.
@@ -140,22 +149,22 @@
 	# Switch layout with Alt + <mnemonic key>. The mnemonics are `s` and `S` for
 	# layouts Vim would generate with `:split`, and `v` and `V` for `:vsplit`.
 	# The remaining mappings based on `z` and `t` should be quite obvious.
-	bind_layout "${mod}s" 'main-horizontal'
-	bind_layout "${mod}S" 'even-vertical'
-	bind_layout "${mod}v" 'main-vertical'
-	bind_layout "${mod}V" 'even-horizontal'
-	bind_layout "${mod}t" 'tiled'
-	bind_layout "${mod}z" 'zoom'
+	bind_layout "${mod}${s}" 'main-horizontal'
+	bind_layout "${mod}${S}" 'even-vertical'
+	bind_layout "${mod}${v}" 'main-vertical'
+	bind_layout "${mod}${V}" 'even-horizontal'
+	bind_layout "${mod}${t}" 'tiled'
+	bind_layout "${mod}${z}" 'zoom'
 
 	# Refresh the current layout (e.g. after deleting a pane).
 	if [ -z "$legacy" ]; then
-		tmux $bind "${mod}r" select-layout -E
+		tmux $bind "${mod}${r}" select-layout -E
 	else
-		tmux $bind "${mod}r" run-shell 'tmux select-layout'\\\; send escape
+		tmux $bind "${mod}${r}" run-shell 'tmux select-layout'\\\; send escape
 	fi
 
 	# Switch pane via Alt + o. (Mirrors Tmux `Ctrl-b o` and Emacs `Ctrl-x o`.)
-	tmux $bind "${mod}o" select-pane -t :.+1
+	tmux $bind "${mod}${o}" select-pane -t :.+1
 
 	# Switch to pane via Alt + hjkl.
 	tmux $bind "${mod}${h}" select-pane -L
@@ -178,35 +187,35 @@
 
 	# Open a terminal with Alt + Enter.
 	if [ -z "$legacy" ]; then
-		tmux $bind "${mod}enter" \
+		tmux $bind "${mod}${enter}" \
 			run-shell 'cwd="`tmux display -p \"#{pane_current_path}\"`"; tmux select-pane -t "bottom-right"; tmux split-pane -c "$cwd"'
 	else
-		tmux $bind "${mod}enter" \
+		tmux $bind "${mod}${enter}" \
 			select-pane -t 'bottom-right' \\\; split-window \\\; run-shell 'tmux select-layout' \\\; send escape
 	fi
 
 	# Name a window with Alt + n.
-	tmux $bind "${mod}n" \
+	tmux $bind "${mod}${n}" \
 		command-prompt -p 'Workspace name:' 'rename-window "%%"'
 
 	# Close a window with Alt + Shift + q.
 	if [ -z "$legacy" ]; then
-		tmux $bind "${mod}Q" \
+		tmux $bind "${mod}${Q}" \
 			if-shell \
 			'[ "$(tmux display-message -p "#{window_panes}")" -gt 1 ]' \
 			'kill-pane; select-layout; select-layout -E' \
 			'kill-pane'
 	else
-		tmux $bind "${mod}Q" \
+		tmux $bind "${mod}${Q}" \
 			kill-pane
 	fi
 
 	# Close a connection with Alt + Shift + e.
-	tmux $bind "${mod}E" \
+	tmux $bind "${mod}${E}" \
 		confirm-before -p "Detach from #H:#S? (y/n)" detach-client
 
 	# Reload configuration with Alt + Shift + c.
-	tmux $bind "${mod}C" \
+	tmux $bind "${mod}${C}" \
 		source-file ~/.tmux.conf \\\; display "Reloaded config"
 # }}}
 
@@ -267,10 +276,10 @@
 			# The environment variables of your `default-shell` are used when running `fzf`.
 			# This solution is about an order of magnitude faster than invoking `compgen`.
 			# Based on: https://medium.com/njiuko/using-fzf-instead-of-dmenu-2780d184753f
-			tmux $bind "${mod}d" \
+			tmux $bind "${mod}${d}" \
 				select-pane -t '{bottom-right}' \\\; split-pane 'sh -c "exec \$(echo \"\$PATH\" | tr \":\" \"\n\" | xargs -I{} -- find {} -maxdepth 1 -mindepth 1 -executable 2>/dev/null | sort -u | fzf)"'
 		else
-			tmux $bind "${mod}d" \
+			tmux $bind "${mod}${d}" \
 				display 'To enable this function, install `fzf` and restart `tmux`.'
 		fi
 	fi
