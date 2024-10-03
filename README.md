@@ -347,6 +347,7 @@ A minimal working  example of a `~/.tmux.conf` with `tpm` would then be:
 # Related projects
 
 - [3mux](https://github.com/aaronjanse/3mux)
+- [tmux-normalmode](https://github.com/jabirali/tmux-normalmode/)
 - [tmux-navigate](https://github.com/sunaku/tmux-navigate)
 - [vim-tmux-navigator](https://github.com/christoomey/vim-tmux-navigator)
 - [vim-i3wm-tmux-navigator](https://github.com/fogine/vim-i3wm-tmux-navigator)
