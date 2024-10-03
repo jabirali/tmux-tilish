@@ -216,9 +216,10 @@
 	tmux $bind "${mod}${E}" \
 		confirm-before -p "Detach from #H:#S? (y/n)" detach-client
 
-	# Reload configuration with Alt + Shift + c.
+	# Reload last config file with Alt + Shift + c.
+	config_file="$(tmux display -p '#{config_files}' | sed 's/^.*,//')"
 	tmux $bind "${mod}${C}" \
-		source-file ~/.tmux.conf \\\; display "Reloaded config"
+		source-file "$config_file" \\\; display "Reloaded $config_file"
 # }}}
 
 # Define hooks {{{
