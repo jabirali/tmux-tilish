@@ -88,6 +88,7 @@ For further configuration options:
 - If you use `kak` or `emacs`, consider activating [prefix mode](#prefix-mode).
 - If you use `tmux` within `i3wm` or `sway`, see [this section](#usage-inside-i3wm).
 - If you like `dmenu`, check out the [application launcher](#application-launcher).
+- If you like `fzf`, check out the [project launcher](#project-launcher).
 - If it doesn't work, check your [terminal settings](#terminal-compatibility).
 
 It is also recommended that you add the following to the top of your `tmux.conf`:
@@ -128,6 +129,8 @@ while a "pane" is what `i3wm` would call a "window" and `vim` would call a "spli
 | <kbd>Alt</kbd> + <kbd>z</kbd> | Switch to layout: zoom (fullscreen) |
 | <kbd>Alt</kbd> + <kbd>r</kbd> | Refresh current layout |
 | <kbd>Alt</kbd> + <kbd>n</kbd> | Name current workspace |
+| <kbd>Alt</kbd> + <kbd>d</kbd> | Application launcher (if enabled) |
+| <kbd>Alt</kbd> + <kbd>p</kbd> | Project launcher (if enabled) |
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>q</kbd> | Quit (close) pane |
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>e</kbd> | Exit (detach) `tmux` |
 | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>c</kbd> | Reload config |
