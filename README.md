@@ -206,13 +206,31 @@ recommend that you increase this to at least a second if you use `tilish`:
 
 	set -g repeat-time 1000
 
+## Project launcher
+
+Many editors and IDEs provide some notion of "projects" that can be easily
+opened using fuzzy-searching. For instance, in Sublime Text you can use the
+keybinding <kbd>Cmd</kbd> + <kbd>Ctrl</kbd> + <kbd>p</kbd> to quickly open
+recent projects, and <kbd>Ctrl</kbd> + <kbd>r</kbd> does the same in VSCode.
+
+If you tell Tilish where you store your projects, it can integrate with `fzf`
+to provide a project launcher. The keybinding `<kbd>Alt</kbd> + <kbd>p</kbd>`
+will then pop up an `fzf` window that lets you select a directory from your
+project directory, and will then open a new `tmux` workspace in that folder
+which is automatically named to match the folder name.
+
+To enable this feature, place e.g. the following snippet in your `tmux.conf` if
+you store all your code projects in `~/Code`:
+
+    set -g @tilish-project "$HOME/Code"
+
 ## Application launcher
 
 In `i3wm`, the keybinding <kbd>Alt</kbd>+<kbd>d</kbd> is by default mapped to
 the application launcher `dmenu`, which can be practical to quickly open apps.
 If you have [`fzf`][5] available on your system, `tilish` can offer a similar 
 application launcher using the same keyboard shortcut. To enable this 
-functionality, add the following to your `~/.tmux.conf`:
+functionality, add the following to your `tmux.conf`:
 
 	set -g @tilish-dmenu 'on'
 

@@ -19,7 +19,7 @@
 	legacy="$(tmux -V | grep -E 'tmux (1\.|2\.[0-6])')"
 
 	# Read user options.
-	for opt in default dmenu easymode enforce navigate navigator prefix remap shiftnum; do
+	for opt in default dmenu easymode enforce navigate navigator prefix project remap shiftnum; do
 		export "$opt"="$(tmux show-option -gv @tilish-"$opt" 2>/dev/null)"
 	done
 
@@ -32,7 +32,7 @@
 	h='h'; j='j'; k='k'; l='l'; o='o';
 	H='H'; J='J'; K='K'; L='L'; O='O';
 	s='s'; S='S'; v='v'; V='V'; t='t'; z='z';
-	d='d'; n='n'; r='r';
+	d='d'; n='n'; p='p'; r='r';
 	C='C'; E='E'; Q='Q';
 	enter='enter'
 
@@ -273,6 +273,12 @@
 	fi
 # }}}
 
+# Integrate with `fzf` to provide a project launcher {{{
+	if [ -n "$project" ]; then
+		tmux $bind "${mod}${p}" run-shell 'this="$(ls --color=yes "'"$project"'" | fzf-tmux -p 100%,100% --color 16 --ansi)" && tmux new-window -c "'"$project"'/$this" -n "$this" || exit 0'
+	fi
+# }}}
+
 # Integrate with `fzf` to approximate `dmenu` {{{
 	if [ -z "$legacy" ] && [ "${dmenu:-}" = "on" ]; then
 		if [ -n "$(command -v fzf)" ]; then
@@ -280,7 +286,7 @@
 			# This solution is about an order of magnitude faster than invoking `compgen`.
 			# Based on: https://medium.com/njiuko/using-fzf-instead-of-dmenu-2780d184753f
 			tmux $bind "${mod}${d}" \
-				select-pane -t '{bottom-right}' \\\; split-pane 'sh -c "exec \$(echo \"\$PATH\" | tr \":\" \"\n\" | xargs -I{} -- find {} -maxdepth 1 -mindepth 1 -perm -111 2>/dev/null | sort -u | fzf)"'
+				select-pane -t '{bottom-right}' \\\; split-pane 'sh -c "exec \$(echo \"\$PATH\" | tr \":\" \"\n\" | xargs -I{} -- find {} -maxdepth 1 -mindepth 1 -perm -111 2>/dev/null | sort -u | fzf-tmux -p 100%,100% --color 16)"'
 		else
 			tmux $bind "${mod}${d}" \
 				display 'To enable this function, install `fzf` and restart `tmux`.'
