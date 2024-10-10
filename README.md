@@ -217,7 +217,7 @@ keybinding <kbd>Cmd</kbd> + <kbd>Ctrl</kbd> + <kbd>p</kbd> to quickly open
 recent projects, and <kbd>Ctrl</kbd> + <kbd>r</kbd> does the same in VSCode.
 
 If you tell Tilish where you store your projects, it can integrate with `fzf`
-to provide a project launcher. The keybinding `<kbd>Alt</kbd> + <kbd>p</kbd>`
+to provide a project launcher. The keybinding <kbd>Alt</kbd> + <kbd>p</kbd>
 will then pop up an `fzf` window that lets you select a directory from your
 project directory, and will then open a new `tmux` workspace in that folder
 which is automatically named to match the folder name.
