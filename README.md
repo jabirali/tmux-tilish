@@ -234,12 +234,10 @@ functionality, add the following to your `tmux.conf`:
 
 	set -g @tilish-dmenu 'on'
 
-Basically, pressing <kbd>Alt</kbd>+<kbd>d</kbd> will then pop up a split
-that lets you fuzzy-search through all executables in your system `$PATH`.
-Selecting an executable runs the command in that split. When you want 
-to start an interactive process, this can be more convenient than
-using <kbd>Alt</kbd>+<kbd>Enter</kbd> and typing the command name.
-This is currently only available in `tmux` v2.7+.
+Pressing <kbd>Alt</kbd>+<kbd>d</kbd> will then show a pop-up `tmux` window that
+lets you fuzzy-search through all executables in your system `$PATH`. Selecting
+an executable runs the command in a new window. This can be quite convenient
+as a way to quickly launch interactive processes like `htop` and `ipython`.
 
 [5]: https://github.com/junegunn/fzf
 
