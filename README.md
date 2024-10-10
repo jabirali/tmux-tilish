@@ -87,8 +87,7 @@ For further configuration options:
 - If you do not use `vim` or `kak`, consider activating [easy mode](#easy-mode).
 - If you use `kak` or `emacs`, consider activating [prefix mode](#prefix-mode).
 - If you use `tmux` within `i3wm` or `sway`, see [this section](#usage-inside-i3wm).
-- If you like `dmenu`, check out the [application launcher](#application-launcher).
-- If you like `fzf`, check out the [project launcher](#project-launcher).
+- If you like `fzf`, check out the [project launcher](#project-launcher) and [application launcher](#application-launcher).
 - If it doesn't work, check your [terminal settings](#terminal-compatibility).
 
 It is also recommended that you add the following to the top of your `tmux.conf`:
@@ -145,12 +144,16 @@ which is somewhat similar to `vim`'s `nnoremap` command. The way it works is
 that you specify which keys you want to remap in the following format. For instance,
 say that you want to remap the `vim`-style `hjkl` movements to the arrow-like `ijkl`
 movements; use <kbd>Alt</kbd> + <kbd>p</kbd> instead of <kbd>Alt</kbd> + <kbd>Enter</kbd>
-to create new panes; and replace <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>Q</kbd>
-with <kbd>Alt</kbd> + <kbd>d</kbd> as the keybinding to close a pane. (Note: If you
-want to remap something to a key that's already in use, remember to also remap
-the key you're replacing to prevent conflicts.) This can be accomplished as follows:
+to create new panes; replace <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>Q</kbd>
+with <kbd>Alt</kbd> + <kbd>q</kbd> as the keybinding to close a pane; and use
+<kbd>Alt</kbd> + <kbd>space</kbd> to run the application launcher.
+This can be accomplished as follows:[^remap]
 
-    set -g @tilish-remap 'h=j; j=k; k=i; l=l; Q=d; enter=p'
+    set -g @tilish-remap 'h=j; j=k; k=i; l=l; Q=q; enter=p; d=space'
+
+[^remap]: If you want to remap something to a key that's already in use,
+          remember to also remap the key you're replacing. Otherwise, it
+	  is not guaranteed that the key remapping will work.
 
 The keybindings that move panes between workspaces assume a US keyboard layout.
 However, you can configure `tilish` for international keyboards by providing a string
