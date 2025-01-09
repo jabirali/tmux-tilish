@@ -139,6 +139,18 @@ bindings are "smart": depending on `base-index`, they either act on workspace 0 
 Moreover, if you press <kbd>Alt</kbd> + <kbd>3</kbd> to switch to workspace 3 and then
 press it again, you will be sent back to the previous workspace you were using.
 
+The  <kbd>Alt</kbd> + <kbd>0</kbd>-<kbd>9</kbd> will create a new workspace if
+one does not exist. This option can be turned off by the configuration
+`@tilish-createauto` as follows:
+
+    set -g @tilish-createauto 'off'
+
+When set to off, this setting will silently ignore when a non-existing
+workspace is selected. This prevents accidental creation of workspaces. Note
+that this configuration does not change the move pane to workspace command
+<kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>0</kbd>-<kbd>9</kbd>, which will
+create a new workspace.
+
 These keybindings can be changed by using a configuration setting `@tilish-remap`,
 which is somewhat similar to `vim`'s `nnoremap` command. The way it works is
 that you specify which keys you want to remap in the following format. For instance,
