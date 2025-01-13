@@ -19,7 +19,7 @@
 	legacy="$(tmux -V | grep -E 'tmux (1\.|2\.[0-6])')"
 
 	# Read user options.
-	for opt in createauto default dmenu easymode enforce navigate navigator prefix project remap shiftnum; do
+	for opt in createauto default dmenu easymode enforce navigate navigator prefix project remap shiftnum smartsplits; do
 		export "$opt"="$(tmux show-option -gv @tilish-"$opt" 2>/dev/null)"
 	done
 
@@ -177,10 +177,12 @@
 	tmux $bind "${mod}${O}" swap-pane -D
 
 	# Switch to pane via Alt + hjkl.
-	tmux $bind "${mod}${h}" select-pane -L
-	tmux $bind "${mod}${j}" select-pane -D
-	tmux $bind "${mod}${k}" select-pane -U
-	tmux $bind "${mod}${l}" select-pane -R
+	if [ "${smartsplits:-}" != "on" ]; then
+		tmux $bind "${mod}${h}" select-pane -L
+		tmux $bind "${mod}${j}" select-pane -D
+		tmux $bind "${mod}${k}" select-pane -U
+		tmux $bind "${mod}${l}" select-pane -R
+	fi
 
 	# Move a pane via Alt + Shift + hjkl.
 	if [ -z "$legacy" ]; then
@@ -277,6 +279,27 @@
 			tmux bind -T copy-mode-vi "M-$j" select-pane -D
 			tmux bind -T copy-mode-vi "M-$k" select-pane -U
 			tmux bind -T copy-mode-vi "M-$l" select-pane -R
+		fi
+	elif [ "${smartsplits:-}" = "on" ]; then
+		# If `@tilish-smartsplits` is nonzero, integrate Alt + hjkl with `smart-splits.nvim`.
+		# This assumes that your Vim/Neovim is setup to use Alt + hjkl bindings as well.
+		
+		tmux $bind "${mod}${h}" if -F "#{@pane-is-vim}" 'send M-h'  'select-pane -L'
+		tmux $bind "${mod}${j}" if -F "#{@pane-is-vim}" 'send M-j'  'select-pane -D'
+		tmux $bind "${mod}${k}" if -F "#{@pane-is-vim}" 'send M-k'  'select-pane -U'
+		tmux $bind "${mod}${l}" if -F "#{@pane-is-vim}" 'send M-l'  'select-pane -R'
+
+		# Smart pane resizing with awareness of Neovim splits. tmux escape then C-hjkl to resize
+		tmux bind -r C-h if -F "#{@pane-is-vim}" 'send-keys C-h' 'resize-pane -L 7'
+		tmux bind -r C-j if -F "#{@pane-is-vim}" 'send-keys C-j' 'resize-pane -D 7'
+		tmux bind -r C-k if -F "#{@pane-is-vim}" 'send-keys C-k' 'resize-pane -U 7'
+		tmux bind -r C-l if -F "#{@pane-is-vim}" 'send-keys C-l' 'resize-pane -R 7'
+
+		if [ -z "$prefix" ]; then
+			tmux bind -T copy-mode-vi "M-${h}" select-pane -L
+			tmux bind -T copy-mode-vi "M-${j}" select-pane -D
+			tmux bind -T copy-mode-vi "M-${k}" select-pane -U
+			tmux bind -T copy-mode-vi "M-${l}" select-pane -R
 		fi
 	fi
 # }}}
