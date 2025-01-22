@@ -19,7 +19,7 @@
 	legacy="$(tmux -V | grep -E 'tmux (1\.|2\.[0-6])')"
 
 	# Read user options.
-	for opt in default dmenu easymode enforce navigate navigator prefix project remap shiftnum; do
+	for opt in createauto default dmenu easymode enforce navigate navigator prefix project remap shiftnum; do
 		export "$opt"="$(tmux show-option -gv @tilish-"$opt" 2>/dev/null)"
 	done
 
@@ -60,11 +60,19 @@
 
 # Define core functionality {{{
 	bind_switch() {
+		# If createauto is set off, then only create new session with mod-#num
+		# otherwise silently ignore (default case)
+		if [ "${createauto}" = "off" ]; then
+			newwincmd=''
+		else
+			newwincmd="new-window -t :""$2"
+		fi
 		# Bind keys to switch to a workspace. The workspace is created if it
 		# doesn't exist, and if we're already there we go back to the last one.
+		#
 		tmux $bind "$1" \
 			if-shell '[ "$(tmux display -p "#I")" != "'"$2"'" ]' \
-			"if-shell 'tmux select-window -t :$2' '' 'new-window -t :$2'" \
+			"if-shell 'tmux select-window -t :$2' '' '$newwincmd'" \
 			"last-window"
 	}
 
