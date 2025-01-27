@@ -177,12 +177,10 @@
 	tmux $bind "${mod}${O}" swap-pane -D
 
 	# Switch to pane via Alt + hjkl.
-	if [ "${smartsplits:-}" != "on" ]; then
-		tmux $bind "${mod}${h}" select-pane -L
-		tmux $bind "${mod}${j}" select-pane -D
-		tmux $bind "${mod}${k}" select-pane -U
-		tmux $bind "${mod}${l}" select-pane -R
-	fi
+	tmux $bind "${mod}${h}" select-pane -L
+	tmux $bind "${mod}${j}" select-pane -D
+	tmux $bind "${mod}${k}" select-pane -U
+	tmux $bind "${mod}${l}" select-pane -R
 
 	# Move a pane via Alt + Shift + hjkl.
 	if [ -z "$legacy" ]; then
@@ -282,14 +280,13 @@
 		fi
 	elif [ "${smartsplits:-}" = "on" ]; then
 		# If `@tilish-smartsplits` is nonzero, integrate Alt + hjkl with `smart-splits.nvim`.
-		# This assumes that your Vim/Neovim is setup to use Alt + hjkl bindings as well.
-		
+		# This assumes that your Vim/Neovim is setup to use Alt + hjkl bindings as well.	
 		tmux $bind "${mod}${h}" if -F "#{@pane-is-vim}" 'send M-h'  'select-pane -L'
 		tmux $bind "${mod}${j}" if -F "#{@pane-is-vim}" 'send M-j'  'select-pane -D'
 		tmux $bind "${mod}${k}" if -F "#{@pane-is-vim}" 'send M-k'  'select-pane -U'
 		tmux $bind "${mod}${l}" if -F "#{@pane-is-vim}" 'send M-l'  'select-pane -R'
 
-		# Smart pane resizing with awareness of Neovim splits. tmux escape then C-hjkl to resize
+		# Smart pane resizing with awareness of Neovim splits. tmux escape then C-hjkl to resize.
 		tmux bind -r C-h if -F "#{@pane-is-vim}" 'send-keys C-h' 'resize-pane -L 7'
 		tmux bind -r C-j if -F "#{@pane-is-vim}" 'send-keys C-j' 'resize-pane -D 7'
 		tmux bind -r C-k if -F "#{@pane-is-vim}" 'send-keys C-k' 'resize-pane -U 7'

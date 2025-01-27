@@ -306,16 +306,15 @@ Alternatively, `tilish` also supports a [Prefix mode](#prefix-mode). This is in 
 less ergonomic than the default `tilish` keybindings. However, it does not require the use
 of <kbd>Alt</kbd>, and is therefore compatible with the default `i3wm` keybindings.
 
-## Integration with vim
+## Integration with vim/neovim
 
-There are multiple great plugins, [tmux-navigate][10], [vim-tmux-navigator][3],
-[smart-splits.nvim][11], which both allow seamless navigation between `vim`
-splits and `tmux` splits.
-[tmux-navigate][10] has an advantage that it also works over `ssh` connections,
-and that it plays better with zooming (<kbd>Alt</kbd>+<kbd>z</kbd>).  If you
-use either plugin, you can tell `tilish` to make it setup the keybindings for
-you. (If you don't, `tilish` will use fallback keybindings that don't integrate
-with `vim`.)
+There are multiple great plugins [tmux-navigate][10], [vim-tmux-navigator][3],
+[smart-splits.nvim][11], which all allow seamless navigation between `vim`
+splits and `tmux` splits. [tmux-navigate][10] has an advantage that it also
+works over `ssh` connections, and that it plays better with zooming
+(<kbd>Alt</kbd>+<kbd>z</kbd>). If you use these plugins, you can tell `tilish`
+to make it setup the keybindings for you as described below. (If you don't,
+`tilish` will use fallback keybindings that don't integrate with `vim`.)
 
 ### Navigate
 
@@ -381,8 +380,7 @@ A minimal working  example of a `~/.tmux.conf` with `tpm` would then be:
 
 Integration with [smart-splits][11] is achieved through setting the
 `@tilish-smartsplits` option to `on`. This automatically configures the
-keybindings so that <kbd>M</kbd>-<kbd>hjkl</kbd> permit navigating around
-panes.
+keybindings so that <kbd>M</kbd>-<kbd>hjkl</kbd> permit navigating around panes.
 
 Prior to that, it requires installing the `smart-splits.nvim` plugin and
 configuring the following keybindings in e.g. `~/.config/nvim/init.vim`:
