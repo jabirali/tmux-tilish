@@ -306,14 +306,15 @@ Alternatively, `tilish` also supports a [Prefix mode](#prefix-mode). This is in 
 less ergonomic than the default `tilish` keybindings. However, it does not require the use
 of <kbd>Alt</kbd>, and is therefore compatible with the default `i3wm` keybindings.
 
-## Integration with vim
+## Integration with vim/neovim
 
-There are two great plugins [tmux-navigate][10] and [vim-tmux-navigator][3],
-which both allow seamless navigation between `vim` splits and `tmux` splits.
-The former has an advantage that it also works over `ssh` connections, and that
-it plays better with zooming (<kbd>Alt</kbd>+<kbd>z</kbd>).  If you use either
-plugin, you can tell `tilish` to make it setup the keybindings for you. (If you
-don't, `tilish` will use fallback keybindings that don't integrate with `vim`.)
+There are multiple great plugins [tmux-navigate][10], [vim-tmux-navigator][3],
+[smart-splits.nvim][11], which all allow seamless navigation between `vim`
+splits and `tmux` splits. [tmux-navigate][10] has an advantage that it also
+works over `ssh` connections, and that it plays better with zooming
+(<kbd>Alt</kbd>+<kbd>z</kbd>). If you use these plugins, you can tell `tilish`
+to make it setup the keybindings for you as described below. (If you don't,
+`tilish` will use fallback keybindings that don't integrate with `vim`.)
 
 ### Navigate
 
@@ -375,8 +376,37 @@ A minimal working  example of a `~/.tmux.conf` with `tpm` would then be:
 	# Activate the plugins.
 	run -b "~/.tmux/plugins/tpm/tpm"
 
+### Smart-splits (neovim)
+
+Integration with [smart-splits][11] is achieved through setting the
+`@tilish-smartsplits` option to `on`. This automatically configures the
+keybindings so that <kbd>M</kbd>-<kbd>hjkl</kbd> permit navigating around panes.
+
+Prior to that, it requires installing the `smart-splits.nvim` plugin and
+configuring the following keybindings in e.g. `~/.config/nvim/init.vim`:
+
+```lua
+  -- moving between splits
+  vim.keymap.set("n", "<A-h>", require("smart-splits").move_cursor_left)
+  vim.keymap.set("n", "<A-k>", require("smart-splits").move_cursor_up)
+  vim.keymap.set("n", "<A-j>", require("smart-splits").move_cursor_down)
+  vim.keymap.set("n", "<A-l>", require("smart-splits").move_cursor_right)
+  vim.keymap.set("n", "<A-\\>", require("smart-splits").move_cursor_previous)
+  -- resizing splits
+  vim.keymap.set("n", "<C-h>", require("smart-splits").resize_left)
+  vim.keymap.set("n", "<C-j>", require("smart-splits").resize_down)
+  vim.keymap.set("n", "<C-k>", require("smart-splits").resize_up)
+  vim.keymap.set("n", "<C-l>", require("smart-splits").resize_right)
+  -- swapping buffers between windows
+  vim.keymap.set("n", "<leader><leader>h", require("smart-splits").swap_buf_left)
+  vim.keymap.set("n", "<leader><leader>j", require("smart-splits").swap_buf_down)
+  vim.keymap.set("n", "<leader><leader>k", require("smart-splits").swap_buf_up)
+  vim.keymap.set("n", "<leader><leader>l", require("smart-splits").swap_buf_right)
+```
+
 [3]:  https://github.com/christoomey/vim-tmux-navigator
 [10]: https://github.com/sunaku/tmux-navigate
+[11]: https://github.com/mrjones2014/smart-splits.nvim
 
 # Related projects
 
@@ -385,3 +415,4 @@ A minimal working  example of a `~/.tmux.conf` with `tpm` would then be:
 - [tmux-navigate](https://github.com/sunaku/tmux-navigate)
 - [vim-tmux-navigator](https://github.com/christoomey/vim-tmux-navigator)
 - [vim-i3wm-tmux-navigator](https://github.com/fogine/vim-i3wm-tmux-navigator)
+- [smart-splits.nvim](https://github.com/mrjones2014/smart-splits.nvim)
